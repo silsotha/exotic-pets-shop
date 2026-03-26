@@ -1,0 +1,1672 @@
+<!doctype html>
+<html lang="ru">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>ExoticPets</title>
+    <link
+      href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;600;700&family=DM+Sans:wght@300;400;500;600&display=swap"
+      rel="stylesheet"
+    />
+    <link rel="stylesheet" href="style.css">
+    <link rel="icon" href="data:image/svg+xml,&lt;svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22&gt;&lt;text y=%22.9em%22 font-size=%2290%22&gt;🌿&lt;/text&gt;&lt;/svg&gt;">
+  </head>
+  <body>
+    <!-- вкладки -->
+    <div class="proto-switcher">
+      <span>🦎 ExoticPets IS</span>
+      <button class="proto-btn active" onclick="showScreen('pub-home')">
+        🌿 Витрина
+      </button>
+      <button class="proto-btn" onclick="showScreen('pub-catalog')">
+        📋 Каталог
+      </button>
+      <button class="proto-btn" onclick="showScreen('admin-login')">
+        🔐 Вход
+      </button>
+      <button class="proto-btn" onclick="showScreen('admin-dash')">
+        📊 Дашборд
+      </button>
+      <button class="proto-btn" onclick="showScreen('admin-animals')">
+        🐍 Животные
+      </button>
+      <button class="proto-btn" onclick="showScreen('admin-vet')">
+        💉 Ветеринария
+      </button>
+      <button class="proto-btn" onclick="showScreen('admin-sales')">
+        💰 Продажи
+      </button>
+      <button class="proto-btn" onclick="showScreen('admin-reports')">
+        📈 Отчёты
+      </button>
+    </div>
+
+    <!-- экран 1: домашняя страница -->
+    <div class="screen active" id="screen-pub-home">
+      <nav class="pub-navbar">
+        <div class="pub-logo"><span class="leaf">🌿</span> ExoticPets</div>
+        <div class="pub-nav-links">
+          <a href="#" class="active">Главная</a>
+          <a href="#">Каталог</a>
+          <a href="#">О нас</a>
+          <a href="#">Контакты</a>
+        </div>
+        <div class="pub-nav-right">
+          <button class="btn-login" onclick="showScreen('admin-login')">
+            Войти в систему
+          </button>
+        </div>
+      </nav>
+
+      <div class="pub-hero">
+        <div class="hero-content">
+          <div class="hero-badge">🦎 Экзотические животные</div>
+          <h1 class="hero-title">Мир <em>редких</em><br />созданий рядом</h1>
+          <p class="hero-sub">
+            Рептилии, амфибии, птицы и насекомые от проверенных поставщиков.
+            Полная ветеринарная документация для каждого питомца.
+          </p>
+          <div class="hero-btns">
+            <button class="btn-primary" onclick="showScreen('pub-catalog')">
+              Смотреть каталог
+            </button>
+            <button class="btn-outline">Узнать подробнее</button>
+          </div>
+        </div>
+        <div class="hero-stats">
+          <div class="hero-stat">
+            <strong>47</strong><span>Доступно сейчас</span>
+          </div>
+          <div class="hero-stat">
+            <strong>18</strong><span>Видов животных</span>
+          </div>
+          <div class="hero-stat">
+            <strong>6</strong><span>Поставщиков</span>
+          </div>
+        </div>
+      </div>
+
+      <div class="pub-section">
+        <div class="section-label">Категории</div>
+        <div class="section-title">Выберите вашего питомца</div>
+        <div class="categories-grid">
+          <div class="cat-card">
+            <span class="cat-icon">🦎</span>
+            <div class="cat-name">Рептилии</div>
+            <div class="cat-count">14 особей</div>
+          </div>
+          <div class="cat-card">
+            <span class="cat-icon">🐸</span>
+            <div class="cat-name">Амфибии</div>
+            <div class="cat-count">8 особей</div>
+          </div>
+          <div class="cat-card">
+            <span class="cat-icon">🦜</span>
+            <div class="cat-name">Птицы</div>
+            <div class="cat-count">11 особей</div>
+          </div>
+          <div class="cat-card">
+            <span class="cat-icon">🦋</span>
+            <div class="cat-name">Насекомые</div>
+            <div class="cat-count">7 особей</div>
+          </div>
+          <div class="cat-card">
+            <span class="cat-icon">🐭</span>
+            <div class="cat-name">Млекопитающие</div>
+            <div class="cat-count">7 особей</div>
+          </div>
+        </div>
+      </div>
+
+      <div
+        class="pub-section"
+        style="background: var(--mist); padding-top: 52px; padding-bottom: 52px"
+      >
+        <div class="section-label">Новые поступления</div>
+        <div class="section-title">Только что в магазине</div>
+        <div class="animals-grid">
+          <div class="animal-card">
+            <div class="animal-img reptile">
+              <span class="status-badge status-available">Доступно</span>🦎
+            </div>
+            <div class="animal-body">
+              <div class="animal-species">Рептилии</div>
+              <div class="animal-name">Пантеровый хамелеон</div>
+              <div class="animal-meta">
+                <span>♂ Самец</span><span>· 8 мес.</span><span>· CITES</span>
+              </div>
+              <div class="animal-footer">
+                <span class="animal-price">18 500 ₽</span
+                ><button class="btn-details">Подробнее</button>
+              </div>
+            </div>
+          </div>
+          <div class="animal-card">
+            <div class="animal-img bird">
+              <span class="status-badge status-available">Доступно</span>🦜
+            </div>
+            <div class="animal-body">
+              <div class="animal-species">Птицы</div>
+              <div class="animal-name">Какаду молуккский</div>
+              <div class="animal-meta">
+                <span>♀ Самка</span><span>· 2 года</span><span>· CITES</span>
+              </div>
+              <div class="animal-footer">
+                <span class="animal-price">45 000 ₽</span
+                ><button class="btn-details">Подробнее</button>
+              </div>
+            </div>
+          </div>
+          <div class="animal-card">
+            <div class="animal-img insect">
+              <span class="status-badge status-quarantine">Карантин</span>🦋
+            </div>
+            <div class="animal-body">
+              <div class="animal-species">Насекомые</div>
+              <div class="animal-name">Палочник листовидный</div>
+              <div class="animal-meta">
+                <span>♀ Самка</span><span>· 3 мес.</span>
+              </div>
+              <div class="animal-footer">
+                <span class="animal-price">3 200 ₽</span
+                ><button class="btn-details">Подробнее</button>
+              </div>
+            </div>
+          </div>
+          <div class="animal-card">
+            <div class="animal-img amphibian">
+              <span class="status-badge status-available">Доступно</span>🐸
+            </div>
+            <div class="animal-body">
+              <div class="animal-species">Амфибии</div>
+              <div class="animal-name">Лягушка-пакман</div>
+              <div class="animal-meta">
+                <span>Пол не определён</span><span>· 5 мес.</span>
+              </div>
+              <div class="animal-footer">
+                <span class="animal-price">4 800 ₽</span
+                ><button class="btn-details">Подробнее</button>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- экран 2: публичный каталог -->
+    <div class="screen" id="screen-pub-catalog">
+      <nav class="pub-navbar">
+        <div class="pub-logo"><span class="leaf">🌿</span> ExoticPets</div>
+        <div class="pub-nav-links">
+          <a href="#">Главная</a>
+          <a href="#" class="active">Каталог</a>
+          <a href="#">О нас</a>
+          <a href="#">Контакты</a>
+        </div>
+        <div class="pub-nav-right">
+          <button class="btn-login" onclick="showScreen('admin-login')">
+            Войти в систему
+          </button>
+        </div>
+      </nav>
+      <div class="pub-section">
+        <div class="section-label">Каталог</div>
+        <div class="section-title">Все животные</div>
+        <div class="catalog-controls">
+          <input
+            class="catalog-search"
+            type="text"
+            placeholder="🔍 Поиск по виду или кличке..."
+          />
+          <select class="catalog-select">
+            <option>Все классы</option>
+            <option>Рептилии</option>
+            <option>Птицы</option>
+            <option>Амфибии</option>
+            <option>Насекомые</option>
+            <option>Млекопитающие</option>
+          </select>
+          <select class="catalog-select">
+            <option>Все статусы</option>
+            <option>Доступно</option>
+            <option>Карантин</option>
+          </select>
+          <select class="catalog-select">
+            <option>Сортировка: По умолчанию</option>
+            <option>Цена ↑</option>
+            <option>Цена ↓</option>
+            <option>Новые первые</option>
+          </select>
+        </div>
+        <div class="animals-grid">
+          <div class="animal-card">
+            <div class="animal-img reptile">
+              <span class="status-badge status-available">Доступно</span>🦎
+            </div>
+            <div class="animal-body">
+              <div class="animal-species">Рептилии</div>
+              <div class="animal-name">Пантеровый хамелеон</div>
+              <div class="animal-meta"><span>♂</span><span>· 8 мес.</span></div>
+              <div class="animal-footer">
+                <span class="animal-price">18 500 ₽</span
+                ><button class="btn-details">Подробнее</button>
+              </div>
+            </div>
+          </div>
+          <div class="animal-card">
+            <div class="animal-img bird">
+              <span class="status-badge status-available">Доступно</span>🦜
+            </div>
+            <div class="animal-body">
+              <div class="animal-species">Птицы</div>
+              <div class="animal-name">Какаду молуккский</div>
+              <div class="animal-meta"><span>♀</span><span>· 2 года</span></div>
+              <div class="animal-footer">
+                <span class="animal-price">45 000 ₽</span
+                ><button class="btn-details">Подробнее</button>
+              </div>
+            </div>
+          </div>
+          <div class="animal-card">
+            <div class="animal-img reptile">
+              <span class="status-badge status-available">Доступно</span>🐊
+            </div>
+            <div class="animal-body">
+              <div class="animal-species">Рептилии</div>
+              <div class="animal-name">Бородатая агама</div>
+              <div class="animal-meta"><span>♂</span><span>· 1 год</span></div>
+              <div class="animal-footer">
+                <span class="animal-price">7 200 ₽</span
+                ><button class="btn-details">Подробнее</button>
+              </div>
+            </div>
+          </div>
+          <div class="animal-card">
+            <div class="animal-img amphibian">
+              <span class="status-badge status-available">Доступно</span>🐸
+            </div>
+            <div class="animal-body">
+              <div class="animal-species">Амфибии</div>
+              <div class="animal-name">Лягушка-пакман</div>
+              <div class="animal-meta"><span>—</span><span>· 5 мес.</span></div>
+              <div class="animal-footer">
+                <span class="animal-price">4 800 ₽</span
+                ><button class="btn-details">Подробнее</button>
+              </div>
+            </div>
+          </div>
+          <div class="animal-card">
+            <div class="animal-img insect">
+              <span class="status-badge status-quarantine">Карантин</span>🦋
+            </div>
+            <div class="animal-body">
+              <div class="animal-species">Насекомые</div>
+              <div class="animal-name">Палочник листовидный</div>
+              <div class="animal-meta"><span>♀</span><span>· 3 мес.</span></div>
+              <div class="animal-footer">
+                <span class="animal-price">3 200 ₽</span
+                ><button class="btn-details">Подробнее</button>
+              </div>
+            </div>
+          </div>
+          <div class="animal-card">
+            <div class="animal-img bird">
+              <span class="status-badge status-available">Доступно</span>🦅
+            </div>
+            <div class="animal-body">
+              <div class="animal-species">Птицы</div>
+              <div class="animal-name">Ара сине-золотой</div>
+              <div class="animal-meta"><span>♂</span><span>· 3 года</span></div>
+              <div class="animal-footer">
+                <span class="animal-price">62 000 ₽</span
+                ><button class="btn-details">Подробнее</button>
+              </div>
+            </div>
+          </div>
+          <div class="animal-card">
+            <div class="animal-img reptile">
+              <span class="status-badge status-available">Доступно</span>🦎
+            </div>
+            <div class="animal-body">
+              <div class="animal-species">Рептилии</div>
+              <div class="animal-name">Геккон токи</div>
+              <div class="animal-meta"><span>♂</span><span>· 6 мес.</span></div>
+              <div class="animal-footer">
+                <span class="animal-price">5 400 ₽</span
+                ><button class="btn-details">Подробнее</button>
+              </div>
+            </div>
+          </div>
+          <div class="animal-card">
+            <div class="animal-img insect">
+              <span class="status-badge status-available">Доступно</span>🕷️
+            </div>
+            <div class="animal-body">
+              <div class="animal-species">Паукообразные</div>
+              <div class="animal-name">Птицеед голиаф</div>
+              <div class="animal-meta"><span>♀</span><span>· 2 года</span></div>
+              <div class="animal-footer">
+                <span class="animal-price">8 900 ₽</span
+                ><button class="btn-details">Подробнее</button>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div style="display: flex; justify-content: center; margin-top: 32px">
+          <div class="pagination-pages">
+            <button class="page-btn active">1</button>
+            <button class="page-btn">2</button>
+            <button class="page-btn">3</button>
+            <button class="page-btn">→</button>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- экран 3: административная панель -->
+    <div class="screen" id="screen-admin-login">
+      <div class="login-page">
+        <div class="login-box">
+          <div class="login-logo">🌿 ExoticPets</div>
+          <div class="login-sub">Административная панель — вход</div>
+          <div class="form-group">
+            <label class="form-label">Email</label>
+            <input
+              class="form-input"
+              type="email"
+              value="admin@exoticpets.ru"
+            />
+          </div>
+          <div class="form-group">
+            <label class="form-label">Пароль</label>
+            <input class="form-input" type="password" value="••••••••" />
+          </div>
+          <div class="form-group">
+            <label class="form-label">Войти как</label>
+            <select class="form-select">
+              <option>Администратор</option>
+              <option>Продавец-консультант</option>
+              <option>Ветеринар</option>
+            </select>
+          </div>
+          <button class="btn-submit" onclick="showScreen('admin-dash')">
+            Войти в систему
+          </button>
+          <div class="login-hint">
+            Прототип — роли: <strong>Администратор</strong>, Продавец, Ветеринар
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- экран 4: дашборд для админа -->
+    <div class="screen" id="screen-admin-dash">
+      <div class="admin-shell">
+        <div class="sidebar" id="sidebar-dash">
+          <div class="sidebar-logo">🌿 ExoticPets</div>
+          <div class="sidebar-user">
+            <div class="sidebar-user-name">Иванова А.В.</div>
+            <span class="sidebar-user-role">Администратор</span>
+          </div>
+          <div class="sidebar-section">
+            <div class="sidebar-section-label">Меню</div>
+            <a class="sidebar-item active" onclick="showScreen('admin-dash')"
+              ><span class="icon">📊</span>Дашборд</a
+            >
+            <a class="sidebar-item" onclick="showScreen('admin-animals')"
+              ><span class="icon">🦎</span>Животные</a
+            >
+            <a class="sidebar-item" onclick="showScreen('admin-vet')"
+              ><span class="icon">💉</span>Ветеринария</a
+            >
+            <a class="sidebar-item" onclick="showScreen('admin-sales')"
+              ><span class="icon">💰</span>Продажи</a
+            >
+            <a class="sidebar-item" onclick="showScreen('admin-reports')"
+              ><span class="icon">📈</span>Отчёты</a
+            >
+          </div>
+          <div class="sidebar-section">
+            <div class="sidebar-section-label">Справочники</div>
+            <a class="sidebar-item"
+              ><span class="icon">🗂️</span>Виды животных</a
+            >
+            <a class="sidebar-item"><span class="icon">🚚</span>Поставщики</a>
+            <a class="sidebar-item"><span class="icon">🌾</span>Корма</a>
+            <a class="sidebar-item"><span class="icon">👥</span>Сотрудники</a>
+          </div>
+          <div class="sidebar-bottom">
+            <a class="sidebar-item" onclick="showScreen('admin-login')"
+              ><span class="icon">🚪</span>Выйти</a
+            >
+          </div>
+        </div>
+        <div class="admin-main">
+          <div class="admin-topbar">
+            <div class="topbar-title">Дашборд</div>
+            <div class="topbar-right">
+              <button class="topbar-icon" title="Уведомления">🔔</button>
+              <div class="topbar-avatar">АИ</div>
+            </div>
+          </div>
+          <div class="admin-content">
+            <div class="stats-row">
+              <div class="stat-card">
+                <div class="stat-icon">🦎</div>
+                <div class="stat-label">Всего животных</div>
+                <div class="stat-value">63</div>
+                <div class="stat-meta up">↑ +4 за неделю</div>
+              </div>
+              <div class="stat-card">
+                <div class="stat-icon">⚠️</div>
+                <div class="stat-label">На карантине</div>
+                <div class="stat-value">8</div>
+                <div class="stat-meta warn">Требует внимания</div>
+              </div>
+              <div class="stat-card">
+                <div class="stat-icon">✅</div>
+                <div class="stat-label">Продано в марте</div>
+                <div class="stat-value">12</div>
+                <div class="stat-meta up">↑ +3 к февралю</div>
+              </div>
+              <div class="stat-card">
+                <div class="stat-icon">💰</div>
+                <div class="stat-label">Выручка (март)</div>
+                <div class="stat-value">284k</div>
+                <div class="stat-meta up">↑ 18% к февралю</div>
+              </div>
+            </div>
+
+            <div class="dashboard-grid">
+              <div class="card">
+                <div class="card-title">Динамика продаж (февраль — март)</div>
+                <div class="mini-chart">
+                  <div class="bar-wrap">
+                    <div class="bar" style="height: 40%"></div>
+                    <div class="bar-label">01</div>
+                  </div>
+                  <div class="bar-wrap">
+                    <div class="bar" style="height: 60%"></div>
+                    <div class="bar-label">05</div>
+                  </div>
+                  <div class="bar-wrap">
+                    <div class="bar" style="height: 35%"></div>
+                    <div class="bar-label">09</div>
+                  </div>
+                  <div class="bar-wrap">
+                    <div class="bar" style="height: 75%"></div>
+                    <div class="bar-label">13</div>
+                  </div>
+                  <div class="bar-wrap">
+                    <div class="bar" style="height: 50%"></div>
+                    <div class="bar-label">17</div>
+                  </div>
+                  <div class="bar-wrap">
+                    <div class="bar" style="height: 85%"></div>
+                    <div class="bar-label">21</div>
+                  </div>
+                  <div class="bar-wrap">
+                    <div class="bar" style="height: 65%"></div>
+                    <div class="bar-label">25</div>
+                  </div>
+                  <div class="bar-wrap">
+                    <div
+                      class="bar"
+                      style="height: 90%"
+                      style="background: var(--sage)"
+                    ></div>
+                    <div class="bar-label">26</div>
+                  </div>
+                </div>
+              </div>
+              <div class="card">
+                <div class="card-title">Распределение по классам</div>
+                <div class="donut-wrap">
+                  <svg
+                    class="donut-svg"
+                    width="100"
+                    height="100"
+                    viewBox="0 0 100 100"
+                  >
+                    <circle
+                      cx="50"
+                      cy="50"
+                      r="38"
+                      fill="none"
+                      stroke="#f0ede8"
+                      stroke-width="14"
+                    />
+                    <circle
+                      cx="50"
+                      cy="50"
+                      r="38"
+                      fill="none"
+                      stroke="#2d4a2d"
+                      stroke-width="14"
+                      stroke-dasharray="90 149"
+                      stroke-dashoffset="0"
+                      transform="rotate(-90 50 50)"
+                    />
+                    <circle
+                      cx="50"
+                      cy="50"
+                      r="38"
+                      fill="none"
+                      stroke="#d4890a"
+                      stroke-width="14"
+                      stroke-dasharray="50 149"
+                      stroke-dashoffset="-90"
+                      transform="rotate(-90 50 50)"
+                    />
+                    <circle
+                      cx="50"
+                      cy="50"
+                      r="38"
+                      fill="none"
+                      stroke="#6aaa7a"
+                      stroke-width="14"
+                      stroke-dasharray="39 149"
+                      stroke-dashoffset="-140"
+                      transform="rotate(-90 50 50)"
+                    />
+                  </svg>
+                  <div class="donut-legend">
+                    <div class="legend-item">
+                      <div class="legend-dot" style="background: #2d4a2d"></div>
+                      Рептилии — 38%
+                    </div>
+                    <div class="legend-item">
+                      <div class="legend-dot" style="background: #d4890a"></div>
+                      Птицы — 21%
+                    </div>
+                    <div class="legend-item">
+                      <div class="legend-dot" style="background: #6aaa7a"></div>
+                      Амфибии — 17%
+                    </div>
+                    <div class="legend-item">
+                      <div class="legend-dot" style="background: #e8e0d4"></div>
+                      Прочие — 24%
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <div class="card">
+              <div class="card-title">Последние продажи</div>
+              <table class="data-table">
+                <thead>
+                  <tr>
+                    <th>№ договора</th>
+                    <th>Животное</th>
+                    <th>Клиент</th>
+                    <th>Продавец</th>
+                    <th>Дата</th>
+                    <th>Сумма</th>
+                    <th>Оплата</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr>
+                    <td>ДКП-2026-044</td>
+                    <td>🦜 Какаду молуккский</td>
+                    <td>Петров И.С.</td>
+                    <td>Соколова М.</td>
+                    <td>26.03.2026</td>
+                    <td><strong>45 000 ₽</strong></td>
+                    <td><span class="pill pill-green">Карта</span></td>
+                  </tr>
+                  <tr>
+                    <td>ДКП-2026-043</td>
+                    <td>🦎 Хамелеон Джексона</td>
+                    <td>Смирнова Л.А.</td>
+                    <td>Соколова М.</td>
+                    <td>25.03.2026</td>
+                    <td><strong>22 000 ₽</strong></td>
+                    <td><span class="pill pill-green">Карта</span></td>
+                  </tr>
+                  <tr>
+                    <td>ДКП-2026-042</td>
+                    <td>🐸 Древолаз</td>
+                    <td>Козлов Р.В.</td>
+                    <td>Орлов Д.</td>
+                    <td>24.03.2026</td>
+                    <td><strong>9 500 ₽</strong></td>
+                    <td><span class="pill pill-amber">Наличные</span></td>
+                  </tr>
+                  <tr>
+                    <td>ДКП-2026-041</td>
+                    <td>🦅 Ара сине-золотой</td>
+                    <td>ООО «ЭкзоПарк»</td>
+                    <td>Соколова М.</td>
+                    <td>22.03.2026</td>
+                    <td><strong>62 000 ₽</strong></td>
+                    <td><span class="pill pill-grey">Перевод</span></td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- экран 5: список животных -->
+    <div class="screen" id="screen-admin-animals">
+      <div class="admin-shell">
+        <div class="sidebar">
+          <div class="sidebar-logo">🌿 ExoticPets</div>
+          <div class="sidebar-user">
+            <div class="sidebar-user-name">Иванова А.В.</div>
+            <span class="sidebar-user-role">Администратор</span>
+          </div>
+          <div class="sidebar-section">
+            <div class="sidebar-section-label">Меню</div>
+            <a class="sidebar-item" onclick="showScreen('admin-dash')"
+              ><span class="icon">📊</span>Дашборд</a
+            >
+            <a class="sidebar-item active" onclick="showScreen('admin-animals')"
+              ><span class="icon">🦎</span>Животные</a
+            >
+            <a class="sidebar-item" onclick="showScreen('admin-vet')"
+              ><span class="icon">💉</span>Ветеринария</a
+            >
+            <a class="sidebar-item" onclick="showScreen('admin-sales')"
+              ><span class="icon">💰</span>Продажи</a
+            >
+            <a class="sidebar-item" onclick="showScreen('admin-reports')"
+              ><span class="icon">📈</span>Отчёты</a
+            >
+          </div>
+          <div class="sidebar-section">
+            <div class="sidebar-section-label">Справочники</div>
+            <a class="sidebar-item"
+              ><span class="icon">🗂️</span>Виды животных</a
+            >
+            <a class="sidebar-item"><span class="icon">🚚</span>Поставщики</a>
+            <a class="sidebar-item"><span class="icon">🌾</span>Корма</a>
+            <a class="sidebar-item"><span class="icon">👥</span>Сотрудники</a>
+          </div>
+          <div class="sidebar-bottom">
+            <a class="sidebar-item" onclick="showScreen('admin-login')"
+              ><span class="icon">🚪</span>Выйти</a
+            >
+          </div>
+        </div>
+        <div class="admin-main">
+          <div class="admin-topbar">
+            <div class="topbar-title">Животные</div>
+            <div class="topbar-right"><div class="topbar-avatar">АИ</div></div>
+          </div>
+          <div class="admin-content">
+            <div class="page-toolbar">
+              <div class="toolbar-left">
+                <input
+                  class="admin-input"
+                  type="text"
+                  placeholder="🔍 Поиск..."
+                />
+                <select class="admin-input" style="cursor: pointer">
+                  <option>Все статусы</option>
+                  <option>На продажу</option>
+                  <option>Карантин</option>
+                  <option>Продано</option>
+                  <option>Списано</option>
+                </select>
+                <select class="admin-input" style="cursor: pointer">
+                  <option>Все классы</option>
+                  <option>Рептилии</option>
+                  <option>Птицы</option>
+                  <option>Амфибии</option>
+                  <option>Насекомые</option>
+                </select>
+              </div>
+              <button class="btn-green" onclick="openModal()">
+                ＋ Добавить животное
+              </button>
+            </div>
+            <div class="table-card">
+              <table class="data-table">
+                <thead>
+                  <tr>
+                    <th>ID</th>
+                    <th>Животное</th>
+                    <th>Вид</th>
+                    <th>Пол</th>
+                    <th>Возраст</th>
+                    <th>Поступление</th>
+                    <th>Статус</th>
+                    <th>Цена</th>
+                    <th>Действия</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr>
+                    <td style="color: var(--smoke); font-size: 12px">#001</td>
+                    <td>
+                      <div class="animal-row-info">
+                        <div class="animal-row-img reptile">🦎</div>
+                        <div>
+                          <div style="font-weight: 600">Чак</div>
+                          <div style="font-size: 11px; color: var(--smoke)">
+                            Пантеровый хамелеон
+                          </div>
+                        </div>
+                      </div>
+                    </td>
+                    <td>Рептилии</td>
+                    <td>♂</td>
+                    <td>8 мес.</td>
+                    <td>12.03.2026</td>
+                    <td><span class="pill pill-green">На продажу</span></td>
+                    <td style="font-weight: 600">18 500 ₽</td>
+                    <td style="display: flex; gap: 6px; padding-top: 14px">
+                      <button class="btn-sm">👁 Просмотр</button
+                      ><button class="btn-sm">✏️ Изм.</button
+                      ><button class="btn-sm btn-sm-danger">🗑</button>
+                    </td>
+                  </tr>
+                  <tr>
+                    <td style="color: var(--smoke); font-size: 12px">#002</td>
+                    <td>
+                      <div class="animal-row-info">
+                        <div class="animal-row-img bird">🦜</div>
+                        <div>
+                          <div style="font-weight: 600">Манго</div>
+                          <div style="font-size: 11px; color: var(--smoke)">
+                            Какаду молуккский
+                          </div>
+                        </div>
+                      </div>
+                    </td>
+                    <td>Птицы</td>
+                    <td>♀</td>
+                    <td>2 года</td>
+                    <td>05.03.2026</td>
+                    <td><span class="pill pill-green">На продажу</span></td>
+                    <td style="font-weight: 600">45 000 ₽</td>
+                    <td style="display: flex; gap: 6px; padding-top: 14px">
+                      <button class="btn-sm">👁 Просмотр</button
+                      ><button class="btn-sm">✏️ Изм.</button
+                      ><button class="btn-sm btn-sm-danger">🗑</button>
+                    </td>
+                  </tr>
+                  <tr>
+                    <td style="color: var(--smoke); font-size: 12px">#003</td>
+                    <td>
+                      <div class="animal-row-info">
+                        <div class="animal-row-img insect">🦋</div>
+                        <div>
+                          <div style="font-weight: 600">Лист №3</div>
+                          <div style="font-size: 11px; color: var(--smoke)">
+                            Палочник листовидный
+                          </div>
+                        </div>
+                      </div>
+                    </td>
+                    <td>Насекомые</td>
+                    <td>♀</td>
+                    <td>3 мес.</td>
+                    <td>20.03.2026</td>
+                    <td><span class="pill pill-amber">Карантин</span></td>
+                    <td style="font-weight: 600">3 200 ₽</td>
+                    <td style="display: flex; gap: 6px; padding-top: 14px">
+                      <button class="btn-sm">👁 Просмотр</button
+                      ><button class="btn-sm">✏️ Изм.</button
+                      ><button class="btn-sm btn-sm-danger">🗑</button>
+                    </td>
+                  </tr>
+                  <tr>
+                    <td style="color: var(--smoke); font-size: 12px">#004</td>
+                    <td>
+                      <div class="animal-row-info">
+                        <div class="animal-row-img amphibian">🐸</div>
+                        <div>
+                          <div style="font-weight: 600">Пуговица</div>
+                          <div style="font-size: 11px; color: var(--smoke)">
+                            Лягушка-пакман
+                          </div>
+                        </div>
+                      </div>
+                    </td>
+                    <td>Амфибии</td>
+                    <td>—</td>
+                    <td>5 мес.</td>
+                    <td>01.03.2026</td>
+                    <td><span class="pill pill-green">На продажу</span></td>
+                    <td style="font-weight: 600">4 800 ₽</td>
+                    <td style="display: flex; gap: 6px; padding-top: 14px">
+                      <button class="btn-sm">👁 Просмотр</button
+                      ><button class="btn-sm">✏️ Изм.</button
+                      ><button class="btn-sm btn-sm-danger">🗑</button>
+                    </td>
+                  </tr>
+                  <tr>
+                    <td style="color: var(--smoke); font-size: 12px">#005</td>
+                    <td>
+                      <div class="animal-row-info">
+                        <div class="animal-row-img reptile">🦅</div>
+                        <div>
+                          <div style="font-weight: 600">Синяя звезда</div>
+                          <div style="font-size: 11px; color: var(--smoke)">
+                            Ара сине-золотой
+                          </div>
+                        </div>
+                      </div>
+                    </td>
+                    <td>Птицы</td>
+                    <td>♂</td>
+                    <td>3 года</td>
+                    <td>15.02.2026</td>
+                    <td><span class="pill pill-grey">Продано</span></td>
+                    <td style="font-weight: 600; color: var(--smoke)">
+                      62 000 ₽
+                    </td>
+                    <td style="display: flex; gap: 6px; padding-top: 14px">
+                      <button class="btn-sm">👁 Просмотр</button>
+                    </td>
+                  </tr>
+                </tbody>
+              </table>
+              <div class="pagination">
+                <span class="pagination-info">Показаны 1–5 из 63 записей</span>
+                <div class="pagination-pages">
+                  <button class="page-btn active">1</button>
+                  <button class="page-btn">2</button>
+                  <button class="page-btn">3</button>
+                  <button class="page-btn">…</button>
+                  <button class="page-btn">13</button>
+                  <button class="page-btn">→</button>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- экран 6: ветеринария -->
+    <div class="screen" id="screen-admin-vet">
+      <div class="admin-shell">
+        <div class="sidebar">
+          <div class="sidebar-logo">🌿 ExoticPets</div>
+          <div class="sidebar-user">
+            <div class="sidebar-user-name">Карпова Е.Ю.</div>
+            <span class="sidebar-user-role">Ветеринар</span>
+          </div>
+          <div class="sidebar-section">
+            <div class="sidebar-section-label">Меню</div>
+            <a class="sidebar-item" onclick="showScreen('admin-dash')"
+              ><span class="icon">📊</span>Дашборд</a
+            >
+            <a class="sidebar-item" onclick="showScreen('admin-animals')"
+              ><span class="icon">🦎</span>Животные</a
+            >
+            <a class="sidebar-item active" onclick="showScreen('admin-vet')"
+              ><span class="icon">💉</span>Ветеринария</a
+            >
+            <a class="sidebar-item" style="opacity: 0.35; pointer-events: none"
+              ><span class="icon">💰</span>Продажи</a
+            >
+            <a class="sidebar-item" style="opacity: 0.35; pointer-events: none"
+              ><span class="icon">📈</span>Отчёты</a
+            >
+          </div>
+          <div class="sidebar-section">
+            <div class="sidebar-section-label">Справочники</div>
+            <a class="sidebar-item"><span class="icon">🌾</span>Корма</a>
+          </div>
+          <div class="sidebar-bottom">
+            <a class="sidebar-item" onclick="showScreen('admin-login')"
+              ><span class="icon">🚪</span>Выйти</a
+            >
+          </div>
+        </div>
+        <div class="admin-main">
+          <div class="admin-topbar">
+            <div class="topbar-title">Ветеринарный контроль</div>
+            <div class="topbar-right"><div class="topbar-avatar">КЕ</div></div>
+          </div>
+          <div class="admin-content">
+            <div class="alert-banner">
+              ⚠️ <strong>3 животных</strong> ожидают карантинного осмотра:
+              Палочник листовидный, Гекконы (2 ос.), срок — до 03.04.2026
+            </div>
+            <div class="vet-grid">
+              <div class="card">
+                <div class="card-title">Добавить ветеринарную запись</div>
+                <div class="form-group">
+                  <label class="form-label">Животное</label>
+                  <select class="form-select">
+                    <option>Чак (Пантеровый хамелеон, #001)</option>
+                    <option>Лист №3 (Палочник, #003) ★ Карантин</option>
+                    <option>Пуговица (Лягушка-пакман, #004)</option>
+                  </select>
+                </div>
+                <div class="form-row">
+                  <div class="form-group">
+                    <label class="form-label">Дата</label>
+                    <input class="form-input" type="date" value="2026-03-26" />
+                  </div>
+                  <div class="form-group">
+                    <label class="form-label">Тип мероприятия</label>
+                    <select class="form-select">
+                      <option>Осмотр</option>
+                      <option>Прививка</option>
+                      <option>Лечение</option>
+                    </select>
+                  </div>
+                </div>
+                <div class="form-group">
+                  <label class="form-label">Диагноз / Наблюдение</label>
+                  <textarea
+                    class="form-textarea"
+                    placeholder="Введите диагноз или наблюдения..."
+                  ></textarea>
+                </div>
+                <div class="form-group">
+                  <label class="form-label">Назначения / Лечение</label>
+                  <textarea
+                    class="form-textarea"
+                    placeholder="Укажите назначенные процедуры..."
+                  ></textarea>
+                </div>
+                <div class="form-group">
+                  <label class="form-label">Результат</label>
+                  <select class="form-select">
+                    <option>Здоров</option>
+                    <option>На лечении</option>
+                    <option>Продолжить карантин</option>
+                  </select>
+                </div>
+                <div style="display: flex; gap: 10px">
+                  <button
+                    class="btn-green"
+                    style="flex: 1"
+                    onclick="showToast('Запись сохранена')"
+                  >
+                    Сохранить запись
+                  </button>
+                  <button
+                    style="
+                      padding: 9px 16px;
+                      background: #e8f5e8;
+                      border: none;
+                      border-radius: 8px;
+                      font-size: 13px;
+                      font-weight: 600;
+                      color: #2d7a2d;
+                      cursor: pointer;
+                    "
+                    onclick="showToast('Статус изменён: Карантин → На продажу')"
+                  >
+                    ✅ Снять карантин
+                  </button>
+                </div>
+              </div>
+              <div>
+                <div class="card" style="margin-bottom: 20px">
+                  <div class="card-title">Журнал кормления</div>
+                  <div class="form-group">
+                    <label class="form-label">Животное</label>
+                    <select class="form-select">
+                      <option>Чак (#001)</option>
+                      <option>Манго (#002)</option>
+                      <option>Пуговица (#004)</option>
+                    </select>
+                  </div>
+                  <div class="form-row">
+                    <div class="form-group">
+                      <label class="form-label">Корм</label>
+                      <select class="form-select">
+                        <option>Сверчки живые</option>
+                        <option>Мотыль мороженый</option>
+                        <option>Гранулы рептилий</option>
+                      </select>
+                    </div>
+                    <div class="form-group">
+                      <label class="form-label">Количество (г/шт)</label>
+                      <input class="form-input" type="number" value="15" />
+                    </div>
+                  </div>
+                  <button
+                    class="btn-green"
+                    style="width: 100%"
+                    onclick="showToast('Кормление зарегистрировано')"
+                  >
+                    Записать кормление
+                  </button>
+                </div>
+                <div class="card">
+                  <div class="card-title">Последние записи</div>
+                  <table class="data-table">
+                    <thead>
+                      <tr>
+                        <th>Животное</th>
+                        <th>Тип</th>
+                        <th>Дата</th>
+                        <th>Рез.</th>
+                      </tr>
+                    </thead>
+                    <tbody>
+                      <tr>
+                        <td>🦎 Чак</td>
+                        <td>Осмотр</td>
+                        <td>20.03</td>
+                        <td><span class="pill pill-green">Здоров</span></td>
+                      </tr>
+                      <tr>
+                        <td>🦜 Манго</td>
+                        <td>Прививка</td>
+                        <td>18.03</td>
+                        <td><span class="pill pill-green">Здоров</span></td>
+                      </tr>
+                      <tr>
+                        <td>🦋 Лист №3</td>
+                        <td>Осмотр</td>
+                        <td>21.03</td>
+                        <td><span class="pill pill-amber">Карантин</span></td>
+                      </tr>
+                      <tr>
+                        <td>🐸 Пуговица</td>
+                        <td>Осмотр</td>
+                        <td>15.03</td>
+                        <td><span class="pill pill-green">Здоров</span></td>
+                      </tr>
+                    </tbody>
+                  </table>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- экран 7: продажи -->
+    <div class="screen" id="screen-admin-sales">
+      <div class="admin-shell">
+        <div class="sidebar">
+          <div class="sidebar-logo">🌿 ExoticPets</div>
+          <div class="sidebar-user">
+            <div class="sidebar-user-name">Соколова М.Д.</div>
+            <span class="sidebar-user-role">Продавец</span>
+          </div>
+          <div class="sidebar-section">
+            <div class="sidebar-section-label">Меню</div>
+            <a class="sidebar-item" onclick="showScreen('admin-dash')"
+              ><span class="icon">📊</span>Дашборд</a
+            >
+            <a class="sidebar-item" onclick="showScreen('admin-animals')"
+              ><span class="icon">🦎</span>Животные</a
+            >
+            <a class="sidebar-item" style="opacity: 0.35; pointer-events: none"
+              ><span class="icon">💉</span>Ветеринария</a
+            >
+            <a class="sidebar-item active" onclick="showScreen('admin-sales')"
+              ><span class="icon">💰</span>Продажи</a
+            >
+            <a class="sidebar-item" style="opacity: 0.35; pointer-events: none"
+              ><span class="icon">📈</span>Отчёты</a
+            >
+          </div>
+          <div class="sidebar-section">
+            <div class="sidebar-section-label">Клиенты</div>
+            <a class="sidebar-item"
+              ><span class="icon">👤</span>База клиентов</a
+            >
+          </div>
+          <div class="sidebar-bottom">
+            <a class="sidebar-item" onclick="showScreen('admin-login')"
+              ><span class="icon">🚪</span>Выйти</a
+            >
+          </div>
+        </div>
+        <div class="admin-main">
+          <div class="admin-topbar">
+            <div class="topbar-title">Оформление продажи</div>
+            <div class="topbar-right"><div class="topbar-avatar">СМ</div></div>
+          </div>
+          <div class="admin-content">
+            <div
+              style="display: grid; grid-template-columns: 1.4fr 1fr; gap: 24px"
+            >
+              <div>
+                <div class="card" style="margin-bottom: 20px">
+                  <div class="card-title">Новая сделка</div>
+                  <div class="form-group">
+                    <label class="form-label"
+                      >Животное (только доступные)</label
+                    >
+                    <select class="form-select">
+                      <option>🦎 Чак — Пантеровый хамелеон (18 500 ₽)</option>
+                      <option>🦜 Манго — Какаду молуккский (45 000 ₽)</option>
+                      <option>🐸 Пуговица — Лягушка-пакман (4 800 ₽)</option>
+                      <option>🦎 Берта — Бородатая агама (7 200 ₽)</option>
+                    </select>
+                  </div>
+                  <div class="form-row">
+                    <div class="form-group">
+                      <label class="form-label">Клиент</label>
+                      <select class="form-select">
+                        <option>Петров И.С.</option>
+                        <option>Смирнова Л.А.</option>
+                        <option>+ Новый клиент</option>
+                      </select>
+                    </div>
+                    <div class="form-group">
+                      <label class="form-label">Способ оплаты</label>
+                      <select class="form-select">
+                        <option>Банковская карта</option>
+                        <option>Наличные</option>
+                        <option>Перевод</option>
+                      </select>
+                    </div>
+                  </div>
+                  <div class="form-group">
+                    <label class="form-label">Номер договора</label>
+                    <input
+                      class="form-input"
+                      type="text"
+                      value="ДКП-2026-045"
+                    />
+                  </div>
+                  <button
+                    class="btn-submit"
+                    onclick="
+                      showToast(
+                        '✅ Продажа оформлена! Статус животного изменён на «Продано»',
+                      )
+                    "
+                  >
+                    Оформить продажу
+                  </button>
+                </div>
+                <div class="card">
+                  <div class="card-title">История продаж</div>
+                  <table class="data-table">
+                    <thead>
+                      <tr>
+                        <th>Договор</th>
+                        <th>Животное</th>
+                        <th>Клиент</th>
+                        <th>Дата</th>
+                        <th>Сумма</th>
+                      </tr>
+                    </thead>
+                    <tbody>
+                      <tr>
+                        <td>ДКП-044</td>
+                        <td>🦜 Какаду</td>
+                        <td>Петров И.</td>
+                        <td>26.03</td>
+                        <td style="font-weight: 600">45 000 ₽</td>
+                      </tr>
+                      <tr>
+                        <td>ДКП-043</td>
+                        <td>🦎 Хамелеон</td>
+                        <td>Смирнова Л.</td>
+                        <td>25.03</td>
+                        <td style="font-weight: 600">22 000 ₽</td>
+                      </tr>
+                      <tr>
+                        <td>ДКП-042</td>
+                        <td>🐸 Древолаз</td>
+                        <td>Козлов Р.</td>
+                        <td>24.03</td>
+                        <td style="font-weight: 600">9 500 ₽</td>
+                      </tr>
+                    </tbody>
+                  </table>
+                </div>
+              </div>
+              <div>
+                <div class="card">
+                  <div class="card-title">Итог сделки</div>
+                  <div class="sale-summary">
+                    <div class="sale-summary-row">
+                      <span class="sale-summary-label">Животное</span
+                      ><span>Чак (Хамелеон)</span>
+                    </div>
+                    <div class="sale-summary-row">
+                      <span class="sale-summary-label">Клиент</span
+                      ><span>Петров И.С.</span>
+                    </div>
+                    <div class="sale-summary-row">
+                      <span class="sale-summary-label">Закупочная цена</span
+                      ><span>12 000 ₽</span>
+                    </div>
+                    <div class="sale-summary-row">
+                      <span class="sale-summary-label">Цена продажи</span
+                      ><span>18 500 ₽</span>
+                    </div>
+                    <div class="sale-summary-row">
+                      <span class="sale-summary-label">Маржа</span
+                      ><span style="color: var(--sage)">+6 500 ₽</span>
+                    </div>
+                    <div class="sale-summary-row">
+                      <span>Итого к оплате</span><span>18 500 ₽</span>
+                    </div>
+                  </div>
+                  <div style="margin-top: 16px; display: flex; gap: 10px">
+                    <button
+                      style="
+                        flex: 1;
+                        padding: 10px;
+                        background: #f0ede8;
+                        border: none;
+                        border-radius: 8px;
+                        font-size: 13px;
+                        font-weight: 600;
+                        cursor: pointer;
+                      "
+                    >
+                      🖨 Чек
+                    </button>
+                    <button
+                      style="
+                        flex: 1;
+                        padding: 10px;
+                        background: #f0ede8;
+                        border: none;
+                        border-radius: 8px;
+                        font-size: 13px;
+                        font-weight: 600;
+                        cursor: pointer;
+                      "
+                    >
+                      📄 Договор
+                    </button>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- экран 8: отчёты -->
+    <div class="screen" id="screen-admin-reports">
+      <div class="admin-shell">
+        <div class="sidebar">
+          <div class="sidebar-logo">🌿 ExoticPets</div>
+          <div class="sidebar-user">
+            <div class="sidebar-user-name">Иванова А.В.</div>
+            <span class="sidebar-user-role">Администратор</span>
+          </div>
+          <div class="sidebar-section">
+            <div class="sidebar-section-label">Меню</div>
+            <a class="sidebar-item" onclick="showScreen('admin-dash')"
+              ><span class="icon">📊</span>Дашборд</a
+            >
+            <a class="sidebar-item" onclick="showScreen('admin-animals')"
+              ><span class="icon">🦎</span>Животные</a
+            >
+            <a class="sidebar-item" onclick="showScreen('admin-vet')"
+              ><span class="icon">💉</span>Ветеринария</a
+            >
+            <a class="sidebar-item" onclick="showScreen('admin-sales')"
+              ><span class="icon">💰</span>Продажи</a
+            >
+            <a class="sidebar-item active" onclick="showScreen('admin-reports')"
+              ><span class="icon">📈</span>Отчёты</a
+            >
+          </div>
+          <div class="sidebar-bottom">
+            <a class="sidebar-item" onclick="showScreen('admin-login')"
+              ><span class="icon">🚪</span>Выйти</a
+            >
+          </div>
+        </div>
+        <div class="admin-main">
+          <div class="admin-topbar">
+            <div class="topbar-title">Аналитика и отчёты</div>
+            <div class="topbar-right"><div class="topbar-avatar">АИ</div></div>
+          </div>
+          <div class="admin-content">
+            <div class="report-filters">
+              <div class="form-group">
+                <label class="form-label">Тип отчёта</label>
+                <select class="form-select">
+                  <option>Отчёт по продажам</option>
+                  <option>Остатки по видам</option>
+                  <option>Ветеринарные записи</option>
+                  <option>Оборачиваемость</option>
+                </select>
+              </div>
+              <div class="form-group">
+                <label class="form-label">Период с</label>
+                <input class="form-input" type="date" value="2026-03-01" />
+              </div>
+              <div class="form-group">
+                <label class="form-label">По</label>
+                <input class="form-input" type="date" value="2026-03-26" />
+              </div>
+              <div class="form-group">
+                <label class="form-label">Группировка</label>
+                <select class="form-select">
+                  <option>По видам</option>
+                  <option>По сотрудникам</option>
+                  <option>По месяцам</option>
+                </select>
+              </div>
+              <div
+                style="
+                  display: flex;
+                  gap: 8px;
+                  align-items: flex-end;
+                  padding-bottom: 1px;
+                "
+              >
+                <button
+                  class="btn-green"
+                  onclick="showToast('Отчёт сформирован')"
+                >
+                  Сформировать
+                </button>
+                <button
+                  style="
+                    padding: 9px 16px;
+                    background: #e8f5e8;
+                    border: 1.5px solid var(--fern);
+                    color: var(--sage);
+                    border-radius: 8px;
+                    font-size: 13px;
+                    font-weight: 600;
+                    cursor: pointer;
+                  "
+                >
+                  ⬇ CSV
+                </button>
+              </div>
+            </div>
+
+            <div
+              style="
+                display: grid;
+                grid-template-columns: repeat(3, 1fr);
+                gap: 16px;
+                margin-bottom: 24px;
+              "
+            >
+              <div class="stat-card">
+                <div class="stat-label">Продаж за период</div>
+                <div class="stat-value" style="font-size: 28px">12</div>
+                <div class="stat-meta up">↑ +3 к предыдущему</div>
+              </div>
+              <div class="stat-card">
+                <div class="stat-label">Выручка</div>
+                <div class="stat-value" style="font-size: 28px">284 200 ₽</div>
+                <div class="stat-meta up">↑ +18%</div>
+              </div>
+              <div class="stat-card">
+                <div class="stat-label">Средний чек</div>
+                <div class="stat-value" style="font-size: 28px">23 700 ₽</div>
+                <div class="stat-meta up">↑ +1 200 ₽</div>
+              </div>
+            </div>
+
+            <div class="table-card">
+              <div
+                style="
+                  padding: 20px 24px 0;
+                  display: flex;
+                  justify-content: space-between;
+                  align-items: center;
+                "
+              >
+                <div class="card-title" style="margin-bottom: 0">
+                  Продажи по видам — март 2026
+                </div>
+              </div>
+              <table class="data-table">
+                <thead>
+                  <tr>
+                    <th>Класс / Вид</th>
+                    <th>Кол-во продаж</th>
+                    <th>Выручка</th>
+                    <th>Доля</th>
+                    <th>Ср. цена</th>
+                    <th>Попул.</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr>
+                    <td><strong>🦜 Птицы</strong></td>
+                    <td>4</td>
+                    <td style="font-weight: 600">142 000 ₽</td>
+                    <td>
+                      <div style="display: flex; align-items: center; gap: 8px">
+                        <div
+                          style="
+                            background: #2d4a2d;
+                            height: 8px;
+                            border-radius: 4px;
+                            width: 50px;
+                          "
+                        ></div>
+                        50%
+                      </div>
+                    </td>
+                    <td>35 500 ₽</td>
+                    <td>⭐⭐⭐</td>
+                  </tr>
+                  <tr>
+                    <td><strong>🦎 Рептилии</strong></td>
+                    <td>5</td>
+                    <td style="font-weight: 600">92 700 ₽</td>
+                    <td>
+                      <div style="display: flex; align-items: center; gap: 8px">
+                        <div
+                          style="
+                            background: #4a7c59;
+                            height: 8px;
+                            border-radius: 4px;
+                            width: 33px;
+                          "
+                        ></div>
+                        33%
+                      </div>
+                    </td>
+                    <td>18 540 ₽</td>
+                    <td>⭐⭐⭐</td>
+                  </tr>
+                  <tr>
+                    <td><strong>🐸 Амфибии</strong></td>
+                    <td>2</td>
+                    <td style="font-weight: 600">32 500 ₽</td>
+                    <td>
+                      <div style="display: flex; align-items: center; gap: 8px">
+                        <div
+                          style="
+                            background: #6aaa7a;
+                            height: 8px;
+                            border-radius: 4px;
+                            width: 12px;
+                          "
+                        ></div>
+                        11%
+                      </div>
+                    </td>
+                    <td>16 250 ₽</td>
+                    <td>⭐⭐</td>
+                  </tr>
+                  <tr>
+                    <td><strong>🦋 Насекомые</strong></td>
+                    <td>1</td>
+                    <td style="font-weight: 600">17 000 ₽</td>
+                    <td>
+                      <div style="display: flex; align-items: center; gap: 8px">
+                        <div
+                          style="
+                            background: #d4c8b8;
+                            height: 8px;
+                            border-radius: 4px;
+                            width: 6px;
+                          "
+                        ></div>
+                        6%
+                      </div>
+                    </td>
+                    <td>17 000 ₽</td>
+                    <td>⭐</td>
+                  </tr>
+                </tbody>
+              </table>
+              <div class="pagination">
+                <span class="pagination-info"
+                  >Итого: 12 продаж · 284 200 ₽</span
+                >
+                <button
+                  style="
+                    padding: 7px 18px;
+                    background: var(--forest);
+                    color: #fff;
+                    border: none;
+                    border-radius: 8px;
+                    font-size: 12px;
+                    font-weight: 600;
+                    cursor: pointer;
+                  "
+                  onclick="showToast('Экспорт в CSV...')"
+                >
+                  ⬇ Экспорт в Excel
+                </button>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- модал: добавление животного -->
+    <div class="modal-overlay" id="modal-add">
+      <div class="modal">
+        <button class="modal-close" onclick="closeModal()">✕</button>
+        <div class="modal-title">Добавить животное</div>
+        <div class="form-row">
+          <div class="form-group">
+            <label class="form-label">Вид животного</label>
+            <select class="form-select">
+              <option>Пантеровый хамелеон</option>
+              <option>Бородатая агама</option>
+              <option>Какаду молуккский</option>
+            </select>
+          </div>
+          <div class="form-group">
+            <label class="form-label">Поставщик</label>
+            <select class="form-select">
+              <option>ООО ЭкзоТорг</option>
+              <option>ИП Зверев А.А.</option>
+            </select>
+          </div>
+        </div>
+        <div class="form-row">
+          <div class="form-group">
+            <label class="form-label">Кличка</label>
+            <input class="form-input" type="text" placeholder="Необязательно" />
+          </div>
+          <div class="form-group">
+            <label class="form-label">Пол</label>
+            <select class="form-select">
+              <option>Самец</option>
+              <option>Самка</option>
+              <option>Не определён</option>
+            </select>
+          </div>
+        </div>
+        <div class="form-row">
+          <div class="form-group">
+            <label class="form-label">Дата рождения</label>
+            <input class="form-input" type="date" />
+          </div>
+          <div class="form-group">
+            <label class="form-label">Дата поступления</label>
+            <input class="form-input" type="date" value="2026-03-26" />
+          </div>
+        </div>
+        <div class="form-row">
+          <div class="form-group">
+            <label class="form-label">Закупочная цена (₽)</label>
+            <input class="form-input" type="number" placeholder="0" />
+          </div>
+          <div class="form-group">
+            <label class="form-label">Цена продажи (₽)</label>
+            <input class="form-input" type="number" placeholder="0" />
+          </div>
+        </div>
+        <div class="form-group">
+          <label class="form-label"
+            >Номер сертификата CITES (при наличии)</label
+          >
+          <input
+            class="form-input"
+            type="text"
+            placeholder="Например: RU-2026-00123"
+          />
+        </div>
+        <div class="modal-footer">
+          <button class="btn-cancel" onclick="closeModal()">Отмена</button>
+          <button
+            class="btn-green"
+            onclick="
+              closeModal();
+              showToast('Животное добавлено. Статус: Карантин');
+            "
+          >
+            Сохранить
+          </button>
+        </div>
+      </div>
+    </div>
+
+    <!-- тост-уведомления -->
+    <div class="toast-stack" id="toast-stack"></div>
+
+    <script>
+      function showScreen(id) {
+        document
+          .querySelectorAll(".screen")
+          .forEach((s) => s.classList.remove("active"));
+        document.getElementById("screen-" + id).classList.add("active");
+        document.querySelectorAll(".proto-btn").forEach((b, i) => {
+          const map = [
+            "pub-home",
+            "pub-catalog",
+            "admin-login",
+            "admin-dash",
+            "admin-animals",
+            "admin-vet",
+            "admin-sales",
+            "admin-reports",
+          ];
+          b.classList.toggle("active", map[i] === id);
+        });
+        window.scrollTo(0, 0);
+      }
+
+      function openModal() {
+        document.getElementById("modal-add").classList.add("open");
+      }
+      function closeModal() {
+        document.getElementById("modal-add").classList.remove("open");
+      }
+
+      function showToast(msg) {
+        const stack = document.getElementById("toast-stack");
+        const t = document.createElement("div");
+        t.className = "toast toast-success";
+        t.innerHTML = "✅ " + msg;
+        stack.appendChild(t);
+        setTimeout(() => t.remove(), 3500);
+      }
+
+      document
+        .getElementById("modal-add")
+        .addEventListener("click", function (e) {
+          if (e.target === this) closeModal();
+        });
+    </script>
+  </body>
+</html>
