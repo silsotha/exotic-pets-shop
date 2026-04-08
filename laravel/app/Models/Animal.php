@@ -21,12 +21,36 @@ class Animal extends Model
         'purchase_price',
         'sale_price',
         'cites_certificate',
+        'photo_url',
     ];
 
-    public function species()    { return $this->belongsTo(Species::class, 'species_id', 'species_id'); }
-    public function supplier()   { return $this->belongsTo(Supplier::class, 'supplier_id', 'supplier_id'); }
-    public function vetRecords() { return $this->hasMany(VetRecord::class, 'animal_id', 'animal_id'); }
-    public function sale()       { return $this->hasOne(Sale::class, 'animal_id', 'animal_id'); }
-    public function feedingLog() { return $this->hasMany(FeedingLog::class, 'animal_id', 'animal_id'); }
-    public function getRouteKeyName(): string { return 'animal_id'; }
+    protected $casts = [
+        'birth_date'   => 'date',
+        'arrival_date' => 'date',
+    ];
+
+    public function species()
+    {
+        return $this->belongsTo(Species::class, 'species_id', 'species_id');
+    }
+    public function supplier()
+    {
+        return $this->belongsTo(Supplier::class, 'supplier_id', 'supplier_id');
+    }
+    public function vetRecords()
+    {
+        return $this->hasMany(VetRecord::class, 'animal_id', 'animal_id');
+    }
+    public function sale()
+    {
+        return $this->hasOne(Sale::class, 'animal_id', 'animal_id');
+    }
+    public function feedingLog()
+    {
+        return $this->hasMany(FeedingLog::class, 'animal_id', 'animal_id');
+    }
+    public function getRouteKeyName(): string
+    {
+        return 'animal_id';
+    }
 }

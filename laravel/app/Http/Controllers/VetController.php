@@ -47,18 +47,17 @@ class VetController extends Controller
     public function store(Request $request)
     {
         $validated = $request->validate([
-            'animal_id'   => 'required|exists:animals,animal_id',
-            'vet_id'      => 'required|exists:employees,employee_id',
+            'animal_id' => 'required|exists:animals,animal_id',
+            'vet_id' => 'required|exists:employees,employee_id',
             'record_date' => 'required|date',
             'record_type' => 'required|in:осмотр,прививка,лечение',
-            'diagnosis'   => 'nullable|string',
-            'treatment'   => 'nullable|string',
-            'result'      => 'required|in:здоров,на лечении,карантин',
+            'diagnosis' => 'nullable|string',
+            'treatment' => 'nullable|string',
+            'result' => 'required|in:здоров,на лечении,карантин',
         ]);
 
         VetRecord::create($validated);
 
-        // если результат "здоров" и животное на карантине — предлагаем перевести
         $animal = Animal::find($validated['animal_id']);
         if ($validated['result'] === 'здоров' && $animal->status === 'карантин') {
             return redirect()->route('vet.index')
@@ -81,7 +80,7 @@ class VetController extends Controller
     public function edit(VetRecord $vet)
     {
         $animals = Animal::with('species')->orderBy('arrival_date', 'desc')->get();
-        $vets    = Employee::where('role', 'ветврач')->orderBy('full_name')->get();
+        $vets = Employee::where('role', 'ветврач')->orderBy('full_name')->get();
         return view('vet.edit', ['vetRecord' => $vet, 'animals' => $animals, 'vets' => $vets]);
     }
 
@@ -89,13 +88,13 @@ class VetController extends Controller
     public function update(Request $request, VetRecord $vet)
     {
         $validated = $request->validate([
-            'animal_id'   => 'required|exists:animals,animal_id',
-            'vet_id'      => 'required|exists:employees,employee_id',
+            'animal_id' => 'required|exists:animals,animal_id',
+            'vet_id' => 'required|exists:employees,employee_id',
             'record_date' => 'required|date',
             'record_type' => 'required|in:осмотр,прививка,лечение',
-            'diagnosis'   => 'nullable|string',
-            'treatment'   => 'nullable|string',
-            'result'      => 'required|in:здоров,на лечении,карантин',
+            'diagnosis' => 'nullable|string',
+            'treatment' => 'nullable|string',
+            'result' => 'required|in:здоров,на лечении,карантин',
         ]);
 
         $vet->update($validated);

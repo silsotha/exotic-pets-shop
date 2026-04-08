@@ -21,10 +21,10 @@ class ClientController extends Controller
     public function store(Request $request)
     {
         $validated = $request->validate([
-            'full_name'    => 'required|string|max:100',
-            'phone'        => 'nullable|string|max:20',
-            'email'        => 'nullable|email|max:100',
-            'passport_data'=> 'nullable|string|max:50',
+            'full_name' => 'required|string|max:100',
+            'phone' => 'nullable|string|max:20',
+            'email' => 'nullable|email|max:100',
+            'passport_data' => 'nullable|string|max:50',
         ]);
 
         $validated['registration_date'] = now()->toDateString();
@@ -42,17 +42,17 @@ class ClientController extends Controller
 
     public function edit(Client $client)
     {
-       $client->load(['sales.animal.species']);
+        $client->load(['sales.animal.species']);
         return view('clients.edit', compact('client'));
     }
 
     public function update(Request $request, Client $client)
     {
         $validated = $request->validate([
-            'full_name'    => 'required|string|max:100',
-            'phone'        => 'nullable|string|max:20',
-            'email'        => 'nullable|email|max:100',
-            'passport_data'=> 'nullable|string|max:50',
+            'full_name' => 'required|string|max:100',
+            'phone' => 'nullable|string|max:20',
+            'email' => 'nullable|email|max:100',
+            'passport_data' => 'nullable|string|max:50',
         ]);
 
         $client->update($validated);
@@ -61,6 +61,12 @@ class ClientController extends Controller
             ->with('success', 'Данные клиента обновлены.');
     }
 
-    public function show(Client $client) { abort(404); }
-    public function destroy(Client $client) { abort(404); }
+    public function show(Client $client)
+    {
+        abort(404);
+    }
+    public function destroy(Client $client)
+    {
+        abort(404);
+    }
 }

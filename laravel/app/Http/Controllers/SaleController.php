@@ -36,11 +36,11 @@ class SaleController extends Controller
     // форма оформления продажи
     public function create()
     {
-        $animals   = Animal::with('species')
-                        ->where('status', 'на продажу')
-                        ->orderBy('arrival_date')
-                        ->get();
-        $clients   = Client::orderBy('full_name')->get();
+        $animals = Animal::with('species')
+            ->where('status', 'на продажу')
+            ->orderBy('arrival_date')
+            ->get();
+        $clients = Client::orderBy('full_name')->get();
         $employees = Employee::where('role', 'продавец')->orderBy('full_name')->get();
 
         return view('sales.create', compact('animals', 'clients', 'employees'));
@@ -50,13 +50,13 @@ class SaleController extends Controller
     public function store(Request $request)
     {
         $validated = $request->validate([
-            'animal_id'      => 'required|exists:animals,animal_id',
-            'client_id'      => 'required|exists:clients,client_id',
-            'employee_id'    => 'required|exists:employees,employee_id',
-            'sale_date'      => 'required|date',
-            'total_price'    => 'required|numeric|min:0',
+            'animal_id' => 'required|exists:animals,animal_id',
+            'client_id' => 'required|exists:clients,client_id',
+            'employee_id' => 'required|exists:employees,employee_id',
+            'sale_date' => 'required|date',
+            'total_price' => 'required|numeric|min:0',
             'payment_method' => 'required|in:наличные,карта,перевод',
-            'contract_number'=> 'nullable|string|max:30',
+            'contract_number' => 'nullable|string|max:30',
         ]);
 
         // проверяем что животное ещё доступно
@@ -94,6 +94,12 @@ class SaleController extends Controller
     }
 
     // заглушки для неиспользуемых методов resource
-    public function edit(Sale $sale) { abort(404); }
-    public function update(Request $request, Sale $sale) { abort(404); }
+    public function edit(Sale $sale)
+    {
+        abort(404);
+    }
+    public function update(Request $request, Sale $sale)
+    {
+        abort(404);
+    }
 }

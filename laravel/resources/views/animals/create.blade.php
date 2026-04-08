@@ -4,6 +4,34 @@
     <div class="container py-4" style="max-width: 700px">
         <h2 class="mb-4">Добавить животное</h2>
 
+        <div class="mb-3">
+            <label class="form-label">Фото (URL)</label>
+            <input type="url" name="photo_url" class="form-control"
+                value="{{ old('photo_url', $animal->photo_url ?? '') }}"
+                placeholder="https://upload.wikimedia.org/...">
+            <div class="form-text">Вставьте прямую ссылку на изображение</div>
+            {{-- Предпросмотр --}}
+            <div id="photo-preview" class="mt-2"
+                style="{{ old('photo_url', $animal->photo_url ?? '') ? '' : 'display:none' }}">
+                <img id="preview-img"
+                    src="{{ old('photo_url', $animal->photo_url ?? '') }}"
+                    style="max-height: 200px; border-radius: 8px; border: 1px solid #dee2e6">
+            </div>
+        </div>
+
+        <script>
+        document.querySelector('[name="photo_url"]').addEventListener('input', function() {
+            const preview = document.getElementById('photo-preview');
+            const img     = document.getElementById('preview-img');
+            if (this.value) {
+                img.src = this.value;
+                preview.style.display = 'block';
+            } else {
+                preview.style.display = 'none';
+            }
+        });
+        </script>
+
         <form method="POST" action="{{ route('animals.store') }}">
             @csrf
 

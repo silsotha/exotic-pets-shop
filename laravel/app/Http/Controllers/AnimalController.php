@@ -24,8 +24,8 @@ class AnimalController extends Controller
             $query->where('species_id', $request->species_id);
         }
 
-        $animals  = $query->orderBy('arrival_date', 'desc')->paginate(15);
-        $species  = Species::orderBy('name')->get();
+        $animals = $query->orderBy('arrival_date', 'desc')->paginate(15);
+        $species = Species::orderBy('name')->get();
 
         return view('animals.index', compact('animals', 'species'));
     }
@@ -33,7 +33,7 @@ class AnimalController extends Controller
     // форма создания
     public function create()
     {
-        $species   = Species::orderBy('name')->get();
+        $species = Species::orderBy('name')->get();
         $suppliers = Supplier::orderBy('name')->get();
         return view('animals.create', compact('species', 'suppliers'));
     }
@@ -42,15 +42,16 @@ class AnimalController extends Controller
     public function store(Request $request)
     {
         $validated = $request->validate([
-            'species_id'       => 'required|exists:species,species_id',
-            'supplier_id'      => 'required|exists:suppliers,supplier_id',
-            'nickname'         => 'nullable|string|max:50',
-            'sex'              => 'required|in:самец,самка,не определён',
-            'birth_date'       => 'nullable|date|before:today',
-            'arrival_date'     => 'required|date',
-            'purchase_price'   => 'required|numeric|min:0',
-            'sale_price'       => 'required|numeric|min:0',
-            'cites_certificate'=> 'nullable|string|max:50',
+            'species_id' => 'required|exists:species,species_id',
+            'supplier_id' => 'required|exists:suppliers,supplier_id',
+            'nickname' => 'nullable|string|max:50',
+            'sex' => 'required|in:самец,самка,не определён',
+            'birth_date' => 'nullable|date|before:today',
+            'arrival_date' => 'required|date',
+            'purchase_price' => 'required|numeric|min:0',
+            'sale_price' => 'required|numeric|min:0',
+            'cites_certificate' => 'nullable|string|max:50',
+            'photo_url' => 'nullable|string|max:500',
         ]);
 
         // новое животное всегда начинает с карантина
@@ -72,7 +73,7 @@ class AnimalController extends Controller
     // форма редактирования
     public function edit(Animal $animal)
     {
-        $species   = Species::orderBy('name')->get();
+        $species = Species::orderBy('name')->get();
         $suppliers = Supplier::orderBy('name')->get();
         return view('animals.edit', compact('animal', 'species', 'suppliers'));
     }
@@ -81,16 +82,17 @@ class AnimalController extends Controller
     public function update(Request $request, Animal $animal)
     {
         $validated = $request->validate([
-            'species_id'       => 'required|exists:species,species_id',
-            'supplier_id'      => 'required|exists:suppliers,supplier_id',
-            'nickname'         => 'nullable|string|max:50',
-            'sex'              => 'required|in:самец,самка,не определён',
-            'birth_date'       => 'nullable|date|before:today',
-            'arrival_date'     => 'required|date',
-            'status'           => 'required|in:карантин,на продажу,продано,списано',
-            'purchase_price'   => 'required|numeric|min:0',
-            'sale_price'       => 'required|numeric|min:0',
-            'cites_certificate'=> 'nullable|string|max:50',
+            'species_id' => 'required|exists:species,species_id',
+            'supplier_id' => 'required|exists:suppliers,supplier_id',
+            'nickname' => 'nullable|string|max:50',
+            'sex' => 'required|in:самец,самка,не определён',
+            'birth_date' => 'nullable|date|before:today',
+            'arrival_date' => 'required|date',
+            'status' => 'required|in:карантин,на продажу,продано,списано',
+            'purchase_price' => 'required|numeric|min:0',
+            'sale_price' => 'required|numeric|min:0',
+            'cites_certificate' => 'nullable|string|max:50',
+            'photo_url' => 'nullable|string|max:500',
         ]);
 
         $animal->update($validated);
@@ -102,7 +104,6 @@ class AnimalController extends Controller
     // удаление
     public function destroy(Animal $animal)
     {
-        // нельзя удалить проданное животное
         if ($animal->status === 'продано') {
             return back()->with('error', 'Нельзя удалить проданное животное.');
         }

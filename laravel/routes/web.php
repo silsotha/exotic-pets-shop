@@ -9,9 +9,12 @@ use App\Http\Controllers\SpeciesController;
 use App\Http\Controllers\SupplierController;
 use App\Http\Controllers\EmployeeController;
 use App\Http\Controllers\ClientController;
+use App\Http\Controllers\PublicController;
 
-// публичная витрина
-Route::get('/', fn() => view('welcome'))->name('home');
+// публичная витрина — без авторизации
+Route::get('/',          [PublicController::class, 'home'])->name('home');
+Route::get('/catalog',   [PublicController::class, 'catalog'])->name('catalog');
+Route::get('/catalog/{animal}', [PublicController::class, 'show'])->name('catalog.show');
 
 // после авторизации редирект на дэшборд
 Route::get('/dashboard', [DashboardController::class, 'index'])
