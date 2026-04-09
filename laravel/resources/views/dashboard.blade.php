@@ -6,7 +6,7 @@
 
         <div class="d-flex justify-content-between align-items-center mb-4">
             @if(auth()->user()->isAdmin())
-                <a href="{{ route('dashboard.export') }}" class="btn btn-outline-success">
+                <a href="{{ route('admin.dashboard.export') }}" class="btn btn-outline-success">
                     ↓ Экспорт продаж CSV
                 </a>
             @endif

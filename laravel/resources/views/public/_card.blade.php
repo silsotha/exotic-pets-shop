@@ -41,7 +41,7 @@
             @if($animal->birth_date)
                 @php
                     $months = (int) $animal->birth_date->diffInMonths(now());
-                    $age = $months < 12 ? $months . ' мес.' : floor($months / 12) . ' л.';
+                    $age = $months < 12 ? $months . ' мес.' : floor($months / 12) . ' г.';
                 @endphp
                 <span>· {{ $age }}</span>
             @endif

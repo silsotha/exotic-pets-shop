@@ -69,7 +69,7 @@
                             } else {
                                 $years = floor($months / 12);
                                 $rem   = $months % 12;
-                                $age   = $years . ' л.' . ($rem > 0 ? ' ' . $rem . ' мес.' : '');
+                                $age   = $years . ' г.' . ($rem > 0 ? ' ' . $rem . ' мес.' : '');
                             }
                         @endphp
                         {{ $age }}
@@ -108,7 +108,7 @@
 
             <div style="background:var(--cream); border:1.5px solid #e0d8cc; border-radius:12px; padding:20px; font-size:14px">
                 <strong style="display:block; margin-bottom:10px; color:var(--forest)">Контакты магазина</strong>
-                📞 +7 (495) 000-00-00<br>
+                📞 +7 (920) 000-00-00<br>
                 ✉ info@exoticpets.ru<br>
                 📍 Москва, ул. Примерная, 1
             </div>

@@ -5,7 +5,7 @@
     <div class="container py-4" style="max-width: 650px">
         <h2 class="mb-4">Добавить вид животного</h2>
 
-        <form method="POST" action="{{ route('species.store') }}">
+        <form method="POST" action="{{ route('admin.species.store') }}">
             @csrf
 
             <div class="row">
@@ -67,7 +67,7 @@
 
             <div class="d-flex gap-2">
                 <button type="submit" class="btn btn-primary">Сохранить</button>
-                <a href="{{ route('species.index') }}" class="btn btn-outline-secondary">Отмена</a>
+                <a href="{{ route('admin.species.index') }}" class="btn btn-outline-secondary">Отмена</a>
             </div>
         </form>
     </div>

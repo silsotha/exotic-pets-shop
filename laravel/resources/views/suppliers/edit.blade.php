@@ -5,7 +5,7 @@
     <div class="container py-4" style="max-width: 600px">
         <h2 class="mb-4">Редактировать: {{ $supplier->name }}</h2>
 
-        <form method="POST" action="{{ route('suppliers.update', $supplier) }}">
+        <form method="POST" action="{{ route('admin.suppliers.update', $supplier) }}">
             @csrf @method('PUT')
 
             <div class="mb-3">
@@ -38,7 +38,7 @@
 
             <div class="d-flex gap-2">
                 <button type="submit" class="btn btn-primary">Сохранить изменения</button>
-                <a href="{{ route('suppliers.index') }}" class="btn btn-outline-secondary">Отмена</a>
+                <a href="{{ route('admin.suppliers.index') }}" class="btn btn-outline-secondary">Отмена</a>
             </div>
         </form>
     </div>

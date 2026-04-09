@@ -72,7 +72,7 @@
                 @endforeach
             </div>
             <div style="text-align:center; margin-top: 36px">
-                <a href="{{ route('catalog') }}" class="btn-primary">Смотреть все животные</a>
+                <a href="{{ route('catalog') }}" class="btn-primary">Смотреть всех животных</a>
             </div>
         @else
             <p style="color: var(--smoke); text-align:center; padding: 32px 0">

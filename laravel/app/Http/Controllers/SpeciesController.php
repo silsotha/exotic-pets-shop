@@ -33,7 +33,7 @@ class SpeciesController extends Controller
 
         Species::create($request->all());
 
-        return redirect()->route('species.index')
+        return redirect()->route('admin.species.index')
             ->with('success', 'Вид добавлен.');
     }
 
@@ -57,7 +57,7 @@ class SpeciesController extends Controller
 
         $species->update($request->all());
 
-        return redirect()->route('species.index')
+        return redirect()->route('admin.species.index')
             ->with('success', 'Вид обновлён.');
     }
 
@@ -68,7 +68,7 @@ class SpeciesController extends Controller
         }
 
         $species->delete();
-        return redirect()->route('species.index')
+        return redirect()->route('admin.species.index')
             ->with('success', 'Вид удалён.');
     }
 

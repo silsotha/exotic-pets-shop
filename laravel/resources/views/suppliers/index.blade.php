@@ -5,7 +5,7 @@
     <div class="container py-4">
         <div class="d-flex justify-content-between align-items-center mb-3">
             <h2>Поставщики</h2>
-            <a href="{{ route('suppliers.create') }}" class="btn btn-primary">+ Добавить</a>
+            <a href="{{ route('admin.suppliers.create') }}" class="btn btn-primary">+ Добавить</a>
         </div>
 
         @if(session('success'))
@@ -37,10 +37,10 @@
                         <td><code>{{ $s->license_number ?? '—' }}</code></td>
                         <td>{{ $s->animals_count }}</td>
                         <td>
-                            <a href="{{ route('suppliers.edit', $s) }}" class="btn btn-sm btn-warning">
+                            <a href="{{ route('admin.suppliers.edit', $s) }}" class="btn btn-sm btn-warning">
                                 Изменить
                             </a>
-                            <form method="POST" action="{{ route('suppliers.destroy', $s) }}" class="d-inline"
+                            <form method="POST" action="{{ route('admin.suppliers.destroy', $s) }}" class="d-inline"
                                 onsubmit="return confirm('Удалить поставщика?')">
                                 @csrf @method('DELETE')
                                 <button class="btn btn-sm btn-outline-danger">Удалить</button>

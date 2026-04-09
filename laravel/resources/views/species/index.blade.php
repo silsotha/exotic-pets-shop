@@ -5,7 +5,7 @@
     <div class="container py-4">
         <div class="d-flex justify-content-between align-items-center mb-3">
             <h2>Виды животных</h2>
-            <a href="{{ route('species.create') }}" class="btn btn-primary">+ Добавить вид</a>
+            <a href="{{ route('admin.species.create') }}" class="btn btn-primary">+ Добавить вид</a>
         </div>
 
         @if(session('success'))
@@ -49,10 +49,10 @@
                         <td>{{ $s->quarantine_days }}</td>
                         <td>{{ $s->animals_count ?? 0 }}</td>
                         <td>
-                            <a href="{{ route('species.edit', $s) }}" class="btn btn-sm btn-warning">
+                            <a href="{{ route('admin.species.edit', $s) }}" class="btn btn-sm btn-warning">
                                 Изменить
                             </a>
-                            <form method="POST" action="{{ route('species.destroy', $s) }}" class="d-inline"
+                            <form method="POST" action="{{ route('admin.species.destroy', $s) }}" class="d-inline"
                                 onsubmit="return confirm('Удалить этот вид?')">
                                 @csrf @method('DELETE')
                                 <button class="btn btn-sm btn-outline-danger">Удалить</button>

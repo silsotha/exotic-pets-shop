@@ -29,7 +29,7 @@ class EmployeeController extends Controller
 
         Employee::create($request->all());
 
-        return redirect()->route('employees.index')
+        return redirect()->route('admin.employees.index')
             ->with('success', 'Сотрудник добавлен.');
     }
 
@@ -49,14 +49,14 @@ class EmployeeController extends Controller
 
         $employee->update($request->all());
 
-        return redirect()->route('employees.index')
+        return redirect()->route('admin.employees.index')
             ->with('success', 'Данные сотрудника обновлены.');
     }
 
     public function destroy(Employee $employee)
     {
         $employee->delete();
-        return redirect()->route('employees.index')
+        return redirect()->route('admin.employees.index')
             ->with('success', 'Сотрудник удалён.');
     }
 

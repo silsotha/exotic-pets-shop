@@ -35,6 +35,11 @@ class PublicController extends Controller
             'speciesCount', 'suppliersCount', 'categoryCounts'
         ));
     }
+    
+    public function about()
+    {
+        return view('public.about');
+    }
 
     // каталог
     public function catalog(Request $request)

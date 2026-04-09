@@ -5,7 +5,7 @@
     <div class="container py-4">
         <div class="d-flex justify-content-between align-items-center mb-3">
             <h2>Сотрудники</h2>
-            <a href="{{ route('employees.create') }}" class="btn btn-primary">+ Добавить</a>
+            <a href="{{ route('admin.employees.create') }}" class="btn btn-primary">+ Добавить</a>
         </div>
 
         @if(session('success'))
@@ -41,10 +41,10 @@
                         <td>{{ $e->phone ?? '—' }}</td>
                         <td>{{ $e->hire_date }}</td>
                         <td>
-                            <a href="{{ route('employees.edit', $e) }}" class="btn btn-sm btn-warning">
+                            <a href="{{ route('admin.employees.edit', $e) }}" class="btn btn-sm btn-warning">
                                 Изменить
                             </a>
-                            <form method="POST" action="{{ route('employees.destroy', $e) }}" class="d-inline"
+                            <form method="POST" action="{{ route('admin.employees.destroy', $e) }}" class="d-inline"
                                 onsubmit="return confirm('Удалить сотрудника?')">
                                 @csrf @method('DELETE')
                                 <button class="btn btn-sm btn-outline-danger">Удалить</button>

@@ -5,7 +5,7 @@
     <div class="container py-4" style="max-width: 600px">
         <h2 class="mb-4">Добавить поставщика</h2>
 
-        <form method="POST" action="{{ route('suppliers.store') }}">
+        <form method="POST" action="{{ route('admin.suppliers.store') }}">
             @csrf
 
             <div class="mb-3">
@@ -43,7 +43,7 @@
 
             <div class="d-flex gap-2">
                 <button type="submit" class="btn btn-primary">Сохранить</button>
-                <a href="{{ route('suppliers.index') }}" class="btn btn-outline-secondary">Отмена</a>
+                <a href="{{ route('admin.suppliers.index') }}" class="btn btn-outline-secondary">Отмена</a>
             </div>
         </form>
     </div>

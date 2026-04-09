@@ -30,7 +30,7 @@ class SupplierController extends Controller
 
         Supplier::create($request->all());
 
-        return redirect()->route('suppliers.index')
+        return redirect()->route('admin.suppliers.index')
             ->with('success', 'Поставщик добавлен.');
     }
 
@@ -51,7 +51,7 @@ class SupplierController extends Controller
 
         $supplier->update($request->all());
 
-        return redirect()->route('suppliers.index')
+        return redirect()->route('admin.suppliers.index')
             ->with('success', 'Поставщик обновлён.');
     }
 
@@ -62,7 +62,7 @@ class SupplierController extends Controller
         }
 
         $supplier->delete();
-        return redirect()->route('suppliers.index')
+        return redirect()->route('admin.suppliers.index')
             ->with('success', 'Поставщик удалён.');
     }
 

@@ -5,7 +5,7 @@
     <div class="container py-4" style="max-width: 650px">
         <h2 class="mb-4">Редактировать вид: {{ $species->name }}</h2>
 
-        <form method="POST" action="{{ route('species.update', $species) }}">
+        <form method="POST" action="{{ route('admin.species.update', $species) }}">
             @csrf @method('PUT')
 
             <div class="row">
@@ -64,7 +64,7 @@
 
             <div class="d-flex gap-2">
                 <button type="submit" class="btn btn-primary">Сохранить изменения</button>
-                <a href="{{ route('species.index') }}" class="btn btn-outline-secondary">Отмена</a>
+                <a href="{{ route('admin.species.index') }}" class="btn btn-outline-secondary">Отмена</a>
             </div>
         </form>
     </div>
