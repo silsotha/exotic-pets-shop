@@ -5,7 +5,6 @@
         <h2 class="mb-4">Dashboard</h2>
 
         <div class="d-flex justify-content-between align-items-center mb-4">
-            <h2>Dashboard</h2>
             @if(auth()->user()->isAdmin())
                 <a href="{{ route('dashboard.export') }}" class="btn btn-outline-success">
                     ↓ Экспорт продаж CSV
@@ -176,7 +175,6 @@
     {{-- chart.js --}}
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
     <script>
-        // данные из Laravel → JS
         const salesMonths = @json($salesByMonth->pluck('month'));
         const salesCounts = @json($salesByMonth->pluck('count'));
         const salesRevenue = @json($salesByMonth->pluck('revenue'));

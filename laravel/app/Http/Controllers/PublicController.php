@@ -13,19 +13,27 @@ class PublicController extends Controller
     {
         $newArrivals = Animal::with('species')
             ->where('status', 'на продажу')
-            ->whereNotNull('photo_url')
             ->orderByDesc('arrival_date')
-            ->limit(6)
+            ->limit(4)
             ->get();
 
-        $classes = Animal::with('species')
+        // счётчики для hero
+        $availableCount  = Animal::where('status', 'на продажу')->count();
+        $speciesCount    = \App\Models\Species::count();
+        $suppliersCount  = \App\Models\Supplier::count();
+
+        // категории с количеством
+        $categoryCounts = Animal::with('species')
             ->where('status', 'на продажу')
             ->get()
-            ->pluck('species.class')
-            ->unique()
+            ->groupBy('species.class')
+            ->map->count()
             ->filter();
 
-        return view('public.home', compact('newArrivals', 'classes'));
+        return view('public.home', compact(
+            'newArrivals', 'availableCount',
+            'speciesCount', 'suppliersCount', 'categoryCounts'
+        ));
     }
 
     // каталог

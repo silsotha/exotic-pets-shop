@@ -1,35 +1,58 @@
-<div class="card animal-card h-100 shadow-sm">
-    <a href="{{ route('catalog.show', $animal) }}" class="text-decoration-none text-dark">
+@php
+    $classBg = [
+        'рептилии' => 'reptile',
+        'птицы' => 'bird',
+        'насекомые' => 'insect',
+        'амфибии' => 'amphibian',
+        'млекопитающие' => 'reptile',
+    ];
+    $classIcon = [
+        'рептилии' => '🦎',
+        'птицы' => '🦜',
+        'насекомые' => '🦋',
+        'амфибии' => '🐸',
+        'млекопитающие' => '🐭',
+    ];
+    $bg = $classBg[$animal->species->class] ?? 'reptile';
+    $icon = $classIcon[$animal->species->class] ?? '🐾';
+@endphp
+
+<div class="animal-card" onclick="window.location='{{ route('catalog.show', $animal) }}'">
+    <div class="animal-img {{ $bg }}">
+        <span class="status-badge status-available">Доступно</span>
         @if($animal->photo_url)
-            <a href="{{ route('catalog.show', $animal) }}">
-                <img src="{{ $animal->photo_url }}" alt="{{ $animal->species->name }}" class="card-img-top"
-                    style="height:220px; object-fit:cover"
-                    onerror="this.style.display='none'; this.nextElementSibling.style.display='flex';">
-                <div class="no-photo" style="display:none">🐾</div>
-            </a>
+            <img src="{{ $animal->photo_url }}" alt="{{ $animal->species->name }}"
+                style="width:100%; height:100%; object-fit:cover; position:absolute; inset:0"
+                onerror="this.style.display='none'">
         @else
-            <a href="{{ route('catalog.show', $animal) }}">
-                <div class="no-photo">🐾</div>
-            </a>
+            {{ $icon }}
         @endif
-    </a>
-    <div class="card-body">
-        <span class="badge bg-light text-secondary mb-1">{{ $animal->species->class }}</span>
-        <h5 class="card-title mb-1">
-            <a href="{{ route('catalog.show', $animal) }}" class="text-decoration-none text-dark">
-                {{ $animal->species->name }}
-            </a>
-        </h5>
-        @if($animal->nickname)
-            <p class="text-muted small mb-2">{{ $animal->nickname }}</p>
-        @endif
-        <div class="d-flex justify-content-between align-items-center mt-auto pt-2">
-            <span class="fs-5 fw-bold text-primary">
-                {{ number_format($animal->sale_price, 0, '.', ' ') }} ₽
+    </div>
+    <div class="animal-body">
+        <div class="animal-species">{{ ucfirst($animal->species->class) }}</div>
+        <div class="animal-name">{{ $animal->species->name }}</div>
+        <div class="animal-meta">
+            <span>
+                @if($animal->sex === 'самец') ♂ Самец
+                @elseif($animal->sex === 'самка') ♀ Самка
+                @else Пол не определён
+                @endif
             </span>
-            <a href="{{ route('catalog.show', $animal) }}" class="btn btn-sm btn-outline-primary">
-                Подробнее
-            </a>
+            @if($animal->birth_date)
+                @php
+                    $months = (int) $animal->birth_date->diffInMonths(now());
+                    $age = $months < 12 ? $months . ' мес.' : floor($months / 12) . ' л.';
+                @endphp
+                <span>· {{ $age }}</span>
+            @endif
+            @if($animal->cites_certificate)
+                <span>· CITES</span>
+            @endif
+        </div>
+        <div class="animal-footer">
+            <span class="animal-price">{{ number_format($animal->sale_price, 0, '.', ' ') }} ₽</span>
+            <a href="{{ route('catalog.show', $animal) }}" class="btn-details"
+                onclick="event.stopPropagation()">Подробнее</a>
         </div>
     </div>
 </div>

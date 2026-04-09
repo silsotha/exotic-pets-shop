@@ -2,13 +2,13 @@
 @section('title', 'Каталог')
 
 @section('content')
-    <div class="container py-5">
-        <h1 class="mb-4">Каталог животных</h1>
+    <div class="pub-section">
+        <div class="section-label">Каталог</div>
+        <div class="section-title">Все животные</div>
 
-        {{-- фильтры --}}
-        <form method="GET" class="row g-2 mb-4">
-            <div class="col-sm-4 col-md-3">
-                <select name="class" class="form-select">
+        <form method="GET">
+            <div class="catalog-controls">
+                <select name="class" class="catalog-select" onchange="this.form.submit()">
                     <option value="">Все категории</option>
                     @foreach($classes as $cls)
                         <option value="{{ $cls }}" {{ request('class') == $cls ? 'selected' : '' }}>
@@ -16,44 +16,39 @@
                         </option>
                     @endforeach
                 </select>
-            </div>
-            <div class="col-sm-4 col-md-3">
-                <select name="sort" class="form-select">
+                <select name="sort" class="catalog-select" onchange="this.form.submit()">
                     <option value="">По дате (новые)</option>
-                    <option value="price_asc" {{ request('sort') == 'price_asc' ? 'selected' : '' }}>
-                        Цена: по возрастанию
-                    </option>
-                    <option value="price_desc" {{ request('sort') == 'price_desc' ? 'selected' : '' }}>
-                        Цена: по убыванию
-                    </option>
+                    <option value="price_asc" {{ request('sort') == 'price_asc' ? 'selected' : '' }}>Цена ↑</option>
+                    <option value="price_desc" {{ request('sort') == 'price_desc' ? 'selected' : '' }}>Цена ↓</option>
                 </select>
+                @if(request()->hasAny(['class', 'sort']))
+                    <a href="{{ route('catalog') }}" style="padding: 9px 16px; border: 1.5px solid #ddd; border-radius: 8px;
+                                  background:#fff; font-size:13px; text-decoration:none; color: var(--smoke)">
+                        Сбросить
+                    </a>
+                @endif
+                <span style="margin-left:auto; color: var(--smoke); font-size:13px">
+                    Найдено: {{ $animals->total() }}
+                </span>
             </div>
-            <div class="col-sm-4 col-md-2">
-                <button class="btn btn-primary w-100">Применить</button>
-            </div>
-            @if(request()->hasAny(['class', 'sort']))
-                <div class="col-sm-4 col-md-2">
-                    <a href="{{ route('catalog') }}" class="btn btn-outline-secondary w-100">Сбросить</a>
-                </div>
-            @endif
         </form>
 
         @if($animals->count() > 0)
-            <div class="row g-4">
+            <div class="animals-grid">
                 @foreach($animals as $animal)
-                    <div class="col-sm-6 col-lg-4 col-xl-3">
-                        @include('public._card', ['animal' => $animal])
-                    </div>
+                    @include('public._card', ['animal' => $animal])
                 @endforeach
             </div>
-            <div class="mt-4">
+            <div style="margin-top:32px">
                 {{ $animals->withQueryString()->links() }}
             </div>
         @else
-            <div class="text-center py-5">
-                <div class="fs-1">🔍</div>
-                <p class="text-muted mt-2">Животных по вашему запросу не найдено</p>
-                <a href="{{ route('catalog') }}" class="btn btn-outline-primary mt-2">Сбросить фильтры</a>
+            <div style="text-align:center; padding: 64px 0">
+                <div style="font-size:4rem">🔍</div>
+                <p style="color: var(--smoke); margin-top: 12px">Животных по вашему запросу не найдено</p>
+                <a href="{{ route('catalog') }}" class="btn-primary" style="display:inline-block; margin-top:20px">
+                    Сбросить фильтры
+                </a>
             </div>
         @endif
     </div>
