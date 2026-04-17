@@ -1,0 +1,32 @@
+<?php
+
+use Illuminate\Database\Migrations\Migration;
+use Illuminate\Database\Schema\Blueprint;
+use Illuminate\Support\Facades\Schema;
+
+return new class extends Migration
+{
+    /**
+     * Run the migrations.
+     */
+    public function up(): void
+    {
+        Schema::create('feed', function (Blueprint $table) {
+            $table->increments('feed_id');
+            $table->string('name', 100);
+            $table->string('feed_type', 30)->nullable();
+            $table->string('unit', 10)->nullable();
+            $table->decimal('quantity_in_stock', 10, 2)->default(0);
+            $table->decimal('min_stock_level', 10, 2)->default(0);
+            $table->timestamps();
+        });
+    }
+
+    /**
+     * Reverse the migrations.
+     */
+    public function down(): void
+    {
+        Schema::dropIfExists('feed');
+    }
+};
