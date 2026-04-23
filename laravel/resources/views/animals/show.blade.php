@@ -30,7 +30,7 @@
                         <tr><th>Поставщик</th><td>{{ $animal->supplier->name }}</td></tr>
                         <tr><th>Пол</th><td>{{ $animal->sex }}</td></tr>
                         <tr><th>Дата рождения</th><td>{{ $animal->birth_date ?? '—' }}</td></tr>
-                        <tr><th>Дата поступления</th><td>{{ $animal->arrival_date }}</td></tr>
+                        <tr><th>Дата поступления</th><td>{{ $animal->arrival_date_formatted }}</td></tr>
                         <tr><th>Сертификат CITES</th><td>{{ $animal->cites_certificate ?? '—' }}</td></tr>
                         <tr>
                             <th>Статус</th>

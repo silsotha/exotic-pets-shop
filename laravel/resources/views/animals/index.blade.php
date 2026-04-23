@@ -79,7 +79,7 @@
                             </span>
                         </td>
                         <td>{{ number_format($animal->sale_price, 2) }} ₽</td>
-                        <td>{{ $animal->arrival_date }}</td>
+                        <td>{{ $animal->arrival_date_formatted }}</td>
                         <td>
                             <a href="{{ route('animals.show', $animal) }}" class="btn btn-sm btn-info">Карточка</a>
                             <a href="{{ route('animals.edit', $animal) }}" class="btn btn-sm btn-warning">Изменить</a>

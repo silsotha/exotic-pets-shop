@@ -58,7 +58,7 @@
                 <div class="col mb-3">
                     <label class="form-label">Дата поступления *</label>
                     <input type="date" name="arrival_date" class="form-control"
-                        value="{{ old('arrival_date', $animal->arrival_date?->format('Y-m-d')) }}" required>
+                        value="{{ old('arrival_date', $animal->arrival_date_formatted }}" required>
                 </div>
             </div>
 

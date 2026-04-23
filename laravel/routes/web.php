@@ -19,7 +19,7 @@ Route::get('/about', [PublicController::class, 'about'])->name('about');
 
 // после авторизации редирект на дэшборд
 Route::get('/dashboard', [DashboardController::class, 'index'])
-    ->middleware(['auth'])
+    ->middleware(['auth', 'role:администратор'])
     ->name('dashboard');
 
 // профиль пользователя (стандартные маршруты Breeze)

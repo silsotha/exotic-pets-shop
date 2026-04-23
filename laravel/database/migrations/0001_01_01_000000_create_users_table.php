@@ -17,8 +17,7 @@ return new class extends Migration
             $table->string('email')->unique();
             $table->string('password');
             $table->enum('role', ['администратор', 'ветврач', 'продавец'])->default('продавец');
-            $table->integer('employee_id')->nullable();
-            $table->foreign('employee_id')->references('employee_id')->on('employees')->nullOnDelete();
+            $table->unsignedBigInteger('employee_id')->nullable();
             $table->rememberToken();
             $table->timestamps();
         });

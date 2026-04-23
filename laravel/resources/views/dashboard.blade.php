@@ -148,7 +148,7 @@
                                         <td>{{ $animal->species->name }}
                                             {{ $animal->nickname ? '(' . $animal->nickname . ')' : '' }}
                                         </td>
-                                        <td>{{ $animal->arrival_date }}</td>
+                                        <td>{{ $animal->arrival_date_formatted }}</td>
                                         <td>
                                             <a href="{{ route('animals.show', $animal) }}"
                                                 class="btn btn-sm btn-outline-warning">

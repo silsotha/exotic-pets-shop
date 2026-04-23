@@ -53,4 +53,12 @@ class Animal extends Model
     {
         return 'animal_id';
     }
+    public function getArrivalDateFormattedAttribute(): string
+    {
+        return $this->arrival_date->format('d.m.Y');
+    }
+    public function getBirthDateFormattedAttribute(): ?string
+    {
+        return $this->birth_date?->format('d.m.Y');
+    }
 }

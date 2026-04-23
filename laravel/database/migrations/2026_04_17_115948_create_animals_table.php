@@ -16,7 +16,7 @@ return new class extends Migration
             $table->unsignedInteger('species_id')->nullable();
             $table->unsignedInteger('supplier_id')->nullable();
             $table->string('nickname', 50)->nullable();
-            $table->string('sex', 10)->nullable();
+            $table->string('sex', 30)->nullable();
             $table->date('birth_date')->nullable();
             $table->date('arrival_date')->nullable();
             $table->string('status', 20)->default('карантин');
