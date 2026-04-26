@@ -26,7 +26,14 @@
         </div>
         <div class="pub-nav-right">
             @auth
-                <a href="{{ route('dashboard') }}" class="btn-login">Панель управления</a>
+                @php
+                    $panelRoute = match(auth()->user()->role) {
+                        'ветврач'  => route('vet.index'),
+                        'продавец' => route('animals.index'),
+                        default    => route('dashboard'),
+                    };
+                @endphp
+                <a href="{{ $panelRoute }}" class="btn-login">Панель управления</a>
             @else
                 <a href="{{ route('login') }}" class="btn-login">Войти в систему</a>
             @endauth
@@ -41,6 +48,13 @@
         &nbsp;·&nbsp; 📍 Москва, ул. Примерная, 1
         &nbsp;·&nbsp; 📞 +7 (920) 000-00-00
     </div>
+
+    <script>
+    // при восстановлении страницы из bfcache (кнопка "назад") — перезагрузить (для работы авторизации)
+    window.addEventListener('pageshow', function (e) {
+        if (e.persisted) window.location.reload();
+    });
+    </script>
 
     @stack('scripts')
 </body>
