@@ -9,7 +9,7 @@ class ClientController extends Controller
 {
     public function index()
     {
-        $clients = Client::withCount('sales')->orderBy('full_name')->paginate(15);
+        $clients = Client::withCount('sales')->orderByDesc('registration_date')->orderByDesc('client_id')->paginate(15);
         return view('clients.index', compact('clients'));
     }
 
@@ -29,7 +29,7 @@ class ClientController extends Controller
                 'regex:/^[\p{L}\s\-]+$/u', // только буквы, пробелы, дефисы
             ],
             'phone' => [
-                'nullable',
+                'required',
                 'string',
                 'regex:/^\+7\s\(\d{3}\)\s\d{3}-\d{2}-\d{2}$/',
             ],
@@ -45,15 +45,14 @@ class ClientController extends Controller
                 'regex:/^\d{4}\s\d{6}$/', // формат: 4516 123456
             ],
         ], [
-            // Русские сообщения об ошибках
-            'full_name.required' => 'Введите ФИО клиента.',
-            'full_name.min' => 'ФИО должно содержать не менее 3 символов.',
-            'full_name.regex' => 'ФИО может содержать только буквы, пробелы и дефисы.',
-            'phone.regex' => 'Неполный номер телефона. Формат: +7 (999) 999-99-99',
-            'email.email' => 'Введите корректный адрес почты.',
-            'email.unique' => 'Этот Email уже занят.',
-            'passport_data.regex' => 'Формат паспорта: 4 цифры, пробел, 6 цифр (4516 123456).',
-        ]);
+                'full_name.required' => 'Введите ФИО клиента.',
+                'full_name.min' => 'ФИО должно содержать не менее 3 символов.',
+                'full_name.regex' => 'ФИО может содержать только буквы, пробелы и дефисы.',
+                'phone.regex' => 'Неполный номер телефона. Формат: +7 (999) 999-99-99',
+                'email.email' => 'Введите корректный адрес почты.',
+                'email.unique' => 'Этот Email уже занят.',
+                'passport_data.regex' => 'Формат паспорта: 4 цифры, пробел, 6 цифр (4516 123456).',
+            ]);
 
         $validated['registration_date'] = now()->toDateString();
         Client::create($validated);
@@ -100,14 +99,14 @@ class ClientController extends Controller
                 'regex:/^\d{4}\s\d{6}$/',
             ],
         ], [
-            'full_name.required' => 'Введите ФИО клиента.',
-            'full_name.min' => 'ФИО должно содержать не менее 3 символов.',
-            'full_name.regex' => 'ФИО может содержать только буквы, пробелы и дефисы.',
-            'phone.regex' => 'Неполный номер телефона. Формат: +7 (999) 999-99-99',
-            'email.email' => 'Введите корректный адрес почты.',
-            'email.unique' => 'Этот Email уже занят.',
-            'passport_data.regex' => 'Формат паспорта: 4 цифры, пробел, 6 цифр (4516 123456).',
-        ]);
+                'full_name.required' => 'Введите ФИО клиента.',
+                'full_name.min' => 'ФИО должно содержать не менее 3 символов.',
+                'full_name.regex' => 'ФИО может содержать только буквы, пробелы и дефисы.',
+                'phone.regex' => 'Неполный номер телефона. Формат: +7 (999) 999-99-99',
+                'email.email' => 'Введите корректный адрес почты.',
+                'email.unique' => 'Этот Email уже занят.',
+                'passport_data.regex' => 'Формат паспорта: 4 цифры, пробел, 6 цифр (4516 123456).',
+            ]);
 
         $client->update($validated);
 

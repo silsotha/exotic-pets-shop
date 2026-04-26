@@ -23,9 +23,9 @@
             <div class="row">
                 {{-- телефон --}}
                 <div class="col mb-3">
-                    <label class="form-label">Телефон</label>
+                    <label class="form-label">Телефон *</label>
                     <input type="tel" name="phone" id="phone" class="form-control @error('phone') is-invalid @enderror"
-                        value="{{ old('phone') }}" placeholder="+7 (___) ___-__-__" maxlength="18">
+                        value="{{ old('phone') }}" placeholder="+7 (___) ___-__-__" maxlength="18" required>
                     <div class="form-text">Формат: +7 (999) 999-99-99</div>
                     @error('phone')
                         <div class="invalid-feedback">{{ $message }}</div>
