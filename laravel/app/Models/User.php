@@ -26,13 +26,17 @@ class User extends Authenticatable
         'remember_token',
     ];
 
-    // Связь с сотрудником
     public function employee()
     {
         return $this->belongsTo(Employee::class);
     }
 
-    // Вспомогательные методы проверки роли
+    public function client()
+    {
+        return $this->hasOne(\App\Models\Client::class, 'user_id', 'id');
+    }
+
+    // вспомогательные методы проверки роли
     public function isAdmin():    bool { return $this->role === 'администратор'; }
     public function isVet():      bool { return $this->role === 'ветврач'; }
     public function isSeller():   bool { return $this->role === 'продавец'; }

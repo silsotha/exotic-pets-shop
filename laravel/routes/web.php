@@ -10,6 +10,7 @@ use App\Http\Controllers\SupplierController;
 use App\Http\Controllers\EmployeeController;
 use App\Http\Controllers\ClientController;
 use App\Http\Controllers\PublicController;
+use App\Http\Controllers\ClientCabinetController;
 
 // публичная витрина — без авторизации
 Route::get('/', [PublicController::class, 'home'])->name('home');
@@ -20,9 +21,15 @@ Route::get('/how-to-choose', [PublicController::class, 'howToChoose'])
     ->name('how-to-choose');
 
 // после авторизации редирект на дэшборд
-Route::get('/dashboard', [DashboardController::class, 'index'])
-    ->middleware(['auth', 'role:администратор'])
-    ->name('dashboard');
+Route::get('/dashboard', function () {
+    return match (auth()->user()->role) {
+        'администратор' => app(\App\Http\Controllers\DashboardController::class)->index(),
+        'клиент'        => redirect()->route('cabinet.index'),
+        'ветврач'       => redirect()->route('vet.index'),
+        'продавец'      => redirect()->route('animals.index'),
+        default         => redirect()->route('home'),
+    };
+})->middleware('auth')->name('dashboard');
 
 // профиль пользователя (стандартные маршруты Breeze)
 Route::middleware('auth')->group(function () {
@@ -30,6 +37,14 @@ Route::middleware('auth')->group(function () {
     Route::patch('/profile', [App\Http\Controllers\ProfileController::class, 'update'])->name('profile.update');
     Route::delete('/profile', [App\Http\Controllers\ProfileController::class, 'destroy'])->name('profile.destroy');
 });
+
+// авторизация клиента
+Route::middleware(['auth', 'role:клиент'])
+    ->prefix('cabinet')
+    ->name('cabinet.')
+    ->group(function () {
+        Route::get('/', [ClientCabinetController::class, 'index'])->name('index');
+    });
 
 Route::middleware(['auth', 'role:администратор'])
     ->prefix('admin')

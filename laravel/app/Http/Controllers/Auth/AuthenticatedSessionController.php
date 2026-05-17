@@ -28,12 +28,12 @@ class AuthenticatedSessionController extends Controller
 
         $request->session()->regenerate();
 
-        $role = $request->user()->role;
-
-        return redirect(match($request->user()->role) {
-            'ветврач'  => route('vet.index'),
-            'продавец' => route('animals.index'),
-            default    => route('dashboard'),
+        return redirect(match ($request->user()->role) {
+            'администратор' => route('dashboard'),
+            'ветврач'       => route('vet.index'),
+            'продавец'      => route('animals.index'),
+            'клиент'        => route('cabinet.index'),
+            default         => route('home'),
         });
     }
 

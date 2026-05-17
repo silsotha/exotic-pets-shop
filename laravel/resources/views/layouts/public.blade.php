@@ -29,12 +29,18 @@
             @auth
                 @php
                     $panelRoute = match(auth()->user()->role) {
-                        'ветврач'  => route('vet.index'),
-                        'продавец' => route('animals.index'),
-                        default    => route('dashboard'),
+                        'администратор' => route('dashboard'),
+                        'ветврач'       => route('vet.index'),
+                        'продавец'      => route('animals.index'),
+                        'клиент'        => route('cabinet.index'),
+                        default         => route('home'),
                     };
+
+                    $panelLabel = auth()->user()->role === 'клиент'
+                        ? 'Личный кабинет'
+                        : 'Панель управления';
                 @endphp
-                <a href="{{ $panelRoute }}" class="btn-login">Панель управления</a>
+                <a href="{{ $panelRoute }}" class="btn-login">{{ $panelLabel }}</a>
             @else
                 <a href="{{ route('login') }}" class="btn-login">Войти в систему</a>
             @endauth

@@ -10,8 +10,14 @@ class Client extends Model
     protected $table = 'clients';
     protected $primaryKey = 'client_id';
     protected $fillable = [
-    'full_name', 'phone', 'email', 'passport_data', 'registration_date',
+        'user_id',
+        'full_name',
+        'phone',
+        'email',
+        'passport_data',
+        'registration_date',
     ];
     public function sales() { return $this->hasMany(Sale::class, 'client_id', 'client_id'); }
     public function getRouteKeyName(): string { return 'client_id'; }
+    public function user() { return $this->belongsTo(User::class); }
 }

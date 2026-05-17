@@ -12,6 +12,14 @@ class DashboardController extends Controller
 {
     public function index()
     {
+        if (auth()->user()->role === 'клиент') {
+            return redirect()->route('cabinet.index');
+        }
+
+        if (auth()->user()->role !== 'администратор') {
+            abort(403);
+        }
+
         // счётчики по статусам
         $stats = Animal::select('status', DB::raw('count(*) as total'))
             ->groupBy('status')
