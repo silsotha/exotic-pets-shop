@@ -41,6 +41,11 @@ class PublicController extends Controller
         return view('public.about');
     }
 
+    public function howToChoose()
+    {
+        return view('public.how-to-choose');
+    }
+
     // каталог
     public function catalog(Request $request)
     {
@@ -54,6 +59,18 @@ class PublicController extends Controller
                 $q->where('class', $request->class)
             );
         }
+
+        if ($request->filled('care_level')) {
+            $query->whereHas('species', function ($q) use ($request) {
+                $q->where('care_level', $request->care_level);
+            });
+        }
+
+        $careLevels = [
+            'beginner' => 'Подходит новичкам',
+            'intermediate' => 'Средняя сложность',
+            'advanced' => 'Для опытных владельцев',
+        ];
 
         if ($request->filled('sort')) {
             match ($request->sort) {
@@ -73,7 +90,7 @@ class PublicController extends Controller
             $q->where('status', 'на продажу')
         )->pluck('class')->unique();
 
-        return view('public.catalog', compact('animals', 'classes'));
+        return view('public.catalog', compact('animals', 'classes', 'careLevels'));
     }
 
     // карточка животного

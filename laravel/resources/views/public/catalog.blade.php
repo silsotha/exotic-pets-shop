@@ -6,31 +6,46 @@
         <div class="section-label">Каталог</div>
         <div class="section-title">Все животные</div>
 
-        <form method="GET">
-            <div class="catalog-controls">
-                <select name="class" class="catalog-select" onchange="this.form.submit()">
-                    <option value="">Все категории</option>
-                    @foreach($classes as $cls)
-                        <option value="{{ $cls }}" {{ request('class') == $cls ? 'selected' : '' }}>
-                            {{ ucfirst($cls) }}
-                        </option>
-                    @endforeach
-                </select>
-                <select name="sort" class="catalog-select" onchange="this.form.submit()">
-                    <option value="">По дате (новые)</option>
-                    <option value="price_asc" {{ request('sort') == 'price_asc' ? 'selected' : '' }}>Цена ↑</option>
-                    <option value="price_desc" {{ request('sort') == 'price_desc' ? 'selected' : '' }}>Цена ↓</option>
-                </select>
-                @if(request()->hasAny(['class', 'sort']))
-                    <a href="{{ route('catalog') }}" style="padding: 9px 16px; border: 1.5px solid #ddd; border-radius: 8px;
-                                  background:#fff; font-size:13px; text-decoration:none; color: var(--smoke)">
-                        Сбросить
-                    </a>
-                @endif
-                <span style="margin-left:auto; color: var(--smoke); font-size:13px">
-                    Найдено: {{ $animals->total() }}
-                </span>
-            </div>
+        <form method="GET" action="{{ route('catalog') }}" class="catalog-controls">
+            <select name="class" class="catalog-select">
+                <option value="">Все категории</option>
+
+                @foreach($classes as $class)
+                    <option value="{{ $class }}" {{ request('class') === $class ? 'selected' : '' }}>
+                        {{ $class }}
+                    </option>
+                @endforeach
+            </select>
+
+            <select name="care_level" class="catalog-select">
+                <option value="">Любая сложность</option>
+
+                @foreach($careLevels as $value => $label)
+                    <option value="{{ $value }}" {{ request('care_level') === $value ? 'selected' : '' }}>
+                        {{ $label }}
+                    </option>
+                @endforeach
+            </select>
+
+            <select name="sort" class="catalog-select">
+                <option value="">Сначала новые</option>
+                <option value="price_asc" {{ request('sort') === 'price_asc' ? 'selected' : '' }}>
+                    Сначала дешевле
+                </option>
+                <option value="price_desc" {{ request('sort') === 'price_desc' ? 'selected' : '' }}>
+                    Сначала дороже
+                </option>
+            </select>
+
+            <button type="submit" class="btn-primary">
+                Применить
+            </button>
+
+            @if(request()->hasAny(['class', 'care_level', 'sort']))
+                <a href="{{ route('catalog') }}" class="catalog-reset">
+                    Сбросить
+                </a>
+            @endif
         </form>
 
         @if($animals->count() > 0)

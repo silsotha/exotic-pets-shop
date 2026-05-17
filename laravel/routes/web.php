@@ -16,6 +16,8 @@ Route::get('/', [PublicController::class, 'home'])->name('home');
 Route::get('/catalog', [PublicController::class, 'catalog'])->name('catalog');
 Route::get('/catalog/{animal}', [PublicController::class, 'show'])->name('catalog.show');
 Route::get('/about', [PublicController::class, 'about'])->name('about');
+Route::get('/how-to-choose', [PublicController::class, 'howToChoose'])
+    ->name('how-to-choose');
 
 // после авторизации редирект на дэшборд
 Route::get('/dashboard', [DashboardController::class, 'index'])

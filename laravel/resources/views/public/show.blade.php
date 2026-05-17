@@ -40,6 +40,13 @@
             <h1 style="font-family:'Playfair Display',serif; font-size:40px; color:var(--forest); margin: 8px 0">
                 {{ $animal->species->name }}
             </h1>
+            
+            @if($animal->species->care_level)
+                <div class="mt-3 inline-flex items-center rounded-full bg-green-100 px-3 py-1 text-sm text-green-800">
+                    {{ $animal->species->care_level_label }}
+                </div>
+            @endif
+
             @if($animal->nickname)
                 <p style="color:var(--smoke); margin-bottom:16px">Кличка: <em>{{ $animal->nickname }}</em></p>
             @endif
@@ -47,6 +54,13 @@
             <div style="font-size:36px; font-weight:700; color:var(--amber); margin: 20px 0">
                 {{ number_format($animal->sale_price, 0, '.', ' ') }} ₽
             </div>
+
+            @if($animal->species->care_level)
+                <div class="animal-care-level">
+                    <span>Сложность содержания</span>
+                    <strong>{{ $animal->species->care_level_label }}</strong>
+                </div>
+            @endif
 
             <table style="width:100%; border-collapse:collapse; margin-bottom:24px">
                 <tr>
@@ -101,6 +115,13 @@
                 </tr>
                 @endif
             </table>
+            
+            @if($animal->species->description)
+                <section class="species-description-card">
+                    <h2>Описание вида</h2>
+                    <p>{{ $animal->species->description }}</p>
+                </section>
+            @endif
 
             <div class="alert-banner">
                 ✅ Животное доступно для покупки. Свяжитесь с нами для оформления.

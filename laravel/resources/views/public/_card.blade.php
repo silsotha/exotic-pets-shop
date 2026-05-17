@@ -30,7 +30,17 @@
     </div>
     <div class="animal-body">
         <div class="animal-species">{{ ucfirst($animal->species->class) }}</div>
-        <div class="animal-name">{{ $animal->species->name }}</div>
+
+        <div class="animal-title-row">
+            <div class="animal-name">{{ $animal->species->name }}</div>
+
+            @if($animal->species->care_level)
+                <span class="care-badge care-badge-{{ $animal->species->care_level }}">
+                    {{ $animal->species->care_level_label }}
+                </span>
+            @endif
+        </div>
+
         <div class="animal-meta">
             <span>
                 @if($animal->sex === 'самец') ♂ Самец

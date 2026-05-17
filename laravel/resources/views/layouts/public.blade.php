@@ -23,6 +23,7 @@
             <a href="{{ route('home') }}" class="{{ request()->routeIs('home') ? 'active' : '' }}">Главная</a>
             <a href="{{ route('catalog') }}" class="{{ request()->routeIs('catalog*') ? 'active' : '' }}">Каталог</a>
             <a href="{{ route('about') }}" class="{{ request()->routeIs('about') ? 'active' : '' }}">О нас</a>
+            <a href="{{ route('how-to-choose') }}">Как выбрать животное</a>
         </div>
         <div class="pub-nav-right">
             @auth

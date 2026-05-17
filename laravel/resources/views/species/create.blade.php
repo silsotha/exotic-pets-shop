@@ -35,6 +35,46 @@
                     placeholder="Мадагаскар, тропические леса">
             </div>
 
+            <div class="mb-3">
+                <label for="description" class="form-label">Краткое описание вида</label>
+
+                <textarea
+                    id="description"
+                    name="description"
+                    rows="2"
+                    class="form-control @error('description') is-invalid @enderror"
+                    placeholder="Кратко опишите особенности вида, поведение, условия содержания..."
+                >{{ old('description') }}</textarea>
+
+                @error('description')
+                    <div class="invalid-feedback">{{ $message }}</div>
+                @enderror
+            </div>
+
+            <div class="mb-3">
+                <label for="care_level" class="form-label">Уровень сложности содержания</label>
+
+                <select id="care_level" name="care_level" class="form-select @error('care_level') is-invalid @enderror">
+                    <option value="">— выберите —</option>
+
+                    <option value="beginner" {{ old('care_level') === 'beginner' ? 'selected' : '' }}>
+                        Подходит новичкам
+                    </option>
+
+                    <option value="intermediate" {{ old('care_level') === 'intermediate' ? 'selected' : '' }}>
+                        Средняя сложность
+                    </option>
+
+                    <option value="advanced" {{ old('care_level') === 'advanced' ? 'selected' : '' }}>
+                        Для опытных владельцев
+                    </option>
+                </select>
+
+                @error('care_level')
+                    <div class="invalid-feedback">{{ $message }}</div>
+                @enderror
+            </div>
+
             <div class="row">
                 <div class="col mb-3">
                     <label class="form-label">Температура мин. (°C)</label>
