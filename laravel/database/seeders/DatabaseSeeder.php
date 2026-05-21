@@ -14,6 +14,7 @@ class DatabaseSeeder extends Seeder
             SpeciesSeeder::class,
             SupplierSeeder::class,
             FeedSeeder::class,
+            DemoSeeder::class,
         ]);
 
         User::updateOrCreate(
