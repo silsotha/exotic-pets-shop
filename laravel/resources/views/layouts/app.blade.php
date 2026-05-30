@@ -156,15 +156,17 @@
 
             <div class="nav-label">Управление</div>
             <a href="{{ route('admin.species.index') }}"
-                class="nav-link {{ request()->routeIs('species.*') ? 'active' : '' }}">
+                class="nav-link {{ request()->routeIs('admin.species.*') ? 'active' : '' }}">
                 <i class="bi bi-bookmarks"></i> Виды животных
             </a>
+
             <a href="{{ route('admin.suppliers.index') }}"
-                class="nav-link {{ request()->routeIs('suppliers.*') ? 'active' : '' }}">
+                class="nav-link {{ request()->routeIs('admin.suppliers.*') ? 'active' : '' }}">
                 <i class="bi bi-truck"></i> Поставщики
             </a>
+
             <a href="{{ route('admin.employees.index') }}"
-                class="nav-link {{ request()->routeIs('employees.*') ? 'active' : '' }}">
+                class="nav-link {{ request()->routeIs('admin.employees.*') ? 'active' : '' }}">
                 <i class="bi bi-person-badge"></i> Сотрудники
             </a>
         @endif

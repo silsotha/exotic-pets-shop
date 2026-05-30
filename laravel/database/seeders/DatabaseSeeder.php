@@ -5,6 +5,7 @@ namespace Database\Seeders;
 use Illuminate\Database\Seeder;
 use App\Models\User;
 use App\Models\Client;
+use App\Models\Employee;
 
 class DatabaseSeeder extends Seeder
 {
@@ -43,6 +44,24 @@ class DatabaseSeeder extends Seeder
                 'phone' => '+7 900 123-45-67',
                 'passport_data' => 'тестовые данные',
                 'registration_date' => now()->toDateString(),
+            ]
+        );
+
+        User::updateOrCreate(
+            ['email' => 'vet@exoticpets.ru'],
+            [
+                'name' => 'Ветеринар',
+                'password' => bcrypt('vet123'),
+                'role' => 'ветврач',
+            ]
+        );
+
+        Employee::updateOrCreate(
+            ['full_name' => 'Анна Власова'],
+            [
+                'role' => 'ветврач',
+                'phone' => '+7 900 777-22-33',
+                'hire_date' => now()->subYear()->toDateString(),
             ]
         );
     }
