@@ -8,25 +8,26 @@ return new class extends Migration
 {
     public function up(): void
     {
-        Schema::table('clients', function (Blueprint $table) {
-            $table->unsignedBigInteger('user_id')
-                ->nullable()
-                ->unique()
-                ->after('client_id');
+        if (!Schema::hasColumn('clients', 'user_id')) {
+            Schema::table('clients', function (Blueprint $table) {
+                $table->unsignedBigInteger('user_id')->nullable()->unique()->after('client_id');
 
-            $table->foreign('user_id')
-                ->references('id')
-                ->on('users')
-                ->nullOnDelete();
-        });
+                $table->foreign('user_id')
+                    ->references('id')
+                    ->on('users')
+                    ->nullOnDelete();
+            });
+        }
     }
 
     public function down(): void
     {
-        Schema::table('clients', function (Blueprint $table) {
-            $table->dropForeign(['user_id']);
-            $table->dropUnique(['user_id']);
-            $table->dropColumn('user_id');
-        });
+        if (Schema::hasColumn('clients', 'user_id')) {
+            Schema::table('clients', function (Blueprint $table) {
+                $table->dropForeign(['user_id']);
+                $table->dropUnique(['user_id']);
+                $table->dropColumn('user_id');
+            });
+        }
     }
 };

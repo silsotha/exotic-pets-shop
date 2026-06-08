@@ -13,12 +13,21 @@ return new class extends Migration
     {
         Schema::create('clients', function (Blueprint $table) {
             $table->increments('client_id');
+
+            $table->unsignedBigInteger('user_id')->nullable()->unique();
+
             $table->string('full_name', 100);
             $table->string('phone', 20)->nullable();
-            $table->string('email', 100)->nullable();
+            $table->string('email', 100)->nullable()->unique();
             $table->string('passport_data', 50)->nullable();
             $table->date('registration_date')->nullable();
+
             $table->timestamps();
+
+            $table->foreign('user_id')
+                ->references('id')
+                ->on('users')
+                ->nullOnDelete();
         });
     }
 

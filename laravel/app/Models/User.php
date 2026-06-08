@@ -40,4 +40,5 @@ class User extends Authenticatable
     public function isAdmin():    bool { return $this->role === 'администратор'; }
     public function isVet():      bool { return $this->role === 'ветврач'; }
     public function isSeller():   bool { return $this->role === 'продавец'; }
+    public function isClient():   bool { return $this->role === 'клиент'; }
 }

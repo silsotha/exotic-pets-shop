@@ -2,19 +2,23 @@
 @section('title', 'Добавить клиента')
 
 @section('content')
-    <div class="container py-4" style="max-width: 600px">
+    <div class="container py-4" style="max-width: 700px">
         <h2 class="mb-4">Добавить клиента</h2>
 
-        <form method="POST" action="{{ route('clients.store') }}" id="client-form">
+        <form method="POST" action="{{ route('clients.store', request()->query()) }}" id="client-form">
             @csrf
 
             {{-- ФИО --}}
             <div class="mb-3">
                 <label class="form-label">ФИО *</label>
                 <input type="text" name="full_name" id="full_name"
-                    class="form-control @error('full_name') is-invalid @enderror" value="{{ old('full_name') }}"
-                    placeholder="Иванов Иван Иванович" minlength="3" maxlength="100" required>
-                <div class="form-text">Только буквы, пробелы и дефисы (3–100 символов)</div>
+                    class="form-control @error('full_name') is-invalid @enderror"
+                    value="{{ old('full_name') }}"
+                    placeholder="Иванов Иван Иванович"
+                    minlength="3"
+                    maxlength="100"
+                    required>
+                <div class="form-text">Только буквы, пробелы и дефисы. Будет также именем аккаунта.</div>
                 @error('full_name')
                     <div class="invalid-feedback">{{ $message }}</div>
                 @enderror
@@ -24,19 +28,27 @@
                 {{-- телефон --}}
                 <div class="col mb-3">
                     <label class="form-label">Телефон *</label>
-                    <input type="tel" name="phone" id="phone" class="form-control @error('phone') is-invalid @enderror"
-                        value="{{ old('phone') }}" placeholder="+7 (___) ___-__-__" maxlength="18" required>
+                    <input type="tel" name="phone" id="phone"
+                        class="form-control @error('phone') is-invalid @enderror"
+                        value="{{ old('phone') }}"
+                        placeholder="+7 (___) ___-__-__"
+                        maxlength="18"
+                        required>
                     <div class="form-text">Формат: +7 (999) 999-99-99</div>
                     @error('phone')
                         <div class="invalid-feedback">{{ $message }}</div>
                     @enderror
                 </div>
 
-                {{-- email --}}
+                {{-- email / логин --}}
                 <div class="col mb-3">
-                    <label class="form-label">Email</label>
-                    <input type="email" name="email" id="email" class="form-control @error('email') is-invalid @enderror"
-                        value="{{ old('email') }}" placeholder="example@mail.ru">
+                    <label class="form-label">Email / логин *</label>
+                    <input type="email" name="email" id="email"
+                        class="form-control @error('email') is-invalid @enderror"
+                        value="{{ old('email') }}"
+                        placeholder="example@mail.ru"
+                        required>
+                    <div class="form-text">Клиент будет входить в систему по этому Email.</div>
                     <div id="email-feedback" class="invalid-feedback"></div>
                     @error('email')
                         <div class="invalid-feedback">{{ $message }}</div>
@@ -44,12 +56,37 @@
                 </div>
             </div>
 
+            {{-- пароль --}}
+            <div class="row">
+                <div class="col mb-3">
+                    <label class="form-label">Пароль для клиента *</label>
+                    <input type="password" name="password" id="password"
+                        class="form-control @error('password') is-invalid @enderror"
+                        autocomplete="new-password"
+                        required>
+                    <div class="form-text">Минимальные требования берутся из настроек Laravel.</div>
+                    @error('password')
+                        <div class="invalid-feedback">{{ $message }}</div>
+                    @enderror
+                </div>
+
+                <div class="col mb-3">
+                    <label class="form-label">Повтор пароля *</label>
+                    <input type="password" name="password_confirmation" id="password_confirmation"
+                        class="form-control"
+                        autocomplete="new-password"
+                        required>
+                </div>
+            </div>
+
             {{-- паспорт --}}
             <div class="mb-4">
                 <label class="form-label">Серия и номер паспорта</label>
                 <input type="text" name="passport_data" id="passport_data"
-                    class="form-control @error('passport_data') is-invalid @enderror" value="{{ old('passport_data') }}"
-                    placeholder="4516 123456" maxlength="11">
+                    class="form-control @error('passport_data') is-invalid @enderror"
+                    value="{{ old('passport_data') }}"
+                    placeholder="4516 123456"
+                    maxlength="11">
                 <div class="form-text">
                     Требуется для договора на животных с CITES. Формат: 4516 123456
                 </div>
@@ -58,8 +95,12 @@
                 @enderror
             </div>
 
+            <div class="alert alert-info">
+                После сохранения будет создан клиент и аккаунт для входа в личный кабинет.
+            </div>
+
             <div class="d-flex gap-2">
-                <button type="submit" class="btn btn-primary">Сохранить</button>
+                <button type="submit" class="btn btn-primary">Сохранить и создать аккаунт</button>
                 <a href="{{ route('clients.index') }}" class="btn btn-outline-secondary">Отмена</a>
             </div>
         </form>
@@ -106,10 +147,12 @@
         // клиентская валидация email
         document.getElementById('email').addEventListener('blur', function () {
             const val = this.value.trim();
-            if (!val) return; // необязательное поле
+            if (!val) return;
+
             const valid = /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(val);
             this.classList.toggle('is-invalid', !valid);
             this.classList.toggle('is-valid', valid);
+
             if (!valid) {
                 document.getElementById('email-feedback').textContent = 'Введите корректный адрес почты.';
             }

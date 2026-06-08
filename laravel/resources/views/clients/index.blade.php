@@ -18,6 +18,7 @@
                 <th>ФИО</th>
                 <th>Телефон</th>
                 <th>Email</th>
+                <th>Аккаунт</th>
                 <th>Паспорт</th>
                 <th>Дата регистрации</th>
                 <th>Покупок</th>
@@ -31,6 +32,13 @@
                 <td>{{ $client->full_name }}</td>
                 <td>{{ $client->phone ?? '—' }}</td>
                 <td>{{ $client->email ?? '—' }}</td>
+                <td>
+                    @if($client->user_id)
+                        <span class="badge bg-success">создан</span>
+                    @else
+                        <span class="badge bg-secondary">нет</span>
+                    @endif
+                </td>
                 <td>{{ $client->passport_data ?? '—' }}</td>
                 <td>{{ $client->registration_date }}</td>
                 <td>{{ $client->sales_count ?? 0 }}</td>
@@ -42,7 +50,7 @@
             </tr>
             @empty
             <tr>
-                <td colspan="8" class="text-center text-muted">Клиентов нет</td>
+                <td colspan="9" class="text-center text-muted">Клиентов нет</td>
             </tr>
             @endforelse
         </tbody>
