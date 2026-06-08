@@ -59,12 +59,11 @@
             {{-- пароль --}}
             <div class="row">
                 <div class="col mb-3">
-                    <label class="form-label">Пароль для клиента *</label>
+                    <label class="form-label">Пароль для клиента</label>
                     <input type="password" name="password" id="password"
                         class="form-control @error('password') is-invalid @enderror"
-                        autocomplete="new-password"
-                        required>
-                    <div class="form-text">Минимальные требования берутся из настроек Laravel.</div>
+                        autocomplete="new-password">
+                    <div class="form-text">Можно оставить пустым — система сгенерирует временный пароль автоматически.</div>
                     @error('password')
                         <div class="invalid-feedback">{{ $message }}</div>
                     @enderror
@@ -74,8 +73,7 @@
                     <label class="form-label">Повтор пароля *</label>
                     <input type="password" name="password_confirmation" id="password_confirmation"
                         class="form-control"
-                        autocomplete="new-password"
-                        required>
+                        autocomplete="new-password">
                 </div>
             </div>
 

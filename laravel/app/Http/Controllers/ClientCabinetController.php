@@ -19,6 +19,8 @@ class ClientCabinetController extends Controller
             ->orderByDesc('sale_date')
             ->get();
 
-        return view('client-cabinet.index', compact('client', 'sales'));
+        $totalSpent = $sales->sum('total_price');
+
+        return view('client-cabinet.index', compact('client', 'sales', 'totalSpent'));
     }
 }

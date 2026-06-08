@@ -7,6 +7,7 @@ use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Hash;
+use Illuminate\Support\Str;
 use Illuminate\Validation\Rules;
 
 class ClientController extends Controller
@@ -42,7 +43,7 @@ class ClientController extends Controller
                 'string',
                 'regex:/^\+7\s\(\d{3}\)\s\d{3}-\d{2}-\d{2}$/',
             ],
-            'email' => [ // для учебного проекта проверка без dns
+            'email' => [
                 'required',
                 'email',
                 'max:100',
@@ -50,7 +51,7 @@ class ClientController extends Controller
                 'unique:users,email',
             ],
             'password' => [
-                'required',
+                'nullable',
                 'confirmed',
                 Rules\Password::defaults(),
             ],
@@ -71,17 +72,18 @@ class ClientController extends Controller
             'email.email' => 'Введите корректный адрес почты.',
             'email.unique' => 'Этот Email уже занят.',
 
-            'password.required' => 'Введите пароль для аккаунта клиента.',
             'password.confirmed' => 'Пароли не совпадают.',
 
             'passport_data.regex' => 'Формат паспорта: 4 цифры, пробел, 6 цифр (4516 123456).',
         ]);
 
-        DB::transaction(function () use ($validated) {
+        $password = $validated['password'] ?? Str::password(10);
+
+        DB::transaction(function () use ($validated, $password) {
             $user = User::create([
                 'name' => $validated['full_name'],
-                'email' => $validated['email'],
-                'password' => Hash::make($validated['password']),
+                'email' => mb_strtolower($validated['email']),
+                'password' => Hash::make($password),
                 'role' => 'клиент',
                 'employee_id' => null,
             ]);
@@ -90,19 +92,23 @@ class ClientController extends Controller
                 'user_id' => $user->id,
                 'full_name' => $validated['full_name'],
                 'phone' => $validated['phone'],
-                'email' => $validated['email'],
+                'email' => mb_strtolower($validated['email']),
                 'passport_data' => $validated['passport_data'] ?? null,
                 'registration_date' => now()->toDateString(),
             ]);
         });
 
+        $message = 'Клиент добавлен, аккаунт для входа создан. '
+            . 'Логин: ' . mb_strtolower($validated['email']) . '. '
+            . 'Временный пароль: ' . $password;
+
         if ($request->query('back') === 'sale') {
             return redirect()->route('sales.create')
-                ->with('success', 'Клиент добавлен, аккаунт для входа создан.');
+                ->with('success', $message);
         }
 
         return redirect()->route('clients.index')
-            ->with('success', 'Клиент добавлен, аккаунт для входа создан.');
+            ->with('success', $message);
     }
 
     public function edit(Client $client)
@@ -194,6 +200,28 @@ class ClientController extends Controller
 
         return redirect()->route('clients.index')
             ->with('success', 'Данные клиента и аккаунта обновлены.');
+    }
+
+    public function resetPassword(Client $client)
+    {
+        if (!auth()->user()->isAdmin()) {
+            abort(403);
+        }
+
+        if (!$client->user) {
+            return back()->with('error', 'У клиента нет связанного аккаунта.');
+        }
+
+        $password = Str::password(10);
+
+        $client->user->update([
+            'password' => Hash::make($password),
+        ]);
+
+        return back()->with(
+            'success',
+            'Пароль клиента сброшен. Логин: ' . $client->email . '. Новый временный пароль: ' . $password
+        );
     }
 
     public function show(Client $client)

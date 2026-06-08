@@ -4,15 +4,13 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>ExoticPets — @yield('title', 'Панель управления')</title>
+    <title>EXO PETS — @yield('title', 'Панель управления')</title>
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
     <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.css" rel="stylesheet">
     <style>
         body {
             background: #f4f6f9;
         }
-
-        /* Sidebar */
         #sidebar {
             width: 260px;
             min-height: 100vh;
@@ -37,6 +35,18 @@
 
         #sidebar .sidebar-logo span {
             color: #4dabf7;
+        }
+
+        .sidebar-logo-img-wrap {
+            display: flex;
+            align-items: center;
+            min-height: 66px;
+        }
+
+        .sidebar-logo-img {
+            display: block;
+            max-height: 28px;
+            object-fit: contain;
         }
 
         #sidebar .nav-label {
@@ -78,7 +88,6 @@
             font-size: 0.82rem;
         }
 
-        /* Main content */
         #main-content {
             margin-left: 260px;
             min-height: 100vh;
@@ -86,7 +95,6 @@
             flex-direction: column;
         }
 
-        /* Topbar */
         #topbar {
             background: #fff;
             border-bottom: 1px solid #e9ecef;
@@ -119,9 +127,9 @@
 <body>
 
     <nav id="sidebar">
-        <div class="sidebar-logo">
-            🦎 <span>Exotic</span>Pets
-        </div>
+        <a href="{{ route('dashboard') }}" class="sidebar-logo sidebar-logo-img-wrap text-decoration-none">
+            <img src="{{ asset('images/logo.png') }}" alt="EXO PETS" class="sidebar-logo-img">
+        </a>
 
         @if(auth()->user()->isAdmin() || auth()->user()->isSeller())
             {{-- Продавец + Админ --}}

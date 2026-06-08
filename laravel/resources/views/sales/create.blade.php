@@ -7,6 +7,9 @@
     @if(session('error'))
         <div class="alert alert-danger">{{ session('error') }}</div>
     @endif
+    @if(session('success'))
+        <div class="alert alert-success">{{ session('success') }}</div>
+    @endif
 
     <form method="POST" action="{{ route('sales.store') }}">
         @csrf
@@ -33,35 +36,58 @@
         {{-- клиент --}}
         <div class="mb-3">
             <label class="form-label">Покупатель *</label>
+
+            <input type="text"
+                id="client-search"
+                class="form-control mb-2"
+                placeholder="Поиск по ФИО, телефону или email">
+
             <div class="input-group">
                 <select name="client_id" class="form-select @error('client_id') is-invalid @enderror" required>
                     <option value="">— выберите или создайте —</option>
                     @foreach($clients as $c)
                         <option value="{{ $c->client_id }}" {{ old('client_id') == $c->client_id ? 'selected' : '' }}>
-                            {{ $c->full_name }} — {{ $c->phone }}
+                            {{ $c->full_name }} — {{ $c->phone ?? 'телефон не указан' }} — {{ $c->email ?? 'email не указан' }}
                         </option>
                     @endforeach
                 </select>
+
                 <a href="{{ route('clients.create') }}?back=sale" class="btn btn-outline-secondary">
                     + Новый
                 </a>
             </div>
+
             @error('client_id')<div class="invalid-feedback">{{ $message }}</div>@enderror
         </div>
 
         {{-- продавец --}}
         <div class="mb-3">
             <label class="form-label">Продавец *</label>
-            <select name="employee_id" class="form-select @error('employee_id') is-invalid @enderror" required>
-                <option value="">— выберите —</option>
-                @foreach($employees as $e)
-                    <option value="{{ $e->employee_id }}" {{ old('employee_id') == $e->employee_id ? 'selected' : '' }}>
-                        {{ $e->full_name }}
-                    </option>
-                @endforeach
-            </select>
+
+            @if(auth()->user()->role === 'продавец' && auth()->user()->employee_id)
+                <input type="hidden" name="employee_id" value="{{ auth()->user()->employee_id }}">
+
+                <div class="form-control bg-light">
+                    {{ $currentEmployee->full_name ?? 'Текущий продавец' }}
+                </div>
+
+                <div class="form-text">
+                    Продавец подставлен автоматически по текущему аккаунту.
+                </div>
+            @else
+                <select name="employee_id" class="form-select @error('employee_id') is-invalid @enderror" required>
+                    <option value="">— выберите —</option>
+                    @foreach($employees as $e)
+                        <option value="{{ $e->employee_id }}" {{ old('employee_id') == $e->employee_id ? 'selected' : '' }}>
+                            {{ $e->full_name }}
+                        </option>
+                    @endforeach
+                </select>
+            @endif
+
             @error('employee_id')<div class="invalid-feedback">{{ $message }}</div>@enderror
         </div>
+        
 
         <div class="row">
             <div class="col mb-3">
@@ -105,10 +131,27 @@
 </div>
 
 <script>
-// Автоподстановка цены при выборе животного
-function fillPrice(select) {
-    const price = select.options[select.selectedIndex].dataset.price;
-    if (price) document.getElementById('total_price').value = price;
-}
+    // автоподстановка цены при выборе животного
+    function fillPrice(select) {
+        const price = select.options[select.selectedIndex].dataset.price;
+        if (price) document.getElementById('total_price').value = price;
+    }
+
+    // быстрый поиск клиента в select
+    const clientSearch = document.getElementById('client-search');
+    const clientSelect = document.querySelector('select[name="client_id"]');
+
+    if (clientSearch && clientSelect) {
+        clientSearch.addEventListener('input', function () {
+            const query = this.value.toLowerCase().trim();
+
+            Array.from(clientSelect.options).forEach(function (option, index) {
+                if (index === 0) return;
+
+                const text = option.textContent.toLowerCase();
+                option.hidden = query && !text.includes(query);
+            });
+        });
+    }
 </script>
 @endsection

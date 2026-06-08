@@ -7,6 +7,9 @@
         <a href="{{ route('clients.create') }}" class="btn btn-primary">+ Добавить клиента</a>
     </div>
 
+    @if(session('error'))
+        <div class="alert alert-danger">{{ session('error') }}</div>
+    @endif
     @if(session('success'))
         <div class="alert alert-success">{{ session('success') }}</div>
     @endif
@@ -42,10 +45,26 @@
                 <td>{{ $client->passport_data ?? '—' }}</td>
                 <td>{{ $client->registration_date }}</td>
                 <td>{{ $client->sales_count ?? 0 }}</td>
-                <td>
-                    <a href="{{ route('clients.edit', $client) }}" class="btn btn-sm btn-warning">
-                        Редактировать
-                    </a>
+                <td style="white-space: nowrap;">
+                    <div class="btn-group btn-group-sm" role="group">
+                        <a href="{{ route('clients.edit', $client) }}" class="btn btn-warning">
+                            Редактировать
+                        </a>
+
+                        @if(auth()->user()->isAdmin() && $client->user_id)
+                            <form method="POST"
+                                action="{{ route('clients.reset-password', $client) }}"
+                                class="d-inline m-0"
+                                onsubmit="return confirm('Сбросить пароль клиента? Новый временный пароль будет показан один раз.')">
+                                @csrf
+                                @method('PATCH')
+
+                                <button type="submit" class="btn btn-outline-danger btn-sm">
+                                    Сбросить пароль
+                                </button>
+                            </form>
+                        @endif
+                    </div>
                 </td>
             </tr>
             @empty

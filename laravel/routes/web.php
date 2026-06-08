@@ -62,6 +62,9 @@ Route::middleware(['auth', 'role:администратор,продавец'])-
     Route::patch('animals/{animal}/approve', [AnimalController::class, 'approve'])->name('animals.approve');
     Route::resource('sales', SaleController::class)->except(['edit', 'update']);
     Route::resource('clients', ClientController::class)->except(['show', 'destroy']);
+    
+    Route::patch('clients/{client}/reset-password', [ClientController::class, 'resetPassword'])
+    ->name('clients.reset-password');
 });
 
 Route::middleware(['auth', 'role:ветврач,администратор'])->group(function () {

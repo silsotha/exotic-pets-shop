@@ -41,9 +41,12 @@ class SaleController extends Controller
             ->orderBy('arrival_date')
             ->get();
         $clients = Client::orderBy('full_name')->get();
-        $employees = Employee::where('role', 'продавец')->orderBy('full_name')->get();
+        $currentEmployee = auth()->user()->employee;
+        $employees = Employee::where('role', 'продавец')
+            ->orderBy('full_name')
+            ->get();
 
-        return view('sales.create', compact('animals', 'clients', 'employees'));
+        return view('sales.create', compact('animals', 'clients', 'employees', 'currentEmployee'));
     }
 
     // сохранение продажи
@@ -52,7 +55,7 @@ class SaleController extends Controller
         $validated = $request->validate([
             'animal_id' => 'required|exists:animals,animal_id',
             'client_id' => 'required|exists:clients,client_id',
-            'employee_id' => 'required|exists:employees,employee_id',
+            'employee_id' => 'nullable|exists:employees,employee_id',
             'sale_date' => 'required|date',
             'total_price' => 'required|numeric|min:0',
             'payment_method' => 'required|in:наличные,карта,перевод',
@@ -63,6 +66,14 @@ class SaleController extends Controller
         $animal = Animal::find($validated['animal_id']);
         if ($animal->status !== 'на продажу') {
             return back()->with('error', 'Это животное уже недоступно для продажи.')->withInput();
+        }
+        if (auth()->user()->role === 'продавец' && auth()->user()->employee_id) {
+            $validated['employee_id'] = auth()->user()->employee_id;
+        }
+        if (empty($validated['employee_id'])) {
+            return back()
+                ->with('error', 'Не удалось определить продавца. Выберите продавца вручную.')
+                ->withInput();
         }
 
         // создаём продажу

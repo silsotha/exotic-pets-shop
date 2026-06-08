@@ -12,10 +12,18 @@
             </p>
         </div>
 
-        <form method="POST" action="{{ route('logout') }}">
-            @csrf
-            <button class="cabinet-logout" type="submit">Выйти</button>
-        </form>
+        <div class="cabinet-actions">
+            <a href="{{ route('profile.edit') }}" class="cabinet-action-link">
+                Изменить пароль
+            </a>
+
+            <form method="POST" action="{{ route('logout') }}" class="cabinet-action-form">
+                @csrf
+                <button class="cabinet-action-link cabinet-action-danger" type="submit">
+                    Выйти
+                </button>
+            </form>
+        </div>
     </section>
 
     <section class="cabinet-wrap">
@@ -40,6 +48,16 @@
                 <div>
                     <span>Дата регистрации</span>
                     <strong>{{ $client->registration_date ?? 'не указана' }}</strong>
+                </div>
+
+                <div>
+                    <span>Количество покупок</span>
+                    <strong>{{ $sales->count() }}</strong>
+                </div>
+
+                <div>
+                    <span>Общая сумма покупок</span>
+                    <strong>{{ number_format($totalSpent, 0, ',', ' ') }} ₽</strong>
                 </div>
             </div>
         </div>

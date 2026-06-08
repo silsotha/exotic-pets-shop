@@ -4,7 +4,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>ExoticPets — @yield('title', 'Магазин экзотических животных')</title>
+    <title>EXO PETS — @yield('title', 'Магазин экзотических животных')</title>
     <link
         href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;600;700&family=DM+Sans:wght@300;400;500;600&display=swap"
         rel="stylesheet">
@@ -16,9 +16,9 @@
 <body>
 
     <nav class="pub-navbar">
-        <div class="pub-logo">
-            <span class="leaf">🌿</span> ExoticPets
-        </div>
+        <a href="{{ route('home') }}" class="pub-logo" aria-label="EXO PETS — на главную">
+            <img src="{{ asset('images/logo.png') }}" alt="EXO PETS" class="pub-logo-img">
+        </a>
         <div class="pub-nav-links">
             <a href="{{ route('home') }}" class="{{ request()->routeIs('home') ? 'active' : '' }}">Главная</a>
             <a href="{{ route('catalog') }}" class="{{ request()->routeIs('catalog*') ? 'active' : '' }}">Каталог</a>
@@ -40,7 +40,10 @@
                         ? 'Личный кабинет'
                         : 'Панель управления';
                 @endphp
-                <a href="{{ $panelRoute }}" class="btn-login">{{ $panelLabel }}</a>
+
+                @if(!(auth()->user()->role === 'клиент' && (request()->routeIs('cabinet.*') || request()->routeIs('profile.*'))))
+                    <a href="{{ $panelRoute }}" class="btn-login">{{ $panelLabel }}</a>
+                @endif
             @else
                 <a href="{{ route('login') }}" class="btn-login">Войти в систему</a>
             @endauth
@@ -51,7 +54,7 @@
 
     <div
         style="background: var(--forest); color: rgba(245,239,230,0.5); text-align:center; padding: 24px; font-size: 13px; margin-top: 64px;">
-        🌿 <strong style="color: var(--cream)">ExoticPets</strong> — магазин экзотических животных
+        🌿 <strong style="color: var(--cream)">EXO PETS</strong> — магазин экзотических животных
         &nbsp;·&nbsp; 📍 Москва, ул. Примерная, 1
         &nbsp;·&nbsp; 📞 +7 (920) 000-00-00
     </div>
