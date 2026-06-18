@@ -736,7 +736,9 @@ body {
     overflow-y: auto;
     overflow-x: hidden;
 }
-
+.admin-content {
+    padding: 32px;
+}
 .admin-topbar {
     background: #fff;
     border-bottom: 1px solid #e8e4de;
@@ -749,6 +751,7 @@ body {
     top: 0;
     z-index: 50;
 }
+
 .topbar-title {
     font-family: "Playfair Display", serif;
     font-size: 18px;
@@ -779,10 +782,6 @@ body {
     font-size: 13px;
     font-weight: 700;
     cursor: pointer;
-}
-
-.admin-content {
-    padding: 32px;
 }
 
 /* дашборд */

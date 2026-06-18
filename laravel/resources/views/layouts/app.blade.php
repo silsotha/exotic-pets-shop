@@ -201,10 +201,7 @@
             <button class="btn btn-sm btn-outline-secondary d-md-none" id="sidebarToggle">
                 <i class="bi bi-list"></i>
             </button>
-            <div class="text-muted small">
-                @yield('breadcrumb', 'ExoticPets Admin')
-            </div>
-            <div class="d-flex align-items-center gap-3">
+            <div class="d-flex align-items-center gap-3 ms-auto">
                 <span class="text-muted small d-none d-md-inline">
                     {{ now()->format('d.m.Y') }}
                 </span>

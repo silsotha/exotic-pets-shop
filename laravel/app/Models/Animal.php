@@ -9,7 +9,6 @@ class Animal extends Model
     public $timestamps = false;
     protected $table = 'animals';
     protected $primaryKey = 'animal_id';
-
     protected $fillable = [
         'species_id',
         'supplier_id',
@@ -23,7 +22,6 @@ class Animal extends Model
         'cites_certificate',
         'photo_url',
     ];
-
     protected $casts = [
         'birth_date'   => 'date',
         'arrival_date' => 'date',
