@@ -2,6 +2,13 @@
 
 @section('title', 'Личный кабинет')
 
+@push('styles')
+    <link
+        rel="stylesheet"
+        href="{{ asset('css/cabinet.css') }}"
+    >
+@endpush
+
 @section('content')
     <section class="cabinet-hero">
         <div>

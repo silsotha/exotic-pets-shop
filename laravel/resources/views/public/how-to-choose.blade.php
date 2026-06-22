@@ -2,6 +2,13 @@
 
 @section('title', 'Как выбрать животное')
 
+@push('styles')
+    <link
+        rel="stylesheet"
+        href="{{ asset('css/choose.css') }}"
+    >
+@endpush
+
 @section('content')
 <section class="choose-page">
     <div class="choose-hero">

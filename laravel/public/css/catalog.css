@@ -1,0 +1,410 @@
+/* предупреждение */
+
+.alert-banner {
+    background: #fef3e2;
+    border: 1px solid #f8d08a;
+    border-radius: 10px;
+    padding: 14px 18px;
+    margin-bottom: 20px;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    font-size: 13px;
+    color: #7a4a0a;
+}
+
+/* грид каталога */
+
+.catalog-controls {
+    display: flex;
+    gap: 12px;
+    margin-bottom: 32px;
+    align-items: center;
+}
+.catalog-select {
+    padding: 9px 16px;
+    border: 1.5px solid #ddd;
+    border-radius: 8px;
+    font-family: "DM Sans", sans-serif;
+    font-size: 13px;
+    background: #fff;
+    color: var(--charcoal);
+    cursor: pointer;
+}
+.catalog-search {
+    flex: 1;
+    max-width: 320px;
+    padding: 9px 16px;
+    border: 1.5px solid #ddd;
+    border-radius: 8px;
+    font-family: "DM Sans", sans-serif;
+    font-size: 13px;
+}
+.catalog-search:focus {
+    outline: none;
+    border-color: var(--sage);
+}
+.catalog-reset {
+    color: var(--smoke);
+    font-size: 13px;
+    font-weight: 600;
+    text-decoration: none;
+    transition: color 0.2s;
+}
+.catalog-reset:hover {
+    color: var(--forest);
+}
+
+/* карточки животных */
+
+.animals-grid {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 24px;
+}
+.animal-card {
+    display: block;
+    background: #fff;
+    border-radius: 14px;
+    overflow: hidden;
+    border: 1px solid #ede8e0;
+    transition:
+        transform 0.25s,
+        box-shadow 0.25s;
+    cursor: pointer;
+    color: inherit;
+    text-decoration: none;
+}
+.animal-card:hover,
+.animal-card:focus {
+    color: inherit;
+    text-decoration: none;
+}
+.animal-card:hover {
+    transform: translateY(-4px);
+    box-shadow: 0 12px 32px rgba(26, 46, 26, 0.12);
+}
+.animal-card:focus-visible {
+    outline: 3px solid rgba(45, 90, 45, 0.25);
+    outline-offset: 3px;
+}
+.animal-img {
+    position: relative;
+    height: 200px;
+    overflow: hidden;
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    font-size: 72px;
+}
+.animal-photo {
+    position: absolute;
+    inset: 0;
+    z-index: 1;
+
+    display: block;
+    width: 100%;
+    height: 100%;
+
+    object-fit: cover;
+    object-position: center;
+}
+.animal-placeholder-icon {
+    position: relative;
+    z-index: 0;
+
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+}
+.animal-img.reptile {
+    background: linear-gradient(135deg, #1a3a1a, #2d5a2d);
+}
+.animal-img.bird {
+    background: linear-gradient(135deg, #1a2a3a, #2d4a6a);
+}
+.animal-img.insect {
+    background: linear-gradient(135deg, #3a2a1a, #6a4a2a);
+}
+.animal-img.amphibian {
+    background: linear-gradient(135deg, #1a3a2a, #2d6a4a);
+}
+.status-badge {
+    position: absolute;
+    top: 12px;
+    right: 12px;
+    z-index: 2;
+    padding: 3px 10px;
+    border-radius: 20px;
+    font-size: 11px;
+    font-weight: 600;
+}
+.status-available {
+    background: rgba(106, 170, 122, 0.9);
+    color: #fff;
+}
+.status-quarantine {
+    background: rgba(230, 126, 34, 0.9);
+    color: #fff;
+}
+.status-sold {
+    background: rgba(107, 122, 107, 0.9);
+    color: #fff;
+}
+.animal-body {
+    padding: 16px 18px 20px;
+}
+.animal-species {
+    font-size: 11px;
+    font-weight: 600;
+    color: var(--sage);
+    letter-spacing: 0.5px;
+    text-transform: uppercase;
+    margin-bottom: 4px;
+}
+.species-description-card {
+    margin-top: 20px;
+    margin-bottom: 20px;
+    padding: 14px 16px;
+    background: #f8f5ef;
+    border-left: 4px solid var(--sage);
+    border-radius: 10px;
+}
+.species-description-card h2 {
+    display: block;
+    margin: 0 0 6px;
+    color: var(--smoke);
+    font-family: "DM Sans", sans-serif;
+    font-size: 12px;
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 0.4px;
+}
+.species-description-card p {
+    margin: 0;
+    color: var(--charcoal);
+    font-size: 14px;
+    font-weight: 400;
+    line-height: 1.7;
+    white-space: pre-wrap;
+    tab-size: 4;
+}
+
+/* сложность содержания */
+
+.care-badge {
+    display: inline-flex;
+    align-items: center;
+    width: fit-content;
+    padding: 4px 9px;
+    border-radius: 999px;
+    font-size: 10.5px;
+    font-weight: 700;
+    letter-spacing: 0.2px;
+    line-height: 1.2;
+    white-space: nowrap;
+}
+.care-badge-beginner {
+    background: #e8f3e3;
+    color: var(--moss);
+}
+.care-badge-intermediate {
+    background: #fff3d8;
+    color: #9a6500;
+}
+.care-badge-advanced {
+    background: #fde8e8;
+    color: var(--danger);
+}
+.animal-care-level {
+    margin: 12px 0 18px;
+    padding: 14px 16px;
+    background: #f8f5ef;
+    border-left: 4px solid var(--sage);
+    border-radius: 10px;
+}
+.animal-care-level span {
+    display: block;
+    margin-bottom: 4px;
+    color: var(--smoke);
+    font-size: 12px;
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 0.4px;
+}
+.animal-care-level strong {
+    color: var(--forest);
+    font-size: 16px;
+    font-weight: 700;
+}
+
+.care-box {
+    border-radius: 22px;
+    background: linear-gradient(180deg, var(--mist), rgba(245, 239, 230, 0.42));
+    padding: 22px;
+}
+
+.care-box h4 {
+    font-family: var(--serif);
+    color: var(--forest);
+    font-size: 24px;
+    margin: 0 0 16px;
+}
+
+.care-grid {
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 12px;
+    margin-bottom: 16px;
+}
+
+.care-item {
+    background: #fff;
+    border-radius: 18px;
+    padding: 16px;
+    border: 1px solid rgba(34, 53, 45, 0.07);
+}
+
+.care-text {
+    color: var(--smoke);
+    line-height: 1.7;
+    margin: 12px 0 0;
+    white-space: pre-line;
+}
+
+.animal-name {
+    font-family: "Playfair Display", serif;
+    font-size: 18px;
+    color: var(--forest);
+    margin-bottom: 8px;
+}
+.animal-title-row {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 12px; /* сверху */
+    margin-bottom: 12px; /* снизу */
+}
+.animal-title-row .animal-name {
+    margin-bottom: 0;
+}
+.animal-title-row .care-badge {
+    margin-top: 0;
+}
+.animal-meta {
+    display: flex;
+    gap: 12px;
+    margin-bottom: 14px;
+}
+.animal-meta span {
+    font-size: 12px;
+    color: var(--smoke);
+}
+.animal-footer {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+.animal-price {
+    font-size: 22px;
+    font-weight: 700;
+    color: var(--amber);
+    font-family: "Playfair Display", serif;
+}
+.btn-details {
+    min-height: 34px;
+    padding: 7px 16px;
+
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+
+    border: none;
+    border-radius: 6px;
+
+    color: #fff;
+    background: var(--forest);
+
+    font-size: 12px;
+    font-weight: 600;
+    line-height: 1;
+
+    transition: background-color 0.2s;
+}
+.animal-card:hover .btn-details {
+    background: var(--moss);
+}
+
+/* mobile */
+
+@media (max-width: 900px) {
+    .animals-grid {
+        grid-template-columns: repeat(2, 1fr);
+    }
+    .categories-grid {
+        grid-template-columns: repeat(3, 1fr);
+    }
+    .stats-row {
+        grid-template-columns: repeat(2, 1fr);
+    }
+    .dashboard-grid {
+        grid-template-columns: 1fr;
+    }
+
+    /* карточка — тело */
+    .animal-body {
+        padding: 16px;
+    }
+    .animal-species {
+        font-size: 11px;
+        font-weight: 600;
+        letter-spacing: 1px;
+        text-transform: uppercase;
+        color: var(--sage);
+        margin-bottom: 4px;
+    }
+    .animal-name {
+        font-family: "Playfair Display", serif;
+        font-size: 17px;
+        font-weight: 600;
+        color: var(--forest);
+        margin-bottom: 8px;
+    }
+    .animal-meta {
+        display: flex;
+        gap: 6px;
+        flex-wrap: wrap;
+        font-size: 12px;
+        color: var(--smoke);
+        margin-bottom: 14px;
+    }
+    .animal-footer {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+    }
+    .animal-price {
+        font-size: 18px;
+        font-weight: 700;
+        color: var(--amber);
+    }
+    .btn-details {
+        padding: 6px 16px;
+        background: transparent;
+        border: 1.5px solid var(--sage);
+        color: var(--sage);
+        border-radius: 6px;
+        font-family: "DM Sans", sans-serif;
+        font-size: 12px;
+        font-weight: 600;
+        cursor: pointer;
+        text-decoration: none;
+        transition: all 0.2s;
+    }
+    .btn-details:hover {
+        background: var(--sage);
+        color: #fff;
+    }
+}

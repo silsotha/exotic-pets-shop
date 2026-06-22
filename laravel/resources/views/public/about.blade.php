@@ -1,4 +1,5 @@
 @extends('layouts.public')
+
 @section('title', 'О нас')
 
 @section('content')

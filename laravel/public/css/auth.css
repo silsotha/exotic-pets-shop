@@ -1,0 +1,93 @@
+/* админ - логин */
+
+.login-page {
+    min-height: calc(100vh - 42px);
+    background: linear-gradient(135deg, var(--forest) 0%, #0d1a0d 100%);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 40px;
+}
+.login-box {
+    background: rgba(253, 250, 245, 0.97);
+    border-radius: 20px;
+    padding: 48px 44px;
+    width: 420px;
+    box-shadow: 0 32px 80px rgba(0, 0, 0, 0.4);
+}
+.login-logo {
+    font-family: "Playfair Display", serif;
+    font-size: 26px;
+    font-weight: 700;
+    color: var(--forest);
+    margin-bottom: 6px;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+}
+.login-sub {
+    color: var(--smoke);
+    font-size: 14px;
+    margin-bottom: 36px;
+}
+.form-group {
+    margin-bottom: 20px;
+}
+.form-label {
+    display: block;
+    font-size: 12px;
+    font-weight: 600;
+    color: var(--forest);
+    margin-bottom: 7px;
+    letter-spacing: 0.3px;
+}
+.form-input {
+    width: 100%;
+    padding: 11px 14px;
+    border: 1.5px solid #ddd;
+    border-radius: 8px;
+    font-family: "DM Sans", sans-serif;
+    font-size: 14px;
+    transition: border-color 0.2s;
+    background: #fff;
+}
+.form-input:focus {
+    outline: none;
+    border-color: var(--sage);
+}
+.form-select {
+    width: 100%;
+    padding: 11px 14px;
+    border: 1.5px solid #ddd;
+    border-radius: 8px;
+    font-family: "DM Sans", sans-serif;
+    font-size: 14px;
+    background: #fff;
+    cursor: pointer;
+}
+.btn-submit {
+    width: 100%;
+    padding: 13px;
+    background: var(--forest);
+    color: #fff;
+    border: none;
+    border-radius: 8px;
+    font-family: "DM Sans", sans-serif;
+    font-size: 15px;
+    font-weight: 600;
+    cursor: pointer;
+    transition: background 0.2s;
+    margin-top: 8px;
+}
+.btn-submit:hover {
+    background: var(--moss);
+}
+.login-hint {
+    margin-top: 20px;
+    text-align: center;
+    font-size: 12px;
+    color: var(--smoke);
+}
+.login-hint strong {
+    color: var(--forest);
+}

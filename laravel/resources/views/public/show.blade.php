@@ -1,5 +1,13 @@
 @extends('layouts.public')
+
 @section('title', $animal->species->name)
+
+@push('styles')
+    <link
+        rel="stylesheet"
+        href="{{ asset('css/catalog.css') }}"
+    >
+@endpush
 
 @section('content')
 <div class="pub-section">
@@ -42,9 +50,9 @@
             </h1>
             
             @if($animal->species->care_level)
-                <div class="mt-3 inline-flex items-center rounded-full bg-green-100 px-3 py-1 text-sm text-green-800">
+                <span class="care-badge care-badge-{{ $animal->species->care_level }}">
                     {{ $animal->species->care_level_label }}
-                </div>
+                </span>
             @endif
 
             @if($animal->nickname)
@@ -54,13 +62,6 @@
             <div style="font-size:36px; font-weight:700; color:var(--amber); margin: 20px 0">
                 {{ number_format($animal->sale_price, 0, '.', ' ') }} ₽
             </div>
-
-            @if($animal->species->care_level)
-                <div class="animal-care-level">
-                    <span>Сложность содержания</span>
-                    <strong>{{ $animal->species->care_level_label }}</strong>
-                </div>
-            @endif
 
             <table style="width:100%; border-collapse:collapse; margin-bottom:24px">
                 <tr>
@@ -127,7 +128,7 @@
                 ✅ Животное доступно для покупки. Свяжитесь с нами для оформления.
             </div>
 
-            <div style="background:var(--cream); border:1.5px solid #e0d8cc; border-radius:12px; padding:20px; font-size:14px">
+            <div style="background: #f8f5ef; border:1.5px solid #e0d8cc; border-radius:12px; padding:20px; font-size:14px">
                 <strong style="display:block; margin-bottom:10px; color:var(--forest)">Контакты магазина</strong>
                 📞 +7 (920) 000-00-00<br>
                 ✉ info@exoticpets.ru<br>

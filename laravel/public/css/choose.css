@@ -1,0 +1,79 @@
+/* страница "как выбрать животное" */
+
+.choose-page {
+    max-width: 1120px;
+    margin: 0 auto;
+    padding: 64px 48px 80px;
+}
+
+.choose-hero {
+    max-width: 760px;
+    margin-bottom: 42px;
+}
+
+.choose-kicker {
+    display: inline-block;
+    margin-bottom: 12px;
+    color: var(--sage);
+    font-size: 13px;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.8px;
+}
+
+.choose-hero h1 {
+    margin: 0 0 18px;
+    color: var(--forest);
+    font-family: "Playfair Display", serif;
+    font-size: 44px;
+    line-height: 1.15;
+    font-weight: 700;
+}
+
+.choose-hero p {
+    margin: 0;
+    color: var(--smoke);
+    font-size: 16px;
+    line-height: 1.75;
+}
+
+.choose-grid {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 24px;
+}
+
+.choose-card {
+    position: relative;
+    padding: 28px;
+    background: #fff;
+    border: 1px solid #ede8e0;
+    border-radius: 16px;
+    box-shadow: 0 8px 28px rgba(26, 46, 26, 0.06);
+}
+
+.choose-number {
+    margin-bottom: 18px;
+    color: var(--amber);
+    font-family: "Playfair Display", serif;
+    font-size: 28px;
+    font-weight: 700;
+}
+
+.choose-card h2 {
+    margin: 0 0 10px;
+    color: var(--forest);
+    font-size: 20px;
+    font-weight: 700;
+}
+
+.choose-card p {
+    margin: 0;
+    color: var(--charcoal);
+    font-size: 14px;
+    line-height: 1.7;
+}
+
+.choose-action {
+    margin-top: 36px;
+}

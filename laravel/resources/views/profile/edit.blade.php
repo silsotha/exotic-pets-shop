@@ -1,6 +1,15 @@
 @extends(auth()->user()->role === 'клиент' ? 'layouts.public' : 'layouts.app')
 
-@section('title', 'Профиль')
+@section('title', 'Настройки профиля')
+
+@if(auth()->user()->role === 'клиент')
+    @push('styles')
+        <link
+            rel="stylesheet"
+            href="{{ asset('css/cabinet.css') }}"
+        >
+    @endpush
+@endif
 
 @section('content')
     @if(auth()->user()->role === 'клиент')

@@ -1,118 +1,340 @@
 @extends('layouts.app')
 
-@section('content')
-<div class="container py-4">
-    <div class="d-flex justify-content-between align-items-center mb-3">
-        <h2>Ветеринарные записи</h2>
-        <a href="{{ route('vet.create') }}" class="btn btn-primary">+ Добавить запись</a>
-    </div>
+@section('title', 'Ветеринарные записи')
+@section('page-title', 'Ветеринарные записи')
 
-    {{-- Уведомления --}}
-    @if(session('success'))
-        <div class="alert alert-success">
-            {{ session('success') }}
-            @if(session('approve_animal_id'))
-                <form method="POST"
-                      action="{{ route('animals.approve', session('approve_animal_id')) }}"
-                      class="d-inline">
-                    @csrf @method('PATCH')
-                    <button class="btn btn-sm btn-success ms-2">
-                        Перевести на продажу
+@section('content')
+    <section class="admin-section">
+        <header class="admin-section-header">
+            <div class="admin-section-heading">
+                <div class="admin-section-eyebrow">
+                    <i class="bi bi-heart-pulse"></i>
+                    Ветеринария
+                </div>
+
+                <h1 class="admin-section-title">
+                    Ветеринарные записи
+                </h1>
+
+                <p class="admin-section-description">
+                    Осмотры, прививки, лечение и результаты ветеринарного наблюдения за животными.
+                </p>
+            </div>
+
+            <div class="admin-section-actions">
+                <a
+                    href="{{ route('vet.create') }}"
+                    class="btn btn-primary"
+                >
+                    <i class="bi bi-plus-lg"></i>
+                    Добавить запись
+                </a>
+            </div>
+        </header>
+
+        @if(session('approve_animal_id'))
+            <div class="admin-notice admin-notice-success">
+                <div class="admin-notice-content">
+                    <div class="admin-notice-icon">
+                        <i class="bi bi-check-lg"></i>
+                    </div>
+
+                    <div>
+                        <div class="admin-notice-title">
+                            Осмотр успешно завершён
+                        </div>
+
+                        <div class="admin-notice-text">
+                            Животное признано здоровым и может быть переведено в продажу.
+                        </div>
+                    </div>
+                </div>
+
+                <form
+                    method="POST"
+                    action="{{ route('animals.approve', session('approve_animal_id')) }}"
+                >
+                    @csrf
+                    @method('PATCH')
+
+                    <button
+                        type="submit"
+                        class="admin-action-btn admin-action-confirm"
+                    >
+                        <i class="bi bi-check-circle"></i>
+                        Перевести в продажу
                     </button>
                 </form>
+            </div>
+        @endif
+
+        <div class="admin-panel">
+            <div class="admin-panel-header">
+                <div class="admin-panel-heading">
+                    <h2 class="admin-panel-title">
+                        Журнал ветеринарных записей
+                    </h2>
+
+                    <p class="admin-panel-description">
+                        Найдено записей: {{ $records->total() }}
+                    </p>
+                </div>
+            </div>
+
+            <form
+                method="GET"
+                action="{{ route('vet.index') }}"
+                class="admin-filters"
+            >
+                <div class="admin-filter">
+                    <label for="record_type" class="form-label">
+                        Тип записи
+                    </label>
+
+                    <select
+                        id="record_type"
+                        name="record_type"
+                        class="form-select"
+                    >
+                        <option value="">
+                            Все типы
+                        </option>
+
+                        <option
+                            value="осмотр"
+                            @selected(request('record_type') === 'осмотр')
+                        >
+                            Осмотр
+                        </option>
+
+                        <option
+                            value="прививка"
+                            @selected(request('record_type') === 'прививка')
+                        >
+                            Прививка
+                        </option>
+
+                        <option
+                            value="лечение"
+                            @selected(request('record_type') === 'лечение')
+                        >
+                            Лечение
+                        </option>
+                    </select>
+                </div>
+
+                <div class="admin-filter">
+                    <label for="result" class="form-label">
+                        Результат
+                    </label>
+
+                    <select
+                        id="result"
+                        name="result"
+                        class="form-select"
+                    >
+                        <option value="">
+                            Все результаты
+                        </option>
+
+                        <option
+                            value="здоров"
+                            @selected(request('result') === 'здоров')
+                        >
+                            Здоров
+                        </option>
+
+                        <option
+                            value="на лечении"
+                            @selected(request('result') === 'на лечении')
+                        >
+                            На лечении
+                        </option>
+
+                        <option
+                            value="карантин"
+                            @selected(request('result') === 'карантин')
+                        >
+                            Карантин
+                        </option>
+                    </select>
+                </div>
+
+                <div class="admin-filter-actions">
+                    <button
+                        type="submit"
+                        class="btn btn-secondary"
+                    >
+                        <i class="bi bi-funnel"></i>
+                        Применить
+                    </button>
+
+                    <a
+                        href="{{ route('vet.index') }}"
+                        class="btn btn-light"
+                    >
+                        <i class="bi bi-arrow-counterclockwise"></i>
+                        Сбросить
+                    </a>
+                </div>
+            </form>
+
+            <div class="admin-table-scroll">
+                <table class="admin-table">
+                    <thead>
+                        <tr>
+                            <th>Дата</th>
+                            <th>Животное</th>
+                            <th>Тип записи</th>
+                            <th>Диагноз</th>
+                            <th>Результат</th>
+                            <th>Ветеринар</th>
+                            <th class="admin-table-actions-cell">
+                                Действия
+                            </th>
+                        </tr>
+                    </thead>
+
+                    <tbody>
+                        @forelse($records as $record)
+                            @php
+                                $resultClasses = [
+                                    'здоров' => 'admin-result-healthy',
+                                    'на лечении' => 'admin-result-treatment',
+                                    'карантин' => 'admin-result-quarantine',
+                                ];
+
+                                $typeIcons = [
+                                    'осмотр' => 'bi-clipboard2-pulse',
+                                    'прививка' => 'bi-shield-check',
+                                    'лечение' => 'bi-capsule',
+                                ];
+                            @endphp
+
+                            <tr>
+                                <td class="admin-table-number">
+                                    {{ $record->record_date }}
+                                </td>
+
+                                <td>
+                                    @if($record->animal)
+                                        <a
+                                            href="{{ route('animals.show', $record->animal_id) }}"
+                                            class="admin-entity-link"
+                                        >
+                                            <span class="admin-table-primary">
+                                                {{ $record->animal->nickname ?? $record->animal->species?->name ?? 'Без клички' }}
+                                            </span>
+
+                                            <span class="admin-table-secondary">
+                                                {{ $record->animal->species?->name ?? 'Неизвестный вид' }}
+                                            </span>
+                                        </a>
+                                    @else
+                                        <span class="admin-table-secondary">
+                                            Животное не найдено
+                                        </span>
+                                    @endif
+                                </td>
+
+                                <td>
+                                    <span class="admin-record-type">
+                                        <i class="bi {{ $typeIcons[$record->record_type] ?? 'bi-journal-medical' }}"></i>
+                                        {{ ucfirst($record->record_type) }}
+                                    </span>
+                                </td>
+
+                                <td>
+                                    @if($record->diagnosis)
+                                        <span
+                                            class="admin-diagnosis"
+                                            title="{{ $record->diagnosis }}"
+                                        >
+                                            {{ \Illuminate\Support\Str::limit($record->diagnosis, 42) }}
+                                        </span>
+                                    @else
+                                        <span class="admin-table-secondary">
+                                            Не указан
+                                        </span>
+                                    @endif
+                                </td>
+
+                                <td>
+                                    <span class="admin-result {{ $resultClasses[$record->result] ?? 'admin-result-default' }}">
+                                        {{ ucfirst($record->result) }}
+                                    </span>
+                                </td>
+
+                                <td>
+                                    {{ $record->vet->full_name }}
+                                </td>
+
+                                <td class="admin-table-actions-cell">
+                                    <div class="admin-table-actions">
+                                        <a
+                                            href="{{ route('vet.show', $record->record_id) }}"
+                                            class="admin-action-btn admin-action-view"
+                                            title="Открыть запись"
+                                        >
+                                            <i class="bi bi-eye"></i>
+                                            <span>Просмотр</span>
+                                        </a>
+
+                                        <a
+                                            href="{{ route('vet.edit', $record->record_id) }}"
+                                            class="admin-action-btn admin-action-edit"
+                                            title="Редактировать запись"
+                                        >
+                                            <i class="bi bi-pencil"></i>
+                                        </a>
+
+                                        <form
+                                            method="POST"
+                                            action="{{ route('vet.destroy', $record) }}"
+                                            onsubmit="return confirm('Удалить ветеринарную запись?')"
+                                        >
+                                            @csrf
+                                            @method('DELETE')
+
+                                            <button
+                                                type="submit"
+                                                class="admin-action-btn admin-action-delete"
+                                                title="Удалить запись"
+                                            >
+                                                <i class="bi bi-trash"></i>
+                                            </button>
+                                        </form>
+                                    </div>
+                                </td>
+                            </tr>
+                        @empty
+                            <tr class="admin-empty-row">
+                                <td colspan="7">
+                                    <div class="admin-empty">
+                                        <div class="admin-empty-icon">
+                                            <i class="bi bi-heart-pulse"></i>
+                                        </div>
+
+                                        <div class="admin-empty-title">
+                                            Ветеринарные записи не найдены
+                                        </div>
+
+                                        <div>
+                                            Измени параметры фильтра или создай новую запись.
+                                        </div>
+                                    </div>
+                                </td>
+                            </tr>
+                        @endforelse
+                    </tbody>
+                </table>
+            </div>
+
+            @if($records->hasPages())
+                <footer class="admin-panel-footer">
+                    {{ $records->withQueryString()->links() }}
+                </footer>
             @endif
         </div>
-    @endif
-    @if(session('error'))
-        <div class="alert alert-danger">{{ session('error') }}</div>
-    @endif
-
-    {{-- Фильтры --}}
-    <form method="GET" class="row g-2 mb-3">
-        <div class="col-md-3">
-            <select name="record_type" class="form-select">
-                <option value="">Все типы</option>
-                <option value="осмотр"   {{ request('record_type') == 'осмотр'   ? 'selected' : '' }}>Осмотр</option>
-                <option value="прививка" {{ request('record_type') == 'прививка' ? 'selected' : '' }}>Прививка</option>
-                <option value="лечение"  {{ request('record_type') == 'лечение'  ? 'selected' : '' }}>Лечение</option>
-            </select>
-        </div>
-        <div class="col-md-3">
-            <select name="result" class="form-select">
-                <option value="">Все результаты</option>
-                <option value="здоров"     {{ request('result') == 'здоров'     ? 'selected' : '' }}>Здоров</option>
-                <option value="на лечении" {{ request('result') == 'на лечении' ? 'selected' : '' }}>На лечении</option>
-                <option value="карантин"   {{ request('result') == 'карантин'   ? 'selected' : '' }}>Карантин</option>
-            </select>
-        </div>
-        <div class="col-md-2">
-            <button class="btn btn-outline-secondary w-100">Фильтр</button>
-        </div>
-        <div class="col-md-2">
-            <a href="{{ route('vet.index') }}" class="btn btn-outline-danger w-100">Сбросить</a>
-        </div>
-    </form>
-
-    {{-- Таблица --}}
-    <table class="table table-bordered table-hover">
-        <thead class="table-dark">
-            <tr>
-                <th>Дата</th>
-                <th>Животное</th>
-                <th>Тип</th>
-                <th>Диагноз</th>
-                <th>Результат</th>
-                <th>Ветеринар</th>
-                <th>Действия</th>
-            </tr>
-        </thead>
-        <tbody>
-            @forelse($records as $rec)
-            <tr>
-                <td>{{ $rec->record_date }}</td>
-                <td>
-                    @if($rec->animal)
-                        <a href="{{ route('animals.show', $rec->animal_id) }}">
-                            {{ $rec->animal->species?->name ?? 'Неизвестный вид' }}
-                            {{ $rec->animal->nickname ? '('.$rec->animal->nickname.')' : '' }}
-                        </a>
-                    @else
-                        <span class="text-muted">Животное не найдено</span>
-                    @endif
-                </td>
-                <td>{{ $rec->record_type }}</td>
-                <td>{{ Str::limit($rec->diagnosis, 40) ?? '—' }}</td>
-                <td>
-                    @php
-                        $badges = [
-                            'здоров'     => 'success',
-                            'на лечении' => 'warning',
-                            'карантин'   => 'danger',
-                        ];
-                    @endphp
-                    <span class="badge bg-{{ $badges[$rec->result] ?? 'secondary' }}">
-                        {{ $rec->result }}
-                    </span>
-                </td>
-                <td>{{ $rec->vet->full_name }}</td>
-                <td>
-                    <a href="{{ route('vet.show', $rec->record_id) }}" class="btn btn-sm btn-info">Просмотр</a>
-                    <a href="{{ route('vet.edit', $rec->record_id) }}" class="btn btn-sm btn-warning">Изменить</a>
-                    <form method="POST" action="{{ route('vet.destroy', $rec) }}" class="d-inline"
-                          onsubmit="return confirm('Удалить запись?')">
-                        @csrf @method('DELETE')
-                        <button class="btn btn-sm btn-outline-danger">Удалить</button>
-                    </form>
-                </td>
-            </tr>
-            @empty
-            <tr>
-                <td colspan="7" class="text-center text-muted">Записей не найдено</td>
-            </tr>
-            @endforelse
-        </tbody>
-    </table>
-
-    {{ $records->withQueryString()->links() }}
-</div>
+    </section>
 @endsection

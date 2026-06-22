@@ -1,0 +1,56 @@
+:root {
+    --forest: #1a2e1a;
+    --moss: #2d4a2d;
+    --sage: #4a7c59;
+    --fern: #6aaa7a;
+    --amber: #d4890a;
+    --gold: #f0b840;
+    --cream: #f5efe6;
+    --paper: #fdfaf5;
+    --bark: #8b6240;
+    --charcoal: #2a2a2a;
+    --smoke: #6b7a6b;
+    --mist: #e8f0e8;
+    --danger: #c0392b;
+    --warn: #e67e22;
+}
+
+*,
+*::before,
+*::after {
+    box-sizing: border-box;
+}
+
+html {
+    min-height: 100%;
+}
+
+body {
+    min-height: 100vh;
+    margin: 0;
+
+    font-family: "DM Sans", sans-serif;
+    color: var(--charcoal);
+    background: var(--paper);
+
+    font-size: 15px;
+}
+
+img {
+    max-width: 100%;
+}
+
+button,
+input,
+select,
+textarea {
+    font: inherit;
+}
+
+a {
+    color: inherit;
+}
+
+[hidden] {
+    display: none !important;
+}

@@ -1,240 +1,394 @@
 @extends('layouts.app')
 
+@section('title', 'Обзор')
+@section('page-title', 'Обзор системы')
+
 @section('content')
-    <div class="container-fluid py-4">
-        <h2 class="mb-4">Dashboard</h2>
+    <section class="admin-section">
+        <header class="admin-section-header">
+            <div class="admin-section-heading">
+                <div class="admin-section-eyebrow">
+                    <i class="bi bi-bar-chart-line"></i>
+                    Аналитика
+                </div>
 
-        <div class="d-flex justify-content-between align-items-center mb-4">
+                <h1 class="admin-section-title">
+                    Обзор системы
+                </h1>
+
+                <p class="admin-section-description">
+                    Текущие показатели магазина, динамика продаж и записи, требующие внимания.
+                </p>
+            </div>
+
             @if(auth()->user()->isAdmin())
-                <a href="{{ route('admin.dashboard.export') }}" class="btn btn-outline-success">
-                    ↓ Экспорт продаж CSV
-                </a>
+                <div class="admin-section-actions">
+                    <a
+                        href="{{ route('admin.dashboard.export') }}"
+                        class="btn btn-secondary"
+                    >
+                        <i class="bi bi-download"></i>
+                        Экспорт продаж
+                    </a>
+                </div>
             @endif
+        </header>
+
+        <div class="dashboard-metrics">
+            <article class="dashboard-metric dashboard-metric-animals">
+                <div class="dashboard-metric-top">
+                    <div class="dashboard-metric-icon">
+                        <i class="bi bi-grid"></i>
+                    </div>
+
+                    <span class="dashboard-metric-caption">
+                        Каталог
+                    </span>
+                </div>
+
+                <div class="dashboard-metric-value">
+                    {{ $totalAnimals }}
+                </div>
+
+                <div class="dashboard-metric-label">
+                    Всего животных
+                </div>
+            </article>
+
+            <article class="dashboard-metric dashboard-metric-quarantine">
+                <div class="dashboard-metric-top">
+                    <div class="dashboard-metric-icon">
+                        <i class="bi bi-hourglass-split"></i>
+                    </div>
+
+                    <span class="dashboard-metric-caption">
+                        Контроль
+                    </span>
+                </div>
+
+                <div class="dashboard-metric-value">
+                    {{ $onQuarantine }}
+                </div>
+
+                <div class="dashboard-metric-label">
+                    На карантине
+                </div>
+            </article>
+
+            <article class="dashboard-metric dashboard-metric-sale">
+                <div class="dashboard-metric-top">
+                    <div class="dashboard-metric-icon">
+                        <i class="bi bi-shop"></i>
+                    </div>
+
+                    <span class="dashboard-metric-caption">
+                        Доступно
+                    </span>
+                </div>
+
+                <div class="dashboard-metric-value">
+                    {{ $availableForSale }}
+                </div>
+
+                <div class="dashboard-metric-label">
+                    На продажу
+                </div>
+            </article>
+
+            <article class="dashboard-metric dashboard-metric-sold">
+                <div class="dashboard-metric-top">
+                    <div class="dashboard-metric-icon">
+                        <i class="bi bi-bag-check"></i>
+                    </div>
+
+                    <span class="dashboard-metric-caption">
+                        Продажи
+                    </span>
+                </div>
+
+                <div class="dashboard-metric-value">
+                    {{ $sold }}
+                </div>
+
+                <div class="dashboard-metric-label">
+                    Продано животных
+                </div>
+            </article>
+
+            <article class="dashboard-metric dashboard-metric-revenue-month">
+                <div class="dashboard-metric-top">
+                    <div class="dashboard-metric-icon">
+                        <i class="bi bi-calendar3"></i>
+                    </div>
+
+                    <span class="dashboard-metric-caption">
+                        Этот месяц
+                    </span>
+                </div>
+
+                <div class="dashboard-metric-value dashboard-metric-value-money">
+                    {{ number_format($revenueThisMonth, 0, ',', ' ') }} ₽
+                </div>
+
+                <div class="dashboard-metric-label">
+                    Выручка за месяц
+                </div>
+            </article>
+
+            <article class="dashboard-metric dashboard-metric-revenue-total">
+                <div class="dashboard-metric-top">
+                    <div class="dashboard-metric-icon">
+                        <i class="bi bi-wallet2"></i>
+                    </div>
+
+                    <span class="dashboard-metric-caption">
+                        Всё время
+                    </span>
+                </div>
+
+                <div class="dashboard-metric-value dashboard-metric-value-money">
+                    {{ number_format($revenueTotal, 0, ',', ' ') }} ₽
+                </div>
+
+                <div class="dashboard-metric-label">
+                    Общая выручка
+                </div>
+            </article>
         </div>
 
-        {{-- виджеты-счётчики --}}
-        <div class="row g-3 mb-4">
-            <div class="col-sm-6 col-xl-2">
-                <div class="card text-white bg-primary h-100">
-                    <div class="card-body">
-                        <div class="fs-2 fw-bold">{{ $totalAnimals }}</div>
-                        <div>Всего животных</div>
+        <div class="dashboard-chart-grid">
+            <article class="admin-panel dashboard-chart-panel">
+                <header class="admin-panel-header">
+                    <div class="admin-panel-heading">
+                        <h2 class="admin-panel-title">
+                            Динамика продаж
+                        </h2>
+
+                        <p class="admin-panel-description">
+                            Количество продаж и выручка за последние 6 месяцев.
+                        </p>
                     </div>
-                </div>
-            </div>
-            <div class="col-sm-6 col-xl-2">
-                <div class="card text-dark bg-warning h-100">
-                    <div class="card-body">
-                        <div class="fs-2 fw-bold">{{ $onQuarantine }}</div>
-                        <div>На карантине</div>
+
+                    <div class="dashboard-panel-icon">
+                        <i class="bi bi-graph-up"></i>
                     </div>
+                </header>
+
+                <div class="dashboard-chart-body">
+                    <canvas id="salesChart"></canvas>
                 </div>
-            </div>
-            <div class="col-sm-6 col-xl-2">
-                <div class="card text-white bg-success h-100">
-                    <div class="card-body">
-                        <div class="fs-2 fw-bold">{{ $availableForSale }}</div>
-                        <div>На продажу</div>
+            </article>
+
+            <article class="admin-panel dashboard-chart-panel">
+                <header class="admin-panel-header">
+                    <div class="admin-panel-heading">
+                        <h2 class="admin-panel-title">
+                            Популярные виды
+                        </h2>
+
+                        <p class="admin-panel-description">
+                            Топ-5 видов по количеству продаж.
+                        </p>
                     </div>
-                </div>
-            </div>
-            <div class="col-sm-6 col-xl-2">
-                <div class="card text-white bg-secondary h-100">
-                    <div class="card-body">
-                        <div class="fs-2 fw-bold">{{ $sold }}</div>
-                        <div>Продано</div>
+
+                    <div class="dashboard-panel-icon">
+                        <i class="bi bi-pie-chart"></i>
                     </div>
+                </header>
+
+                <div class="dashboard-chart-body dashboard-chart-body-small">
+                    <canvas id="speciesChart"></canvas>
                 </div>
-            </div>
-            <div class="col-sm-6 col-xl-2">
-                <div class="card text-white bg-info h-100">
-                    <div class="card-body">
-                        <div class="fs-2 fw-bold">{{ number_format($revenueThisMonth, 0, '.', ' ') }} ₽</div>
-                        <div>Выручка за месяц</div>
-                    </div>
-                </div>
-            </div>
-            <div class="col-sm-6 col-xl-2">
-                <div class="card text-white bg-dark h-100">
-                    <div class="card-body">
-                        <div class="fs-2 fw-bold">{{ number_format($revenueTotal, 0, '.', ' ') }} ₽</div>
-                        <div>Выручка всего</div>
-                    </div>
-                </div>
-            </div>
+            </article>
         </div>
 
-        <div class="row g-4 mb-4">
+        <div class="dashboard-lower-grid">
+            <article class="admin-panel">
+                <header class="admin-panel-header">
+                    <div class="admin-panel-heading">
+                        <h2 class="admin-panel-title">
+                            Последние продажи
+                        </h2>
 
-            {{-- график продаж по месяцам --}}
-            <div class="col-lg-8">
-                <div class="card h-100">
-                    <div class="card-header fw-bold">Динамика продаж (последние 6 месяцев)</div>
-                    <div class="card-body">
-                        <canvas id="salesChart" height="100"></canvas>
+                        <p class="admin-panel-description">
+                            Недавно оформленные операции.
+                        </p>
                     </div>
-                </div>
-            </div>
 
-            {{-- топ видов --}}
-            <div class="col-lg-4">
-                <div class="card h-100">
-                    <div class="card-header fw-bold">Топ-5 продаваемых видов</div>
-                    <div class="card-body">
-                        <canvas id="speciesChart"></canvas>
-                    </div>
-                </div>
-            </div>
-        </div>
+                    <a
+                        href="{{ route('sales.index') }}"
+                        class="admin-action-btn admin-action-view"
+                    >
+                        Все продажи
+                        <i class="bi bi-arrow-right"></i>
+                    </a>
+                </header>
 
-        <div class="row g-4">
+                <div class="admin-table-scroll">
+                    <table class="admin-table dashboard-table">
+                        <thead>
+                            <tr>
+                                <th>Дата</th>
+                                <th>Животное</th>
+                                <th>Клиент</th>
+                                <th>Сумма</th>
+                            </tr>
+                        </thead>
 
-            {{-- последние продажи --}}
-            <div class="col-lg-7">
-                <div class="card">
-                    <div class="card-header fw-bold">Последние продажи</div>
-                    <div class="card-body p-0">
-                        <table class="table table-sm mb-0">
-                            <thead class="table-light">
+                        <tbody>
+                            @forelse($recentSales as $sale)
                                 <tr>
-                                    <th>Дата</th>
-                                    <th>Животное</th>
-                                    <th>Клиент</th>
-                                    <th>Сумма</th>
-                                </tr>
-                            </thead>
-                            <tbody>
-                                @forelse($recentSales as $sale)
-                                    <tr>
-                                        <td>{{ $sale->sale_date }}</td>
-                                        <td>{{ $sale->animal->species->name }}</td>
-                                        <td>{{ $sale->client->full_name }}</td>
-                                        <td>{{ number_format($sale->total_price, 2) }} ₽</td>
-                                    </tr>
-                                @empty
-                                    <tr>
-                                        <td colspan="4" class="text-center text-muted py-2">Продаж пока нет</td>
-                                    </tr>
-                                @endforelse
-                            </tbody>
-                        </table>
-                    </div>
-                    <div class="card-footer">
-                        <a href="{{ route('sales.index') }}" class="btn btn-sm btn-outline-primary">
-                            Все продажи →
-                        </a>
-                    </div>
-                </div>
-            </div>
+                                    <td class="admin-table-number">
+                                        {{ $sale->sale_date }}
+                                    </td>
 
-            {{-- карантин с просрочкой --}}
-            <div class="col-lg-5">
-                <div class="card">
-                    <div class="card-header fw-bold text-danger">
-                        ⚠ Карантин истёк ({{ $overdueQuarantine->count() }})
+                                    <td>
+                                        <div class="admin-table-primary">
+                                            {{ $sale->animal->nickname ?? $sale->animal->species->name }}
+                                        </div>
+
+                                        @if($sale->animal->nickname)
+                                            <div class="admin-table-secondary">
+                                                {{ $sale->animal->species->name }}
+                                            </div>
+                                        @endif
+                                    </td>
+
+                                    <td>
+                                        {{ $sale->client->full_name }}
+                                    </td>
+
+                                    <td class="admin-table-number">
+                                        <strong>
+                                            {{ number_format($sale->total_price, 2, ',', ' ') }} ₽
+                                        </strong>
+                                    </td>
+                                </tr>
+                            @empty
+                                <tr class="admin-empty-row">
+                                    <td colspan="4">
+                                        <div class="admin-empty dashboard-empty">
+                                            <div class="admin-empty-icon">
+                                                <i class="bi bi-receipt"></i>
+                                            </div>
+
+                                            <div class="admin-empty-title">
+                                                Продаж пока нет
+                                            </div>
+
+                                            <div>
+                                                Оформленные операции появятся в этом блоке.
+                                            </div>
+                                        </div>
+                                    </td>
+                                </tr>
+                            @endforelse
+                        </tbody>
+                    </table>
+                </div>
+            </article>
+
+            <article class="admin-panel dashboard-attention-panel">
+                <header class="admin-panel-header">
+                    <div class="admin-panel-heading">
+                        <div class="dashboard-attention-title">
+                            <span class="dashboard-attention-icon">
+                                <i class="bi bi-exclamation-lg"></i>
+                            </span>
+
+                            <h2 class="admin-panel-title">
+                                Истёкший карантин
+                            </h2>
+                        </div>
+
+                        <p class="admin-panel-description">
+                            Требуют осмотра: {{ $overdueQuarantine->count() }}
+                        </p>
                     </div>
-                    <div class="card-body p-0">
-                        <table class="table table-sm mb-0">
-                            <thead class="table-light">
+                </header>
+
+                <div class="admin-table-scroll">
+                    <table class="admin-table dashboard-table">
+                        <thead>
+                            <tr>
+                                <th>Животное</th>
+                                <th>Поступило</th>
+                                <th class="admin-table-actions-cell"></th>
+                            </tr>
+                        </thead>
+
+                        <tbody>
+                            @forelse($overdueQuarantine as $animal)
                                 <tr>
-                                    <th>Животное</th>
-                                    <th>Поступило</th>
-                                    <th></th>
+                                    <td>
+                                        <div class="admin-table-primary">
+                                            {{ $animal->nickname ?? $animal->species->name }}
+                                        </div>
+
+                                        @if($animal->nickname)
+                                            <div class="admin-table-secondary">
+                                                {{ $animal->species->name }}
+                                            </div>
+                                        @endif
+                                    </td>
+
+                                    <td class="admin-table-number">
+                                        {{ $animal->arrival_date_formatted }}
+                                    </td>
+
+                                    <td class="admin-table-actions-cell">
+                                        <a
+                                            href="{{ route('animals.show', $animal) }}"
+                                            class="admin-action-btn admin-action-attention"
+                                        >
+                                            <i class="bi bi-eye"></i>
+                                            Открыть
+                                        </a>
+                                    </td>
                                 </tr>
-                            </thead>
-                            <tbody>
-                                @forelse($overdueQuarantine as $animal)
-                                    <tr>
-                                        <td>{{ $animal->species->name }}
-                                            {{ $animal->nickname ? '(' . $animal->nickname . ')' : '' }}
-                                        </td>
-                                        <td>{{ $animal->arrival_date_formatted }}</td>
-                                        <td>
-                                            <a href="{{ route('animals.show', $animal) }}"
-                                                class="btn btn-sm btn-outline-warning">
-                                                Открыть
-                                            </a>
-                                        </td>
-                                    </tr>
-                                @empty
-                                    <tr>
-                                        <td colspan="3" class="text-center text-muted py-2">
-                                            Просрочек нет ✓
-                                        </td>
-                                    </tr>
-                                @endforelse
-                            </tbody>
-                        </table>
-                    </div>
+                            @empty
+                                <tr class="admin-empty-row">
+                                    <td colspan="3">
+                                        <div class="admin-empty dashboard-empty">
+                                            <div class="admin-empty-icon dashboard-empty-success">
+                                                <i class="bi bi-check-lg"></i>
+                                            </div>
+
+                                            <div class="admin-empty-title">
+                                                Просрочек нет
+                                            </div>
+
+                                            <div>
+                                                Все сроки карантина находятся под контролем.
+                                            </div>
+                                        </div>
+                                    </td>
+                                </tr>
+                            @endforelse
+                        </tbody>
+                    </table>
                 </div>
-            </div>
-
+            </article>
         </div>
-    </div>
-
-    {{-- chart.js --}}
-    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
-    <script>
-        const salesMonths = @json($salesByMonth->pluck('month'));
-        const salesCounts = @json($salesByMonth->pluck('count'));
-        const salesRevenue = @json($salesByMonth->pluck('revenue'));
-
-        const speciesNames = @json($topSpecies->pluck('name'));
-        const speciesCounts = @json($topSpecies->pluck('total'));
-
-        // график продаж
-        new Chart(document.getElementById('salesChart'), {
-            type: 'bar',
-            data: {
-                labels: salesMonths,
-                datasets: [
-                    {
-                        label: 'Количество продаж',
-                        data: salesCounts,
-                        backgroundColor: 'rgba(13, 110, 253, 0.6)',
-                        yAxisID: 'y',
-                    },
-                    {
-                        label: 'Выручка (₽)',
-                        data: salesRevenue,
-                        type: 'line',
-                        borderColor: 'rgba(25, 135, 84, 1)',
-                        backgroundColor: 'rgba(25, 135, 84, 0.1)',
-                        yAxisID: 'y1',
-                        tension: 0.3,
-                        fill: true,
-                    }
-                ]
-            },
-            options: {
-                responsive: true,
-                interaction: { mode: 'index' },
-                scales: {
-                    y: { type: 'linear', position: 'left', title: { display: true, text: 'Продажи' } },
-                    y1: {
-                        type: 'linear', position: 'right', title: { display: true, text: 'Выручка ₽' },
-                        grid: { drawOnChartArea: false }
-                    }
-                }
-            }
-        });
-
-        // круговая диаграмма видов
-        new Chart(document.getElementById('speciesChart'), {
-            type: 'doughnut',
-            data: {
-                labels: speciesNames,
-                datasets: [{
-                    data: speciesCounts,
-                    backgroundColor: [
-                        '#0d6efd', '#198754', '#ffc107', '#dc3545', '#0dcaf0'
-                    ],
-                }]
-            },
-            options: {
-                responsive: true,
-                plugins: { legend: { position: 'bottom' } }
-            }
-        });
-    </script>
+    </section>
 @endsection
+
+@push('scripts')
+    <script id="dashboard-sales-data" type="application/json">
+        {!! json_encode([
+            'months' => $salesByMonth->pluck('month')->values(),
+            'counts' => $salesByMonth->pluck('count')->values(),
+            'revenue' => $salesByMonth->pluck('revenue')->values(),
+        ], JSON_UNESCAPED_UNICODE | JSON_UNESCAPED_SLASHES) !!}
+    </script>
+
+    <script id="dashboard-species-data" type="application/json">
+        {!! json_encode([
+            'names' => $topSpecies->pluck('name')->values(),
+            'counts' => $topSpecies->pluck('total')->values(),
+        ], JSON_UNESCAPED_UNICODE | JSON_UNESCAPED_SLASHES) !!}
+    </script>
+
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <script src="{{ asset('js/admin-dashboard.js') }}"></script>
+@endpush

@@ -5,226 +5,274 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>EXO PETS — @yield('title', 'Панель управления')</title>
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.css" rel="stylesheet">
-    <style>
-        body {
-            background: #f4f6f9;
-        }
-        #sidebar {
-            width: 260px;
-            min-height: 100vh;
-            background: #1a1f2e;
-            position: fixed;
-            top: 0;
-            left: 0;
-            z-index: 100;
-            transition: width 0.2s;
-            display: flex;
-            flex-direction: column;
-        }
-
-        #sidebar .sidebar-logo {
-            padding: 1.2rem 1.5rem;
-            border-bottom: 1px solid rgba(255, 255, 255, 0.08);
-            color: #fff;
-            font-size: 1.15rem;
-            font-weight: 700;
-            letter-spacing: 0.5px;
-        }
-
-        #sidebar .sidebar-logo span {
-            color: #4dabf7;
-        }
-
-        .sidebar-logo-img-wrap {
-            display: flex;
-            align-items: center;
-            min-height: 66px;
-        }
-
-        .sidebar-logo-img {
-            display: block;
-            max-height: 28px;
-            object-fit: contain;
-        }
-
-        #sidebar .nav-label {
-            font-size: 0.7rem;
-            text-transform: uppercase;
-            letter-spacing: 1px;
-            color: rgba(255, 255, 255, 0.35);
-            padding: 1rem 1.5rem 0.3rem;
-        }
-
-        #sidebar .nav-link {
-            color: rgba(255, 255, 255, 0.7);
-            padding: 0.55rem 1.5rem;
-            border-radius: 0;
-            display: flex;
-            align-items: center;
-            gap: 0.65rem;
-            font-size: 0.92rem;
-            transition: all 0.15s;
-        }
-
-        #sidebar .nav-link:hover,
-        #sidebar .nav-link.active {
-            color: #fff;
-            background: rgba(255, 255, 255, 0.08);
-            border-left: 3px solid #4dabf7;
-        }
-
-        #sidebar .nav-link i {
-            font-size: 1rem;
-            width: 18px;
-        }
-
-        #sidebar .sidebar-footer {
-            margin-top: auto;
-            padding: 1rem 1.5rem;
-            border-top: 1px solid rgba(255, 255, 255, 0.08);
-            color: rgba(255, 255, 255, 0.5);
-            font-size: 0.82rem;
-        }
-
-        #main-content {
-            margin-left: 260px;
-            min-height: 100vh;
-            display: flex;
-            flex-direction: column;
-        }
-
-        #topbar {
-            background: #fff;
-            border-bottom: 1px solid #e9ecef;
-            padding: 0.65rem 1.5rem;
-            display: flex;
-            align-items: center;
-            justify-content: space-between;
-            position: sticky;
-            top: 0;
-            z-index: 99;
-        }
-
-        @media (max-width: 768px) {
-            #sidebar {
-                width: 0;
-                overflow: hidden;
-            }
-
-            #sidebar.show {
-                width: 260px;
-            }
-
-            #main-content {
-                margin-left: 0;
-            }
-        }
-    </style>
+    <link
+        href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css"
+        rel="stylesheet">
+    <link
+        href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.css"
+        rel="stylesheet">
+    <link rel="icon"
+        href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><text y=%22.9em%22 font-size=%2290%22>📋</text></svg>">
+    <link
+        href="{{ asset('css/admin-panel.css') }}"
+        rel="stylesheet">
+    @stack('styles')
 </head>
 
 <body>
+    @php
+    $currentUser = auth()->user();
 
-    <nav id="sidebar">
-        <a href="{{ route('dashboard') }}" class="sidebar-logo sidebar-logo-img-wrap text-decoration-none">
-            <img src="{{ asset('images/logo.png') }}" alt="EXO PETS" class="sidebar-logo-img">
+    $roleLabel = [
+    'администратор' => 'Администратор',
+    'продавец' => 'Продавец-консультант',
+    'ветврач' => 'Ветеринар',
+    ];
+
+    $userInitial = mb_strtoupper(mb_substr($currentUser->name, 0, 1));
+    @endphp
+
+    <nav id="sidebar" aria-label="Навигация панели">
+        <a
+            href="{{ route('home') }}"
+            class="sidebar-logo"
+            aria-label="EXO PETS">
+            <img
+                src="{{ asset('images/logo_negate.png') }}"
+                alt="EXO PETS"
+                class="sidebar-logo-img">
         </a>
 
-        @if(auth()->user()->isAdmin() || auth()->user()->isSeller())
-            {{-- Продавец + Админ --}}
-            <div class="nav-label">Каталог</div>
-            <a href="{{ route('animals.index') }}" class="nav-link {{ request()->routeIs('animals.*') ? 'active' : '' }}">
-                <i class="bi bi-grid"></i> Животные
-            </a>
+        <div class="sidebar-navigation">
+            @if($currentUser->isAdmin() || $currentUser->isSeller())
+            <div class="nav-group">
+                <div class="nav-label">Каталог</div>
 
-            <div class="nav-label">Торговля</div>
-            <a href="{{ route('sales.index') }}" class="nav-link {{ request()->routeIs('sales.*') ? 'active' : '' }}">
-                <i class="bi bi-bag-check"></i> Продажи
-            </a>
-            <a href="{{ route('clients.index') }}" class="nav-link {{ request()->routeIs('clients.*') ? 'active' : '' }}">
-                <i class="bi bi-people"></i> Клиенты
-            </a>
-        @endif
+                <a
+                    href="{{ route('animals.index') }}"
+                    class="nav-link {{ request()->routeIs('animals.*') ? 'active' : '' }}">
+                    <i class="bi bi-grid"></i>
+                    <span>Животные</span>
+                </a>
+            </div>
 
-        @if(auth()->user()->isAdmin() || auth()->user()->isVet())
-            {{-- Ветеринар + Админ --}}
-            <div class="nav-label">Ветеринария</div>
-            <a href="{{ route('vet.index') }}" class="nav-link {{ request()->routeIs('vet.*') ? 'active' : '' }}">
-                <i class="bi bi-heart-pulse"></i> Ветзаписи
-            </a>
-        @endif
+            <div class="nav-group">
+                <div class="nav-label">Торговля</div>
 
-        @if(auth()->user()->isAdmin())
-            {{-- Только Админ --}}
-            <div class="nav-label">Аналитика</div>
-            <a href="{{ route('dashboard') }}" class="nav-link {{ request()->routeIs('dashboard') ? 'active' : '' }}">
-                <i class="bi bi-bar-chart-line"></i> Dashboard
-            </a>
+                <a
+                    href="{{ route('sales.index') }}"
+                    class="nav-link {{ request()->routeIs('sales.*') ? 'active' : '' }}">
+                    <i class="bi bi-bag-check"></i>
+                    <span>Продажи</span>
+                </a>
 
-            <div class="nav-label">Управление</div>
-            <a href="{{ route('admin.species.index') }}"
-                class="nav-link {{ request()->routeIs('admin.species.*') ? 'active' : '' }}">
-                <i class="bi bi-bookmarks"></i> Виды животных
-            </a>
+                <a
+                    href="{{ route('clients.index') }}"
+                    class="nav-link {{ request()->routeIs('clients.*') ? 'active' : '' }}">
+                    <i class="bi bi-people"></i>
+                    <span>Клиенты</span>
+                </a>
+            </div>
+            @endif
 
-            <a href="{{ route('admin.suppliers.index') }}"
-                class="nav-link {{ request()->routeIs('admin.suppliers.*') ? 'active' : '' }}">
-                <i class="bi bi-truck"></i> Поставщики
-            </a>
+            @if($currentUser->isAdmin() || $currentUser->isVet())
+            <div class="nav-group">
+                <div class="nav-label">Ветеринария</div>
 
-            <a href="{{ route('admin.employees.index') }}"
-                class="nav-link {{ request()->routeIs('admin.employees.*') ? 'active' : '' }}">
-                <i class="bi bi-person-badge"></i> Сотрудники
-            </a>
-        @endif
+                <a
+                    href="{{ route('vet.index') }}"
+                    class="nav-link {{ request()->routeIs('vet.*') ? 'active' : '' }}">
+                    <i class="bi bi-heart-pulse"></i>
+                    <span>Ветзаписи</span>
+                </a>
+            </div>
+            @endif
 
-        {{-- Итог по роли --}}
+            @if($currentUser->isAdmin())
+            <div class="nav-group">
+                <div class="nav-label">Аналитика</div>
+
+                <a
+                    href="{{ route('dashboard') }}"
+                    class="nav-link {{ request()->routeIs('dashboard') ? 'active' : '' }}">
+                    <i class="bi bi-bar-chart-line"></i>
+                    <span>Обзор</span>
+                </a>
+            </div>
+
+            <div class="nav-group">
+                <div class="nav-label">Управление</div>
+
+                <a
+                    href="{{ route('admin.species.index') }}"
+                    class="nav-link {{ request()->routeIs('admin.species.*') ? 'active' : '' }}">
+                    <i class="bi bi-bookmarks"></i>
+                    <span>Виды животных</span>
+                </a>
+
+                <a
+                    href="{{ route('admin.suppliers.index') }}"
+                    class="nav-link {{ request()->routeIs('admin.suppliers.*') ? 'active' : '' }}">
+                    <i class="bi bi-truck"></i>
+                    <span>Поставщики</span>
+                </a>
+
+                <a
+                    href="{{ route('admin.employees.index') }}"
+                    class="nav-link {{ request()->routeIs('admin.employees.*') ? 'active' : '' }}">
+                    <i class="bi bi-person-badge"></i>
+                    <span>Сотрудники</span>
+                </a>
+            </div>
+            @endif
+        </div>
+
         <div class="sidebar-footer">
-            {{ auth()->user()->name }}<br>
-            @php
-                $roleLabel = [
-                    'администратор' => 'Администратор',
-                    'продавец' => 'Продавец-консультант',
-                    'ветврач' => 'Ветеринар',
-                ];
-            @endphp
-            <span class="badge bg-secondary mt-1">
-                {{ $roleLabel[auth()->user()->role] ?? auth()->user()->role }}
-            </span>
+            <div class="sidebar-user">
+                <div class="sidebar-user-avatar">
+                    {{ $userInitial }}
+                </div>
+
+                <div class="sidebar-user-info">
+                    <div class="sidebar-user-name">
+                        {{ $currentUser->name }}
+                    </div>
+
+                    <div class="sidebar-user-role">
+                        {{ $roleLabel[$currentUser->role] ?? $currentUser->role }}
+                    </div>
+                </div>
+            </div>
         </div>
     </nav>
 
-    <div id="main-content">
+    <div id="sidebarBackdrop"></div>
 
-        <div id="topbar">
-            <button class="btn btn-sm btn-outline-secondary d-md-none" id="sidebarToggle">
-                <i class="bi bi-list"></i>
-            </button>
-            <div class="d-flex align-items-center gap-3 ms-auto">
-                <span class="text-muted small d-none d-md-inline">
-                    {{ now()->format('d.m.Y') }}
-                </span>
+    <div id="main-content">
+        <header id="topbar">
+            <div class="d-flex align-items-center gap-3">
+                <button
+                    type="button"
+                    class="btn btn-sm btn-secondary d-lg-none"
+                    id="sidebarToggle"
+                    aria-label="Открыть меню"
+                    aria-controls="sidebar"
+                    aria-expanded="false">
+                    <i class="bi bi-list"></i>
+                </button>
+
+                <div class="topbar-context">
+                    <div class="topbar-title">
+                        @yield('page-title', 'Панель управления')
+                    </div>
+
+                    <div class="topbar-subtitle">
+                        EXO PETS
+                    </div>
+                </div>
+            </div>
+
+            <div class="topbar-actions">
+                <div class="topbar-date d-none d-md-inline-flex">
+                    <i class="bi bi-calendar3"></i>
+                    <span>{{ now()->format('d.m.Y') }}</span>
+                </div>
+
                 <form method="POST" action="{{ route('logout') }}" class="m-0">
                     @csrf
-                    <button class="btn btn-sm btn-outline-danger">
-                        <i class="bi bi-box-arrow-right"></i> Выйти
+
+                    <button
+                        type="submit"
+                        class="btn btn-sm btn-danger"
+                        title="Выйти">
+                        <i class="bi bi-box-arrow-right"></i>
+                        <span class="d-none d-sm-inline">Выйти</span>
                     </button>
                 </form>
             </div>
-        </div>
+        </header>
 
-        <div class="flex-grow-1">
-            @yield('content')
-        </div>
+        <main class="flex-grow-1">
+            <div class="admin-content">
+                @if(session('success'))
+                <div
+                    class="alert alert-success alert-dismissible fade show"
+                    role="alert">
+                    <i class="bi bi-check-circle me-1"></i>
+                    {{ session('success') }}
+
+                    <button
+                        type="button"
+                        class="btn-close"
+                        data-bs-dismiss="alert"
+                        aria-label="Закрыть"></button>
+                </div>
+                @endif
+
+                @if(session('error'))
+                <div
+                    class="alert alert-danger alert-dismissible fade show"
+                    role="alert">
+                    <i class="bi bi-exclamation-circle me-1"></i>
+                    {{ session('error') }}
+
+                    <button
+                        type="button"
+                        class="btn-close"
+                        data-bs-dismiss="alert"
+                        aria-label="Закрыть"></button>
+                </div>
+                @endif
+
+                @yield('content')
+            </div>
+        </main>
     </div>
 
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+
     <script>
-        document.getElementById('sidebarToggle')?.addEventListener('click', () => {
-            document.getElementById('sidebar').classList.toggle('show');
+        document.addEventListener('DOMContentLoaded', () => {
+            const sidebar = document.getElementById('sidebar');
+            const toggle = document.getElementById('sidebarToggle');
+            const backdrop = document.getElementById('sidebarBackdrop');
+
+            const closeSidebar = () => {
+                sidebar?.classList.remove('show');
+                backdrop?.classList.remove('show');
+                toggle?.setAttribute('aria-expanded', 'false');
+                document.body.style.overflow = '';
+            };
+
+            const openSidebar = () => {
+                sidebar?.classList.add('show');
+                backdrop?.classList.add('show');
+                toggle?.setAttribute('aria-expanded', 'true');
+                document.body.style.overflow = 'hidden';
+            };
+
+            toggle?.addEventListener('click', () => {
+                sidebar?.classList.contains('show') ?
+                    closeSidebar() :
+                    openSidebar();
+            });
+
+            backdrop?.addEventListener('click', closeSidebar);
+
+            document.addEventListener('keydown', event => {
+                if (event.key === 'Escape') {
+                    closeSidebar();
+                }
+            });
+
+            window.addEventListener('resize', () => {
+                if (window.innerWidth >= 992) {
+                    closeSidebar();
+                }
+            });
         });
     </script>
+
     @stack('scripts')
 </body>
 

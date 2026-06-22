@@ -1,80 +1,206 @@
 @extends('layouts.app')
 
+@section('title', 'Клиенты')
+@section('page-title', 'Клиенты')
+
 @section('content')
-<div class="container py-4">
-    <div class="d-flex justify-content-between align-items-center mb-3">
-        <h2>Клиенты</h2>
-        <a href="{{ route('clients.create') }}" class="btn btn-primary">+ Добавить клиента</a>
-    </div>
+    <section class="admin-section">
+        <header class="admin-section-header">
+            <div class="admin-section-heading">
+                <div class="admin-section-eyebrow">
+                    <i class="bi bi-people"></i>
+                    Покупатели
+                </div>
 
-    @if(session('error'))
-        <div class="alert alert-danger">{{ session('error') }}</div>
-    @endif
-    @if(session('success'))
-        <div class="alert alert-success">{{ session('success') }}</div>
-    @endif
+                <h1 class="admin-section-title">Клиенты</h1>
 
-    <table class="table table-bordered table-hover">
-        <thead class="table-dark">
-            <tr>
-                <th>#</th>
-                <th>ФИО</th>
-                <th>Телефон</th>
-                <th>Email</th>
-                <th>Аккаунт</th>
-                <th>Паспорт</th>
-                <th>Дата регистрации</th>
-                <th>Покупок</th>
-                <th>Действия</th>
-            </tr>
-        </thead>
-        <tbody>
-            @forelse($clients as $client)
-            <tr>
-                <td>{{ $client->client_id }}</td>
-                <td>{{ $client->full_name }}</td>
-                <td>{{ $client->phone ?? '—' }}</td>
-                <td>{{ $client->email ?? '—' }}</td>
-                <td>
-                    @if($client->user_id)
-                        <span class="badge bg-success">создан</span>
-                    @else
-                        <span class="badge bg-secondary">нет</span>
-                    @endif
-                </td>
-                <td>{{ $client->passport_data ?? '—' }}</td>
-                <td>{{ $client->registration_date }}</td>
-                <td>{{ $client->sales_count ?? 0 }}</td>
-                <td style="white-space: nowrap;">
-                    <div class="btn-group btn-group-sm" role="group">
-                        <a href="{{ route('clients.edit', $client) }}" class="btn btn-warning">
-                            Редактировать
-                        </a>
+                <p class="admin-section-description">
+                    Контактные данные клиентов, сведения об аккаунтах и история совершённых покупок.
+                </p>
+            </div>
 
-                        @if(auth()->user()->isAdmin() && $client->user_id)
-                            <form method="POST"
-                                action="{{ route('clients.reset-password', $client) }}"
-                                class="d-inline m-0"
-                                onsubmit="return confirm('Сбросить пароль клиента? Новый временный пароль будет показан один раз.')">
-                                @csrf
-                                @method('PATCH')
+            <div class="admin-section-actions">
+                <a
+                    href="{{ route('clients.create') }}"
+                    class="btn btn-primary"
+                >
+                    <i class="bi bi-person-plus"></i>
+                    Добавить клиента
+                </a>
+            </div>
+        </header>
 
-                                <button type="submit" class="btn btn-outline-danger btn-sm">
-                                    Сбросить пароль
-                                </button>
-                            </form>
-                        @endif
-                    </div>
-                </td>
-            </tr>
-            @empty
-            <tr>
-                <td colspan="9" class="text-center text-muted">Клиентов нет</td>
-            </tr>
-            @endforelse
-        </tbody>
-    </table>
+        <div class="admin-panel">
+            <div class="admin-panel-header">
+                <div class="admin-panel-heading">
+                    <h2 class="admin-panel-title">
+                        База клиентов
+                    </h2>
 
-    {{ $clients->links() }}
-</div>
+                    <p class="admin-panel-description">
+                        Всего записей: {{ $clients->total() }}
+                    </p>
+                </div>
+            </div>
+
+            <div class="admin-table-scroll">
+                <table class="admin-table admin-table-clients">
+                    <thead>
+                        <tr>
+                            <th>ID</th>
+                            <th>Клиент</th>
+                            <th>Контакты</th>
+                            <th>Аккаунт</th>
+                            <th>Паспорт</th>
+                            <th>Регистрация</th>
+                            <th>Покупок</th>
+                            <th class="admin-table-actions-cell">
+                                Действия
+                            </th>
+                        </tr>
+                    </thead>
+
+                    <tbody>
+                        @forelse($clients as $client)
+                            <tr>
+                                <td class="admin-table-number">
+                                    #{{ $client->client_id }}
+                                </td>
+
+                                <td>
+                                    <div class="admin-table-primary">
+                                        {{ $client->full_name }}
+                                    </div>
+                                </td>
+
+                                <td>
+                                    <div class="admin-contact-list">
+                                        @if($client->phone)
+                                            <a
+                                                href="tel:{{ $client->phone }}"
+                                                class="admin-contact-item"
+                                            >
+                                                <i class="bi bi-telephone"></i>
+                                                <span>{{ $client->phone }}</span>
+                                            </a>
+                                        @endif
+
+                                        @if($client->email)
+                                            <a
+                                                href="mailto:{{ $client->email }}"
+                                                class="admin-contact-item"
+                                            >
+                                                <i class="bi bi-envelope"></i>
+                                                <span>{{ $client->email }}</span>
+                                            </a>
+                                        @endif
+
+                                        @if(!$client->phone && !$client->email)
+                                            <span class="admin-table-secondary">
+                                                Не указаны
+                                            </span>
+                                        @endif
+                                    </div>
+                                </td>
+
+                                <td>
+                                    @if($client->user_id)
+                                        <span class="admin-status admin-status-sale">
+                                            Аккаунт создан
+                                        </span>
+                                    @else
+                                        <span class="admin-status admin-status-sold">
+                                            Без аккаунта
+                                        </span>
+                                    @endif
+                                </td>
+
+                                <td>
+                                    @if($client->passport_data)
+                                        <span
+                                            class="admin-truncated-value"
+                                            title="{{ $client->passport_data }}"
+                                        >
+                                            {{ \Illuminate\Support\Str::limit($client->passport_data, 24) }}
+                                        </span>
+                                    @else
+                                        <span class="admin-table-secondary">
+                                            Не указан
+                                        </span>
+                                    @endif
+                                </td>
+
+                                <td class="admin-table-number">
+                                    {{ $client->registration_date }}
+                                </td>
+
+                                <td class="admin-table-number">
+                                    <span class="admin-count-badge">
+                                        {{ $client->sales_count ?? 0 }}
+                                    </span>
+                                </td>
+
+                                <td class="admin-table-actions-cell">
+                                    <div class="admin-table-actions">
+                                        <a
+                                            href="{{ route('clients.edit', $client) }}"
+                                            class="admin-action-btn admin-action-edit"
+                                            title="Редактировать клиента"
+                                        >
+                                            <i class="bi bi-pencil"></i>
+                                            <span>Изменить</span>
+                                        </a>
+
+                                        @if(auth()->user()->isAdmin() && $client->user_id)
+                                            <form
+                                                method="POST"
+                                                action="{{ route('clients.reset-password', $client) }}"
+                                                onsubmit="return confirm('Сбросить пароль клиента? Новый временный пароль будет показан один раз.')"
+                                            >
+                                                @csrf
+                                                @method('PATCH')
+
+                                                <button
+                                                    type="submit"
+                                                    class="admin-action-btn admin-action-password"
+                                                    title="Сбросить пароль"
+                                                >
+                                                    <i class="bi bi-key"></i>
+                                                    <span>Пароль</span>
+                                                </button>
+                                            </form>
+                                        @endif
+                                    </div>
+                                </td>
+                            </tr>
+                        @empty
+                            <tr class="admin-empty-row">
+                                <td colspan="8">
+                                    <div class="admin-empty">
+                                        <div class="admin-empty-icon">
+                                            <i class="bi bi-people"></i>
+                                        </div>
+
+                                        <div class="admin-empty-title">
+                                            Клиенты не добавлены
+                                        </div>
+
+                                        <div>
+                                            Создай карточку клиента для оформления продажи.
+                                        </div>
+                                    </div>
+                                </td>
+                            </tr>
+                        @endforelse
+                    </tbody>
+                </table>
+            </div>
+
+            @if($clients->hasPages())
+                <footer class="admin-panel-footer">
+                    {{ $clients->links() }}
+                </footer>
+            @endif
+        </div>
+    </section>
 @endsection

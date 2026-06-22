@@ -1,6 +1,13 @@
 @extends('layouts.public')
 @section('title', 'Главная')
 
+@push('styles')
+    <link
+    rel="stylesheet"
+    href="{{ asset('css/catalog.css') }}"
+    >
+@endpush
+
 @section('content')
 
     <div class="pub-hero">
