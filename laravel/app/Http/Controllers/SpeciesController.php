@@ -3,7 +3,9 @@
 namespace App\Http\Controllers;
 
 use App\Models\Species;
+use App\Models\Feed;
 use Illuminate\Http\Request;
+use Illuminate\Validation\Rule;
 
 class SpeciesController extends Controller
 {
@@ -31,9 +33,26 @@ class SpeciesController extends Controller
             'humidity_min' => 'nullable|numeric',
             'humidity_max' => 'nullable|numeric',
             'quarantine_days' => 'required|integer|min:1',
+            'feeding_group' => [
+                'required',
+                'string',
+                'max:50',
+                Rule::in(
+                    collect(config('exotic.animal_groups', []))
+                        ->flatten()
+                        ->all()
+                ),
+            ],
         ]);
 
-        Species::create($request->all());
+        $species = Species::create($request->all());
+
+        $feedIds = Feed::query()
+            ->whereJsonContains('animal_classes', $species->class)
+            ->pluck('feed_id');
+
+        $species->feeds()->syncWithoutDetaching($feedIds);
+
 
         return redirect()->route('admin.species.index')
             ->with('success', 'Вид добавлен.');
@@ -57,6 +76,16 @@ class SpeciesController extends Controller
             'humidity_min' => 'nullable|numeric',
             'humidity_max' => 'nullable|numeric',
             'quarantine_days' => 'required|integer|min:1',
+            'feeding_group' => [
+                'required',
+                'string',
+                'max:50',
+                Rule::in(
+                    collect(config('exotic.animal_groups', []))
+                        ->flatten()
+                        ->all()
+                ),
+            ],
         ]);
 
         $species->update($request->all());

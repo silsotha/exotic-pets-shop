@@ -2,10 +2,8 @@
 @section('title', 'Главная')
 
 @push('styles')
-    <link
-    rel="stylesheet"
-    href="{{ asset('css/catalog.css') }}"
-    >
+    <link rel="stylesheet" href="{{ asset('css/catalog.css') }}">
+    <link rel="stylesheet" href="{{ asset('css/public-feeds.css') }}">
 @endpush
 
 @section('content')
@@ -70,6 +68,7 @@
     {{-- новые поступления --}}
     <div class="pub-section" style="background: var(--mist); padding-top: 52px; padding-bottom: 52px">
         <div class="section-label">Новые поступления</div>
+
         <div class="section-title">Только что в магазине</div>
 
         @if($newArrivals->count() > 0)
@@ -87,5 +86,7 @@
             </p>
         @endif
     </div>
+
+    @include('public.home-feed-section')
 
 @endsection

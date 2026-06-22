@@ -3,10 +3,8 @@
 @section('title', $animal->species->name)
 
 @push('styles')
-    <link
-        rel="stylesheet"
-        href="{{ asset('css/catalog.css') }}"
-    >
+    <link rel="stylesheet" href="{{ asset('css/catalog.css') }}">
+    <link rel="stylesheet" href="{{ asset('css/public-feeds.css') }}">
 @endpush
 
 @section('content')
@@ -121,6 +119,55 @@
                 <section class="species-description-card">
                     <h2>Описание вида</h2>
                     <p>{{ $animal->species->description }}</p>
+                </section>
+            @endif
+
+            @if($suitableFeeds->isNotEmpty())
+                <section class="animal-feeds">
+                    <div class="animal-feeds-heading">
+                        <div>
+                            <span class="animal-feeds-eyebrow">Подходящий рацион</span>
+                            <h2>Чем кормить</h2>
+                        </div>
+
+                        <a
+                            href="{{ route('feeds', ['species' => $animal->species_id]) }}"
+                            class="animal-feeds-link"
+                        >
+                            Все варианты
+                        </a>
+                    </div>
+
+                    <div class="animal-feed-list">
+                        @foreach($suitableFeeds as $feed)
+                            @php
+                                $normalizedType = mb_strtolower($feed->feed_type ?? '');
+                                $typeClass = match (true) {
+                                    str_contains($normalizedType, 'жив') => 'feed-type-live',
+                                    str_contains($normalizedType, 'заморож') => 'feed-type-frozen',
+                                    str_contains($normalizedType, 'раститель') => 'feed-type-plant',
+                                    str_contains($normalizedType, 'сух') => 'feed-type-dry',
+                                    str_contains($normalizedType, 'витамин'),
+                                    str_contains($normalizedType, 'минерал'),
+                                    str_contains($normalizedType, 'добав') => 'feed-type-supplement',
+                                    default => 'feed-type-other',
+                                };
+                            @endphp
+
+                            <article class="animal-feed-item">
+                                <div>
+                                    <h3>{{ $feed->name }}</h3>
+                                    @if($feed->purpose)
+                                        <p>{{ \Illuminate\Support\Str::limit($feed->purpose, 90) }}</p>
+                                    @endif
+                                </div>
+
+                                <span class="feed-type-badge {{ $typeClass }}">
+                                    {{ $feed->feed_type ?: 'Корм' }}
+                                </span>
+                            </article>
+                        @endforeach
+                    </div>
                 </section>
             @endif
 

@@ -25,6 +25,8 @@
                 </div>
             </div>
 
+            @include('species._feeding-group-field')
+
             <div class="mb-3">
                 <label class="form-label">Среда обитания</label>
                 <input type="text" name="habitat" class="form-control" value="{{ old('habitat', $species->habitat) }}">

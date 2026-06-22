@@ -11,14 +11,16 @@ use App\Http\Controllers\EmployeeController;
 use App\Http\Controllers\ClientController;
 use App\Http\Controllers\PublicController;
 use App\Http\Controllers\ClientCabinetController;
+use App\Http\Controllers\FeedController;
+use App\Http\Controllers\FeedStockController;
 
 // публичная витрина — без авторизации
 Route::get('/', [PublicController::class, 'home'])->name('home');
 Route::get('/catalog', [PublicController::class, 'catalog'])->name('catalog');
 Route::get('/catalog/{animal}', [PublicController::class, 'show'])->name('catalog.show');
+Route::get('/feeds', [PublicController::class, 'feeds'])->name('feeds');
 Route::get('/about', [PublicController::class, 'about'])->name('about');
-Route::get('/how-to-choose', [PublicController::class, 'howToChoose'])
-    ->name('how-to-choose');
+Route::get('/how-to-choose', [PublicController::class, 'howToChoose'])->name('how-to-choose');
 
 // после авторизации редирект на дэшборд
 Route::get('/dashboard', function () {
@@ -51,10 +53,20 @@ Route::middleware(['auth', 'role:администратор'])
     ->name('admin.')
     ->group(function () {
         Route::resource('species', SpeciesController::class);
+        Route::resource('feeds', FeedController::class);
+
+        Route::post(
+            'feeds/{feed}/stock',
+            [FeedStockController::class, 'store']
+        )->name('feeds.stock.store');
+
         Route::resource('suppliers', SupplierController::class);
         Route::resource('employees', EmployeeController::class);
-        Route::get('export', [DashboardController::class, 'exportSales'])
-            ->name('dashboard.export');
+
+        Route::get(
+            'export',
+            [DashboardController::class, 'exportSales']
+        )->name('dashboard.export');
     });
 
 Route::middleware(['auth', 'role:администратор,продавец'])->group(function () {
@@ -62,9 +74,8 @@ Route::middleware(['auth', 'role:администратор,продавец'])-
     Route::patch('animals/{animal}/approve', [AnimalController::class, 'approve'])->name('animals.approve');
     Route::resource('sales', SaleController::class)->except(['edit', 'update']);
     Route::resource('clients', ClientController::class)->except(['show', 'destroy']);
-    
     Route::patch('clients/{client}/reset-password', [ClientController::class, 'resetPassword'])
-    ->name('clients.reset-password');
+        ->name('clients.reset-password');
 });
 
 Route::middleware(['auth', 'role:ветврач,администратор'])->group(function () {

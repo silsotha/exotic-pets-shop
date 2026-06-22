@@ -3,12 +3,12 @@
 namespace App\Http\Controllers;
 
 use App\Models\Animal;
+use App\Models\Feed;
 use App\Models\Species;
 use Illuminate\Http\Request;
 
 class PublicController extends Controller
 {
-    // главная страница
     public function home()
     {
         $newArrivals = Animal::with('species')
@@ -17,12 +17,18 @@ class PublicController extends Controller
             ->limit(4)
             ->get();
 
-        // счётчики для hero
-        $availableCount  = Animal::where('status', 'на продажу')->count();
-        $speciesCount    = \App\Models\Species::count();
-        $suppliersCount  = \App\Models\Supplier::count();
+        $featuredFeeds = Feed::query()
+            ->with('species:species_id,name')
+            ->whereHas('species')
+            ->orderByRaw("CASE WHEN LOWER(feed_type) LIKE '%жив%' THEN 1 WHEN LOWER(feed_type) LIKE '%заморож%' THEN 2 ELSE 3 END")
+            ->orderBy('name')
+            ->limit(6)
+            ->get();
 
-        // категории с количеством
+        $availableCount = Animal::where('status', 'на продажу')->count();
+        $speciesCount = Species::count();
+        $suppliersCount = \App\Models\Supplier::count();
+
         $categoryCounts = Animal::with('species')
             ->where('status', 'на продажу')
             ->get()
@@ -31,11 +37,15 @@ class PublicController extends Controller
             ->filter();
 
         return view('public.home', compact(
-            'newArrivals', 'availableCount',
-            'speciesCount', 'suppliersCount', 'categoryCounts'
+            'newArrivals',
+            'featuredFeeds',
+            'availableCount',
+            'speciesCount',
+            'suppliersCount',
+            'categoryCounts'
         ));
     }
-    
+
     public function about()
     {
         return view('public.about');
@@ -46,18 +56,46 @@ class PublicController extends Controller
         return view('public.how-to-choose');
     }
 
-    // каталог
+    public function feeds(Request $request)
+    {
+        $query = Feed::query()
+            ->with('species:species_id,name')
+            ->whereHas('species');
+
+        if ($request->filled('type')) {
+            $query->where('feed_type', $request->string('type'));
+        }
+
+        if ($request->filled('species')) {
+            $query->whereHas('species', function ($speciesQuery) use ($request) {
+                $speciesQuery->where('species.species_id', $request->integer('species'));
+            });
+        }
+
+        $feeds = $query->orderBy('name')->paginate(12)->withQueryString();
+
+        $feedTypes = Feed::query()
+            ->whereNotNull('feed_type')
+            ->where('feed_type', '!=', '')
+            ->whereHas('species')
+            ->orderBy('feed_type')
+            ->distinct()
+            ->pluck('feed_type');
+
+        $species = Species::query()
+            ->whereHas('feeds')
+            ->orderBy('name')
+            ->get(['species_id', 'name']);
+
+        return view('public.feeds', compact('feeds', 'feedTypes', 'species'));
+    }
+
     public function catalog(Request $request)
     {
-        $query = Animal::with('species')
-            ->where('status', 'на продажу');
+        $query = Animal::with('species')->where('status', 'на продажу');
 
         if ($request->filled('class')) {
-            $query->whereHas(
-                'species',
-                fn($q) =>
-                $q->where('class', $request->class)
-            );
+            $query->whereHas('species', fn($q) => $q->where('class', $request->class));
         }
 
         if ($request->filled('care_level')) {
@@ -86,14 +124,12 @@ class PublicController extends Controller
 
         $classes = Species::whereHas(
             'animals',
-            fn($q) =>
-            $q->where('status', 'на продажу')
+            fn($q) => $q->where('status', 'на продажу')
         )->pluck('class')->unique();
 
         return view('public.catalog', compact('animals', 'classes', 'careLevels'));
     }
 
-    // карточка животного
     public function show(Animal $animal)
     {
         if ($animal->status !== 'на продажу') {
@@ -102,7 +138,13 @@ class PublicController extends Controller
 
         $animal->load('species');
 
-        // похожие животные того же вида
+        $suitableFeeds = $animal->species
+            ->feeds()
+            ->orderByRaw("CASE WHEN LOWER(feed_type) LIKE '%жив%' THEN 1 WHEN LOWER(feed_type) LIKE '%заморож%' THEN 2 ELSE 3 END")
+            ->orderBy('name')
+            ->limit(3)
+            ->get();
+
         $similar = Animal::with('species')
             ->where('status', 'на продажу')
             ->where('species_id', $animal->species_id)
@@ -110,6 +152,6 @@ class PublicController extends Controller
             ->limit(3)
             ->get();
 
-        return view('public.show', compact('animal', 'similar'));
+        return view('public.show', compact('animal', 'similar', 'suitableFeeds'));
     }
 }

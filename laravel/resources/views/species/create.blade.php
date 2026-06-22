@@ -28,6 +28,8 @@
                     @error('class')<div class="invalid-feedback">{{ $message }}</div>@enderror
                 </div>
             </div>
+            
+            @include('species._feeding-group-field')
 
             <div class="mb-3">
                 <label class="form-label">Среда обитания</label>

@@ -111,6 +111,13 @@
                 </a>
 
                 <a
+                    href="{{ route('admin.feeds.index') }}"
+                    class="nav-link {{ request()->routeIs('admin.feeds.*') ? 'active' : '' }}">
+                    <i class="bi bi-box-seam"></i>
+                    <span>Кормовые объекты</span>
+                </a>
+
+                <a
                     href="{{ route('admin.suppliers.index') }}"
                     class="nav-link {{ request()->routeIs('admin.suppliers.*') ? 'active' : '' }}">
                     <i class="bi bi-truck"></i>

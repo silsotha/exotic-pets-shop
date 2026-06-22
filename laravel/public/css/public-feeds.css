@@ -1,0 +1,358 @@
+.home-feeds-section {
+    padding-top: 56px;
+    padding-bottom: 64px;
+}
+.home-feeds-heading {
+    display: flex;
+    align-items: end;
+    justify-content: space-between;
+    gap: 24px;
+    margin-bottom: 28px;
+}
+.home-feeds-description,
+.feed-page-intro {
+    max-width: 680px;
+    margin: 10px 0 0;
+    color: var(--smoke);
+    line-height: 1.7;
+}
+.feeds-grid {
+    display: grid;
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+    gap: 22px;
+}
+.feed-card {
+    min-width: 0;
+    padding: 22px;
+    background: #fff;
+    border: 1px solid #e9e2d7;
+    border-radius: 16px;
+    box-shadow: 0 8px 24px rgba(26, 46, 26, 0.05);
+    transition:
+        transform 0.22s ease,
+        box-shadow 0.22s ease;
+}
+.feed-card:hover {
+    transform: translateY(-3px);
+    box-shadow: 0 14px 34px rgba(26, 46, 26, 0.1);
+}
+.feed-card-top {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 12px;
+    margin-bottom: 18px;
+}
+.feed-card-icon {
+    width: 42px;
+    height: 42px;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: 12px;
+    font-size: 19px;
+}
+.feed-card-title {
+    margin: 0 0 10px;
+    color: var(--forest);
+    font-family: "Playfair Display", serif;
+    font-size: 21px;
+}
+.feed-card-purpose {
+    min-height: 44px;
+    margin: 0 0 16px;
+    color: var(--smoke);
+    font-size: 13px;
+    line-height: 1.65;
+}
+.feed-type-badge {
+    display: inline-flex;
+    align-items: center;
+    width: fit-content;
+    padding: 5px 10px;
+    border-radius: 999px;
+    font-size: 11px;
+    font-weight: 700;
+    line-height: 1.2;
+}
+.feed-type-live {
+    color: #245c31;
+    background: #e4f3e6;
+}
+.feed-type-frozen {
+    color: #285b78;
+    background: #e4f2f8;
+}
+.feed-type-plant {
+    color: #52711c;
+    background: #eef4dc;
+}
+.feed-type-dry {
+    color: #7b581e;
+    background: #f6ead6;
+}
+.feed-type-supplement {
+    color: #6b4b88;
+    background: #efe6f7;
+}
+.feed-type-other {
+    color: #59635e;
+    background: #ecefed;
+}
+.feed-species-list {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 6px;
+}
+.feed-species-list span {
+    padding: 4px 8px;
+    color: var(--smoke);
+    background: var(--mist);
+    border-radius: 999px;
+    font-size: 10.5px;
+    font-weight: 600;
+}
+.feed-catalog-page {
+    padding-top: 46px;
+    padding-bottom: 64px;
+}
+.feed-filters {
+    display: flex;
+    align-items: center;
+    flex-wrap: wrap;
+    gap: 12px;
+    margin: 30px 0;
+}
+.feed-filter-submit {
+    border: 0;
+    cursor: pointer;
+}
+.feed-pagination {
+    margin-top: 32px;
+}
+.feed-empty {
+    padding: 42px 20px;
+    color: var(--smoke);
+    background: var(--mist);
+    border-radius: 14px;
+    text-align: center;
+}
+.animal-feeds {
+    margin: 20px 0;
+    padding: 18px;
+    background: #f5f1e9;
+    border: 1px solid #e5ddd0;
+    border-radius: 14px;
+}
+.animal-feeds-heading {
+    display: flex;
+    align-items: end;
+    justify-content: space-between;
+    gap: 16px;
+    margin-bottom: 14px;
+}
+.animal-feeds-eyebrow {
+    display: block;
+    margin-bottom: 3px;
+    color: var(--sage);
+    font-size: 10px;
+    font-weight: 700;
+    letter-spacing: 0.7px;
+    text-transform: uppercase;
+}
+.animal-feeds-heading h2 {
+    margin: 0;
+    color: var(--forest);
+    font-family: "Playfair Display", serif;
+    font-size: 22px;
+}
+.animal-feeds-link {
+    color: var(--sage);
+    font-size: 12px;
+    font-weight: 700;
+    text-decoration: none;
+}
+.animal-feeds-link:hover {
+    color: var(--forest);
+}
+.animal-feed-list {
+    display: grid;
+    gap: 9px;
+}
+.animal-feed-item {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 14px;
+    padding: 12px 13px;
+    background: #fff;
+    border-radius: 10px;
+}
+.animal-feed-item h3 {
+    margin: 0;
+    color: var(--forest);
+    font-size: 13px;
+    font-weight: 700;
+}
+.animal-feed-item p {
+    margin: 3px 0 0;
+    color: var(--smoke);
+    font-size: 11.5px;
+    line-height: 1.45;
+}
+.animal-feed-item .feed-type-badge {
+    flex-shrink: 0;
+}
+@media (max-width: 900px) {
+    .feeds-grid {
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+    }
+    .home-feeds-heading {
+        align-items: flex-start;
+        flex-direction: column;
+    }
+}
+@media (max-width: 600px) {
+    .feeds-grid {
+        grid-template-columns: 1fr;
+    }
+    .feed-filters {
+        align-items: stretch;
+        flex-direction: column;
+    }
+    .feed-filters .catalog-select,
+    .feed-filter-submit {
+        width: 100%;
+        max-width: none;
+    }
+    .animal-feed-item {
+        align-items: flex-start;
+        flex-direction: column;
+    }
+}
+
+/* более выразительные иконки кормовых объектов */
+
+.feed-card-icon {
+    position: relative;
+    overflow: hidden;
+}
+
+.feed-card-emoji {
+    position: relative;
+    z-index: 1;
+    display: block;
+    font-size: 25px;
+    line-height: 1;
+    filter: saturate(0.92);
+    transform: translateY(1px);
+}
+
+.feed-card-icon-corner {
+    position: absolute;
+    right: 3px;
+    bottom: 2px;
+    z-index: 2;
+    font-size: 11px;
+    line-height: 1;
+    text-shadow: 0 1px 2px rgba(255, 255, 255, 0.9);
+}
+
+.feed-card-icon::after {
+    content: "";
+    position: absolute;
+    inset: auto -8px -10px auto;
+    width: 28px;
+    height: 28px;
+    border-radius: 50%;
+    background: rgba(255, 255, 255, 0.28);
+}
+
+/* самостоятельная секция кормов на главной */
+
+.public-feed-section {
+    background: #fff;
+    border-top: 1px solid #ece6dc;
+}
+
+.public-feed-section > .pub-section {
+    padding-top: 58px;
+    padding-bottom: 64px;
+}
+
+.public-feed-section-heading {
+    display: flex;
+    align-items: end;
+    justify-content: space-between;
+    gap: 24px;
+    margin-bottom: 28px;
+}
+
+.public-feed-section-description {
+    max-width: 660px;
+    margin: 10px 0 0;
+    color: var(--smoke);
+    line-height: 1.7;
+}
+
+/* метаданные мышей и крыс */
+
+.feed-rodent-meta {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 6px;
+    margin: -2px 0 14px;
+}
+
+.feed-rodent-meta span {
+    padding: 4px 8px;
+    color: #5f4b3d;
+    background: #f3ebe4;
+    border-radius: 999px;
+    font-size: 10.5px;
+    font-weight: 700;
+}
+
+/* поля грызуна в административной форме */
+
+.rodent-feed-fields {
+    margin: 2px 0 22px;
+    padding: 18px 18px 4px;
+    background: #f8f4ef;
+    border: 1px solid #e5dacf;
+    border-radius: 12px;
+}
+
+.rodent-feed-fields-heading {
+    display: flex;
+    align-items: flex-start;
+    justify-content: space-between;
+    gap: 16px;
+    margin-bottom: 14px;
+}
+
+.rodent-feed-fields-heading h3 {
+    margin: 0 0 4px;
+    color: #26372d;
+    font-size: 15px;
+    font-weight: 700;
+}
+
+.rodent-feed-fields-heading p {
+    margin: 0;
+    color: #6b746e;
+    font-size: 12px;
+    line-height: 1.5;
+}
+
+.rodent-feed-icon {
+    font-size: 28px;
+    line-height: 1;
+}
+
+@media (max-width: 700px) {
+    .public-feed-section-heading {
+        align-items: flex-start;
+        flex-direction: column;
+    }
+}

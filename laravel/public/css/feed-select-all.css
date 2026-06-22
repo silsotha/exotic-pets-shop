@@ -1,0 +1,103 @@
+/* Общая логика карточек выбора */
+
+.feed-target-no-groups {
+    padding: 12px 14px;
+    color: #7b847f;
+    font-size: 12px;
+}
+
+.feed-species-groups {
+    display: grid;
+    gap: 12px;
+    max-height: 420px;
+    overflow-y: auto;
+    padding-right: 4px;
+}
+
+.feed-species-group {
+    overflow: hidden;
+    background: #fff;
+    border: 1px solid #ded8cf;
+    border-radius: 12px;
+}
+
+.feed-species-group-header {
+    min-height: 48px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 16px;
+    padding: 11px 14px;
+    background: #f7f5f1;
+    border-bottom: 1px solid #e8e2d9;
+}
+
+.feed-species-group-header > div {
+    min-width: 0;
+    color: #26372d;
+    font-size: 13px;
+}
+
+.feed-species-group-header strong {
+    font-weight: 700;
+}
+
+.feed-species-group-header span {
+    color: #657169;
+}
+
+.feed-species-select-all,
+.feed-species-option {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    margin: 0;
+    cursor: pointer;
+}
+
+.feed-species-select-all {
+    flex: 0 0 auto;
+    color: #405047;
+    font-size: 12px;
+    font-weight: 700;
+}
+
+.feed-species-options {
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 8px;
+    padding: 12px 14px 14px;
+}
+
+.feed-species-option {
+    min-width: 0;
+    min-height: 40px;
+    padding: 9px 11px;
+    border: 1px solid #e5dfd6;
+    border-radius: 9px;
+    color: #425048;
+    font-size: 12px;
+    font-weight: 600;
+}
+
+.feed-species-option:has(input:checked) {
+    border-color: #789378;
+    background: #eef5ed;
+}
+
+.js-select-all:indeterminate {
+    background-color: #8c9e8d;
+    border-color: #8c9e8d;
+}
+
+@media (max-width: 620px) {
+    .feed-species-group-header {
+        align-items: flex-start;
+        flex-direction: column;
+        gap: 8px;
+    }
+
+    .feed-species-options {
+        grid-template-columns: 1fr;
+    }
+}
