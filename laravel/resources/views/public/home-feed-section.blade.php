@@ -13,16 +13,16 @@
                         представленных в магазине.
                     </p>
                 </div>
-
-                <a href="{{ route('feeds') }}" class="btn-outline">
-                    Смотреть все корма
-                </a>
             </div>
 
             <div class="feeds-grid">
                 @foreach($featuredFeeds as $feed)
                     @include('public._feed-card', ['feed' => $feed])
                 @endforeach
+            </div>
+
+            <div style="text-align:center; margin-top: 36px">
+                <a href="{{ route('feeds') }}" class="btn-primary">Смотреть все корма</a>
             </div>
         </div>
     </div>

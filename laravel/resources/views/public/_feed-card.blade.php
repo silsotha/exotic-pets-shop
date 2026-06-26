@@ -17,7 +17,7 @@
         str_contains($normalizedName, 'сверч') => '🦗',
         str_contains($normalizedName, 'таракан') => '🪳',
         str_contains($normalizedName, 'мыш') => '🐁',
-        str_contains($normalizedName, 'крыса') => '🐀',
+        str_contains($normalizedName, 'крыс') => '🐀',
         str_contains($normalizedName, 'саранч'),
         str_contains($normalizedName, 'кузнеч') => '🦗',
         str_contains($normalizedName, 'черв') => '🪱',

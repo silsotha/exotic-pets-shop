@@ -22,7 +22,7 @@ class PublicController extends Controller
             ->whereHas('species')
             ->orderByRaw("CASE WHEN LOWER(feed_type) LIKE '%жив%' THEN 1 WHEN LOWER(feed_type) LIKE '%заморож%' THEN 2 ELSE 3 END")
             ->orderBy('name')
-            ->limit(6)
+            ->limit(3)
             ->get();
 
         $availableCount = Animal::where('status', 'на продажу')->count();
@@ -140,10 +140,39 @@ class PublicController extends Controller
 
         $suitableFeeds = $animal->species
             ->feeds()
-            ->orderByRaw("CASE WHEN LOWER(feed_type) LIKE '%жив%' THEN 1 WHEN LOWER(feed_type) LIKE '%заморож%' THEN 2 ELSE 3 END")
+            ->orderByRaw("
+        CASE
+            WHEN LOWER(feed_type) LIKE '%жив%' THEN 1
+            WHEN LOWER(feed_type) LIKE '%заморож%' THEN 2
+            ELSE 3
+        END
+    ")
             ->orderBy('name')
-            ->limit(3)
             ->get();
+
+        $displayFeeds = $suitableFeeds
+            ->groupBy(function (Feed $feed) {
+                $normalizedName = mb_strtolower(trim($feed->name));
+
+                if (
+                    str_contains($normalizedName, 'мыш') ||
+                    str_contains($normalizedName, 'крыс')
+                ) {
+                    return 'rodent:' . $normalizedName;
+                }
+
+                return 'feed:' . $feed->feed_id;
+            })
+            ->map(function ($group) {
+                return [
+                    'feed' => $group->first(),
+                    'variants' => $group
+                        ->sortBy('prey_weight_min')
+                        ->values(),
+                ];
+            })
+            ->take(3)
+            ->values();
 
         $similar = Animal::with('species')
             ->where('status', 'на продажу')
@@ -152,6 +181,10 @@ class PublicController extends Controller
             ->limit(3)
             ->get();
 
-        return view('public.show', compact('animal', 'similar', 'suitableFeeds'));
+        return view('public.show', compact(
+            'animal',
+            'similar',
+            'displayFeeds'
+        ));
     }
 }

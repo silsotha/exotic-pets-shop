@@ -122,7 +122,7 @@
                 </section>
             @endif
 
-            @if($suitableFeeds->isNotEmpty())
+            @if($displayFeeds->isNotEmpty())
                 <section class="animal-feeds">
                     <div class="animal-feeds-heading">
                         <div>
@@ -139,26 +139,89 @@
                     </div>
 
                     <div class="animal-feed-list">
-                        @foreach($suitableFeeds as $feed)
+                        @foreach($displayFeeds as $displayFeed)
                             @php
-                                $normalizedType = mb_strtolower($feed->feed_type ?? '');
+                                $feed = $displayFeed['feed'];
+                                $variants = $displayFeed['variants'];
+
+                                $normalizedType = mb_strtolower(
+                                    $feed->feed_type ?? ''
+                                );
+
                                 $typeClass = match (true) {
-                                    str_contains($normalizedType, 'жив') => 'feed-type-live',
-                                    str_contains($normalizedType, 'заморож') => 'feed-type-frozen',
-                                    str_contains($normalizedType, 'раститель') => 'feed-type-plant',
-                                    str_contains($normalizedType, 'сух') => 'feed-type-dry',
+                                    str_contains($normalizedType, 'жив') =>
+                                        'feed-type-live',
+
+                                    str_contains($normalizedType, 'заморож') =>
+                                        'feed-type-frozen',
+
+                                    str_contains($normalizedType, 'раститель') =>
+                                        'feed-type-plant',
+
+                                    str_contains($normalizedType, 'сух') =>
+                                        'feed-type-dry',
+
                                     str_contains($normalizedType, 'витамин'),
                                     str_contains($normalizedType, 'минерал'),
-                                    str_contains($normalizedType, 'добав') => 'feed-type-supplement',
+                                    str_contains($normalizedType, 'добав') =>
+                                        'feed-type-supplement',
+
                                     default => 'feed-type-other',
                                 };
                             @endphp
 
                             <article class="animal-feed-item">
-                                <div>
+                                <div class="animal-feed-content">
                                     <h3>{{ $feed->name }}</h3>
+
                                     @if($feed->purpose)
-                                        <p>{{ \Illuminate\Support\Str::limit($feed->purpose, 90) }}</p>
+                                        <p>
+                                            {{ \Illuminate\Support\Str::limit(
+                                                $feed->purpose,
+                                                90
+                                            ) }}
+                                        </p>
+                                    @endif
+
+                                    @if($variants->count() > 1)
+                                        <div class="animal-feed-variants">
+                                            @foreach($variants as $variant)
+                                                <div class="animal-feed-variant">
+                                                    <span class="animal-feed-variant-stage">
+                                                        {{ $variant->rodent_stage_label }}
+                                                    </span>
+
+                                                    @if($variant->prey_weight_label)
+                                                        <span class="animal-feed-variant-weight">
+                                                            {{ $variant->prey_weight_label }}
+                                                        </span>
+                                                    @endif
+
+                                                    <span
+                                                        class="
+                                                            feed-stock-badge
+                                                            feed-stock-{{ $variant->public_stock_status }}
+                                                        "
+                                                    >
+                                                        {{ $variant->public_stock_label }}
+                                                    </span>
+                                                </div>
+                                            @endforeach
+                                        </div>
+                                    @elseif($variants->first()?->rodent_stage_label)
+                                        <div class="animal-feed-variants">
+                                            <div class="animal-feed-variant">
+                                                <span class="animal-feed-variant-stage">
+                                                    {{ $variants->first()->rodent_stage_label }}
+                                                </span>
+
+                                                @if($variants->first()->prey_weight_label)
+                                                    <span class="animal-feed-variant-weight">
+                                                        {{ $variants->first()->prey_weight_label }}
+                                                    </span>
+                                                @endif
+                                            </div>
+                                        </div>
                                     @endif
                                 </div>
 

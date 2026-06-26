@@ -22,7 +22,6 @@ class Feed extends Model
         'unit',
         'quantity_in_stock',
         'min_stock_level',
-        'animal_classes',
         'animal_groups',
         'rodent_stage',
         'prey_weight_min',

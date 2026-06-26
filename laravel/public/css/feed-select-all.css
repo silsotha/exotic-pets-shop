@@ -1,4 +1,4 @@
-/* Общая логика карточек выбора */
+/* общая логика карточек выбора */
 
 .feed-target-no-groups {
     padding: 12px 14px;
@@ -83,6 +83,24 @@
 .feed-species-option:has(input:checked) {
     border-color: #789378;
     background: #eef5ed;
+}
+
+.feeds-grid-home {
+    display: grid;
+    grid-template-columns: repeat(4, minmax(0, 1fr));
+    gap: 18px;
+}
+
+@media (max-width: 1000px) {
+    .feeds-grid-home {
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+    }
+}
+
+@media (max-width: 560px) {
+    .feeds-grid-home {
+        grid-template-columns: 1fr;
+    }
 }
 
 .js-select-all:indeterminate {
